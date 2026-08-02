@@ -35,7 +35,7 @@ export function Security() {
           {t.security.cards.map((card, i) => {
             const Icon = cardIcons[i] ?? ShieldAlert;
             return (
-              <StaggerItem key={card.tag} className="h-full">
+              <StaggerItem key={i} className="h-full">
                 <SpotlightCard className="h-full p-6">
                   <div className="flex items-center justify-between">
                     <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-accent">

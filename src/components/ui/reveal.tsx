@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { Children, cloneElement, isValidElement } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -39,19 +40,26 @@ export function Reveal({
 /* ------------------------------------------------------------------ *
  * Stagger — parent/child pair for lists.
  * ------------------------------------------------------------------ */
-const staggerParent: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
-};
-
-const staggerChild: Variants = {
-  hidden: { opacity: 0, y: 22, filter: "blur(5px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: EASE },
-  },
+/**
+ * Each item observes the viewport for itself rather than inheriting a variant
+ * from the parent.
+ *
+ * Motion only propagates a parent variant at the moment the parent animates.
+ * A child that mounts *afterwards* — which is exactly what happens when the
+ * language switches and a translated `key` changes — never receives "show"
+ * and stays stuck at opacity 0, leaving a visible container with invisible
+ * contents. Self-observing items re-reveal themselves no matter when they
+ * mount, so the pattern cannot rot that way again.
+ *
+ * `Stagger` keeps the shared layout and hands each item its position so the
+ * entrance still cascades.
+ */
+export type StaggerItemProps = {
+  children: React.ReactNode;
+  className?: string;
+  /** Injected by `Stagger`; drives the cascade delay. */
+  index?: number;
+  amount?: number;
 };
 
 export function Stagger({
@@ -64,27 +72,33 @@ export function Stagger({
   amount?: number;
 }) {
   return (
-    <motion.div
-      className={className}
-      variants={staggerParent}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
-    >
-      {children}
-    </motion.div>
+    <div className={className}>
+      {Children.map(children, (child, index) =>
+        isValidElement(child) && child.type === StaggerItem
+          ? cloneElement(child as React.ReactElement<StaggerItemProps>, {
+              index,
+              amount,
+            })
+          : child,
+      )}
+    </div>
   );
 }
 
 export function StaggerItem({
   children,
   className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+  index = 0,
+  amount = 0.2,
+}: StaggerItemProps) {
   return (
-    <motion.div className={className} variants={staggerChild}>
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 22, filter: "blur(5px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount }}
+      transition={{ duration: 0.7, delay: 0.05 + index * 0.07, ease: EASE }}
+    >
       {children}
     </motion.div>
   );

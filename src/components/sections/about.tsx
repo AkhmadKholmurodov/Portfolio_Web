@@ -118,9 +118,12 @@ export function About() {
             </div>
 
             <Stagger className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] sm:grid-cols-2">
-              {t.about.facts.map((fact) => (
+              {/* Index keys on purpose: the list never reorders, and a
+                  translated key would remount every cell on a language
+                  switch. */}
+              {t.about.facts.map((fact, i) => (
                 <StaggerItem
-                  key={fact.label}
+                  key={i}
                   className="bg-[var(--bg)] p-5 transition-colors duration-500 hover:bg-white/[0.02]"
                 >
                   <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-500">
