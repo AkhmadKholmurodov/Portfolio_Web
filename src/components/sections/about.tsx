@@ -3,11 +3,20 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { ArrowUpRight, AtSign, Briefcase, GitBranch } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
 import { profile, socials } from "@/content/profile";
 import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/reveal";
 import { useReducedMotion } from "@/hooks/use-media";
+
+// lucide dropped brand marks in v1; the row already carries the name in
+// text, so these read as category icons rather than logos.
+const socialIcons = {
+  github: GitBranch,
+  linkedin: Briefcase,
+  email: AtSign,
+} as const;
 
 /** Portrait card that parallaxes gently against the column beside it. */
 function Portrait() {
@@ -24,47 +33,62 @@ function Portrait() {
 
   return (
     <div ref={ref} className="relative">
-      <motion.div
-        style={reduced ? undefined : { y }}
-        className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02]"
-      >
-        <Image
-          src={profile.photo}
-          alt={profile.name}
-          width={412}
-          height={527}
-          priority={false}
-          sizes="(max-width: 1024px) 70vw, 380px"
-          className="w-full object-cover grayscale transition-[filter,transform] duration-700 hover:grayscale-0 hover:scale-[1.02]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent"
-        />
-        <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-300">
-            {t.about.photoCaption}
-          </span>
-          <span className="flex items-center gap-1.5 font-mono text-[11px] text-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-[blip_2.4s_ease-in-out_infinite]" />
-            E-7
-          </span>
+      {/* The parallax wraps the photo *and* the links — moving only the photo
+          would slide it down over them. */}
+      <motion.div style={reduced ? undefined : { y }}>
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02]">
+          <Image
+            src={profile.photo}
+            alt={profile.name}
+            width={412}
+            height={527}
+            priority={false}
+            sizes="(max-width: 1024px) 70vw, 380px"
+            className="w-full object-cover grayscale transition-[filter,transform] duration-700 hover:grayscale-0 hover:scale-[1.02]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent"
+          />
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-300">
+              {t.about.photoCaption}
+            </span>
+            <span className="flex items-center gap-1.5 font-mono text-[11px] text-accent">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-[blip_2.4s_ease-in-out_infinite]" />
+              E-7
+            </span>
+          </div>
         </div>
-      </motion.div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {socials.map((social) => (
-          <a
-            key={social.key}
-            href={social.href}
-            target={social.key === "email" ? undefined : "_blank"}
-            rel="noopener noreferrer"
-            className="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink-500 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
-          >
-            {social.label}
-          </a>
-        ))}
-      </div>
+        <ul className="mt-4 divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+          {socials.map((social) => {
+            const Icon = socialIcons[social.key];
+            return (
+              <li key={social.key}>
+                <a
+                  href={social.href}
+                  target={social.key === "email" ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 px-4 py-3 transition-colors duration-300 hover:bg-white/[0.03]"
+                >
+                  <Icon
+                    className="h-4 w-4 shrink-0 text-ink-500 transition-colors group-hover:text-accent"
+                    strokeWidth={1.6}
+                  />
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
+                    {social.label}
+                  </span>
+                  <span className="ml-auto truncate text-[13px] text-ink-300 transition-colors group-hover:text-ink-100">
+                    {social.handle}
+                  </span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-ink-700 transition-all duration-300 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.div>
     </div>
   );
 }
