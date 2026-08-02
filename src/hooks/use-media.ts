@@ -1,0 +1,42 @@
+"use client";
+
+import { useCallback, useSyncExternalStore } from "react";
+
+/**
+ * Media query as an external store. `useSyncExternalStore` is the right shape
+ * here — matchMedia is a subscription outside React, and this avoids the
+ * setState-in-effect cascade a useState/useEffect pair would cause.
+ */
+function useMediaQuery(query: string, serverValue = false) {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mql = window.matchMedia(query);
+      mql.addEventListener("change", onChange);
+      return () => mql.removeEventListener("change", onChange);
+    },
+    [query],
+  );
+
+  const getSnapshot = useCallback(
+    () => window.matchMedia(query).matches,
+    [query],
+  );
+
+  // The server cannot know the viewport; every caller treats false as
+  // "assume the richer experience and let the client correct it".
+  const getServerSnapshot = useCallback(() => serverValue, [serverValue]);
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
+export function useReducedMotion() {
+  return useMediaQuery("(prefers-reduced-motion: reduce)");
+}
+
+export function useIsTouch() {
+  return useMediaQuery("(hover: none), (pointer: coarse)");
+}
+
+export function useIsMobile() {
+  return useMediaQuery("(max-width: 767px)");
+}
