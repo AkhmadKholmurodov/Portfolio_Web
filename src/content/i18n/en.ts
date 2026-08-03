@@ -180,7 +180,7 @@ export const en = {
           },
           {
             title: "Backend & data",
-            body: "Route handlers over Prisma against PostgreSQL (Neon). API grouped by concern: auth, listings, engagement, nearby discovery.",
+            body: "Route handlers over Prisma against PostgreSQL, migrated from Neon to Supabase under a capacity deadline. API grouped by concern: auth, listings, engagement, nearby discovery.",
           },
           {
             title: "Delivery",

@@ -10,12 +10,12 @@ const C = {
   // The two facts a Korean screener checks first, so they sit in the header
   // rather than three sections down.
   status: "E-7 visa holder  ·  Korean (Advanced) · English (Advanced) · Uzbek (Native)",
-  where: "Gyeongsan, Gyeongbuk, South Korea",
+  where: "South Korea — open to relocating to Seoul",
   contact: "+82 10-3802-1005  ·  seehyuk2000@gmail.com",
   links: [
+    { label: "seehyuk.vercel.app", href: "https://seehyuk.vercel.app" },
     { label: "github.com/AkhmadKholmurodov", href: "https://github.com/AkhmadKholmurodov" },
     { label: "linkedin.com/in/akhmadkholmurodov", href: "https://linkedin.com/in/akhmadkholmurodov" },
-    { label: "eyaqin-app.vercel.app", href: "https://eyaqin-app.vercel.app" },
   ],
 
   summary:
@@ -67,11 +67,12 @@ const C = {
       date: "eyaqin-app.vercel.app",
       href: "https://eyaqin-app.vercel.app",
       stack:
-        "Next.js · React 19 · TypeScript · Prisma · PostgreSQL (Neon) · Zustand · React Native (Expo SDK 54) · Socket.io · Vercel",
+        "Next.js · React 19 · TypeScript · Prisma · PostgreSQL (Supabase) · Zustand · React Native (Expo SDK 54) · Socket.io · Vercel",
       bullets: [
-        "Neighbourhood-first second-hand marketplace: district- and radius-based search ranks listings by real distance instead of a nationwide feed.",
+        "Neighbourhood-first second-hand marketplace: district- and radius-based search ranks listings by real distance, not a nationwide feed.",
         "Modelled the listing lifecycle as explicit, server-validated states (active → reserved → escrow_verification → sold → hidden), with real-time chat and moderation tooling on top.",
         "Extended it with a React Native client sharing one typed REST/WebSocket surface — camera upload, push notifications, geolocation and a nine-palette theme system.",
+        "Migrated the production database from Neon to Supabase under a hard capacity deadline — planned and ran the schema and data cutover with no record lost.",
       ],
     },
     {
@@ -89,7 +90,7 @@ const C = {
   security: [
     "HackerOne — reported a vulnerability in a live production web application; validated and triaged by the vendor's security team (closed as duplicate, validity confirmed).",
     "Secure Wireless LAN 7.6 Administrator — Fortinet Training Institute & ISC2, 2026 (CISSP domain: Communication and Network Security)  ·  Front End Development Libraries — freeCodeCamp, 2023.",
-    "Ongoing practice on Hack The Box and TryHackMe: web application vulnerability analysis, infrastructure penetration testing, OWASP Top 10.",
+    "Ongoing practice on Hack The Box and TryHackMe: web application vulnerability analysis and infrastructure penetration testing.",
   ],
 
   education: {
@@ -100,7 +101,7 @@ const C = {
   },
 
   awards:
-    "National Open Table Tennis Championship — 1st (2026), 2nd (2024)  ·  Table Tennis Champions League — 1st (2024)",
+    "eYaqin entered in the national startup competition, Uzbekistan (2026)  ·  National Open Table Tennis Championship — 1st place (2026)",
 };
 
 /* ------------------------------------------------------------------ *
@@ -127,7 +128,7 @@ const W = PAGE.w - M.left - M.right;
 const S = {
   body: 8.45,
   lead: 10.4,
-  bulletGap: 1.1,
+  bulletGap: 0.9,
   section: 8,
   sectionGap: 5,
   entryGap: 5.5,

@@ -13,12 +13,12 @@ import {
 import { ArrowUpRight, Lock } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
 import { projectsMeta, signalHex, type ProjectMeta } from "@/content/profile";
-import { DESIGN, useFitScale } from "@/components/journey/stage";
+import { DESIGN, useFitScale, type SceneSize } from "@/components/journey/stage";
 import { SceneWeb } from "@/components/journey/scene-web";
 import { SceneSurveillance } from "@/components/journey/scene-surveillance";
 import { SceneMobile } from "@/components/journey/scene-mobile";
 import { useTheme } from "@/components/providers/theme-provider";
-import { useIsCompact } from "@/hooks/use-media";
+import { useSceneSize } from "@/hooks/use-media";
 import { cn } from "@/lib/utils";
 
 /**
@@ -32,8 +32,9 @@ import { cn } from "@/lib/utils";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Track height per project. Longer means a slower, more readable walk. */
-const SCENE_VH = 150;
+/** Track height per project. Longer means a slower, more readable walk — but
+ *  on a phone every extra viewport is another thumb flick, so it shortens. */
+const SCENE_VH = { wide: 150, compact: 150, narrow: 115 } as const;
 
 /** Where in each scene's local timeline its named beats begin. */
 const BEAT_MARKS = [0, 0.3, 0.55, 0.78] as const;
@@ -51,7 +52,7 @@ export function ProjectJourney({
 }) {
   const { t } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
-  const compact = useIsCompact();
+  const size = useSceneSize();
   const count = projectsMeta.length;
 
   const { scrollYProgress: trackedProgress } = useScroll({
@@ -73,7 +74,8 @@ export function ProjectJourney({
   const scrollYProgress = useMotionValue(0);
   useMotionValueEvent(trackedProgress, "change", (v) => scrollYProgress.set(v));
 
-  const design = compact ? DESIGN.compact : DESIGN.wide;
+  const design = DESIGN[size];
+  const sceneVh = SCENE_VH[size];
   const { ref: fitRef, scale } = useFitScale(design.w, design.h);
 
   // Two indices drive everything textual: which project, and which beat within
@@ -105,7 +107,7 @@ export function ProjectJourney({
     <div
       ref={trackRef}
       className="relative"
-      style={{ height: `${count * SCENE_VH}vh` }}
+      style={{ height: `${count * sceneVh}vh` }}
     >
       {/* Anchor targets for the rail. Lenis owns in-page hash clicks, so a
           plain <a href="#…"> is the one way to jump that does not fight it.
@@ -118,7 +120,7 @@ export function ProjectJourney({
           aria-hidden
           className="absolute left-0 h-px w-px"
           style={{
-            top: `${(((i + 0.28) / count) * (count * SCENE_VH - 100)) / (count * SCENE_VH) * 100}%`,
+            top: `${(((i + 0.28) / count) * (count * sceneVh - 100)) / (count * sceneVh) * 100}%`,
           }}
         />
       ))}
@@ -145,7 +147,7 @@ export function ProjectJourney({
                 progress={scrollYProgress}
                 design={design}
                 scale={scale}
-                compact={compact}
+                size={size}
               />
             ))}
 
@@ -162,7 +164,7 @@ export function ProjectJourney({
             name={project.name}
             subtitle={project.subtitle}
             status={project.status}
-            compact={compact}
+            size={size}
             onOpen={() => onOpen(meta.key)}
           />
         </div>
@@ -181,7 +183,7 @@ function SceneLayer({
   progress,
   design,
   scale,
-  compact,
+  size,
 }: {
   meta: ProjectMeta;
   index: number;
@@ -189,7 +191,7 @@ function SceneLayer({
   progress: MotionValue<number>;
   design: { w: number; h: number };
   scale: number;
-  compact: boolean;
+  size: SceneSize;
 }) {
   const { isDark } = useTheme();
   const hue = signalHex(meta.signal, isDark);
@@ -237,7 +239,7 @@ function SceneLayer({
         }}
       >
         <motion.div className="h-full w-full" style={{ scale: depth }}>
-          <Scene p={local} tint={hue} compact={compact} />
+          <Scene p={local} tint={hue} size={size} />
         </motion.div>
       </div>
     </motion.div>
@@ -353,14 +355,14 @@ function Caption({
   name,
   subtitle,
   status,
-  compact,
+  size,
   onOpen,
 }: {
   meta: ProjectMeta;
   name: string;
   subtitle: string;
   status: string;
-  compact: boolean;
+  size: SceneSize;
   onOpen: () => void;
 }) {
   const { t } = useLanguage();
@@ -408,7 +410,7 @@ function Caption({
               <span className="text-[13px] text-ink-500 sm:text-[14px]">{subtitle}</span>
             </h3>
 
-            {!compact && (
+            {size === "wide" && (
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {meta.tech.slice(0, 6).map((tech) => (
                   <li

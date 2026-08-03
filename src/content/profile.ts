@@ -128,7 +128,7 @@ export const projectsMeta: ProjectMeta[] = [
     index: "01",
     year: "2025",
     href: "https://eyaqin-app.vercel.app",
-    tech: ["Next.js", "React 19", "TypeScript", "Prisma", "PostgreSQL (Neon)", "Zustand", "Tailwind", "Vercel"],
+    tech: ["Next.js", "React 19", "TypeScript", "Prisma", "PostgreSQL (Supabase)", "Zustand", "Tailwind", "Vercel"],
     signal: signalRamp[0],
   },
   {

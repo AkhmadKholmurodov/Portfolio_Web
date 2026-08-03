@@ -28,7 +28,7 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import { Beat, Thumb } from "@/components/journey/stage";
+import { Beat, Thumb, type SceneProps } from "@/components/journey/stage";
 
 /**
  * Scene 03 — eYaqin in the hand.
@@ -96,12 +96,10 @@ const ALPHA = (pct: number) =>
 export function SceneMobile({
   p,
   tint,
-  compact,
-}: {
-  p: MotionValue<number>;
-  tint: string;
-  compact: boolean;
-}) {
+  size,
+}: SceneProps) {
+  const narrow = size === "narrow";
+  const wide = size === "wide";
   const screenX = useTransform(
     p,
     [0.26, 0.4, 0.5, 0.64],
@@ -127,7 +125,7 @@ export function SceneMobile({
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      {!compact && (
+      {wide && (
         <>
           <PalettePicker p={p} choice={paletteChoice} />
           <PushCard p={p} tint={tint} />
@@ -138,8 +136,10 @@ export function SceneMobile({
           desktop window and floats without it. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute h-[520px] w-[520px] rounded-full"
+        className="pointer-events-none absolute rounded-full"
         style={{
+          width: narrow ? 330 : 520,
+          height: narrow ? 330 : 520,
           background: `radial-gradient(circle, ${tint}14, transparent 66%)`,
           filter: "blur(30px)",
         }}

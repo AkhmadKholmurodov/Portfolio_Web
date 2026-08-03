@@ -179,7 +179,7 @@ export const ko: Dict = {
           },
           {
             title: "백엔드와 데이터",
-            body: "Prisma를 통해 PostgreSQL(Neon)에 접근하는 라우트 핸들러. API는 인증, 매물, 참여, 주변 탐색으로 나눠 구성했습니다.",
+            body: "Prisma를 통해 PostgreSQL에 접근하는 라우트 핸들러. 용량 한계에 맞춰 Neon에서 Supabase로 마이그레이션했습니다. API는 인증, 매물, 참여, 주변 탐색으로 나눠 구성했습니다.",
           },
           {
             title: "배포",

@@ -1,13 +1,8 @@
 "use client";
 
 import { Check, ScanLine, X } from "lucide-react";
-import {
-  motion,
-  useMotionTemplate,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
-import { Beat } from "@/components/journey/stage";
+import { motion, useMotionTemplate, useTransform } from "motion/react";
+import { Beat, type SceneProps } from "@/components/journey/stage";
 
 /**
  * Scene 02 — SmartGuard.
@@ -47,12 +42,10 @@ function pad(n: number) {
 export function SceneSurveillance({
   p,
   tint,
-  compact,
-}: {
-  p: MotionValue<number>;
-  tint: string;
-  compact: boolean;
-}) {
+  size,
+}: SceneProps) {
+  const narrow = size === "narrow";
+  const wide = size === "wide";
   // The timecode is scrubbed by the page, not by a clock — the visitor is
   // literally scrolling through the night.
   const clock = useTransform(p, (v) => {
@@ -234,7 +227,7 @@ export function SceneSurveillance({
       >
         <div className="paper-rule absolute inset-0 opacity-40" />
 
-        <div className="relative flex h-full gap-6 p-6">
+        <div className="relative flex h-full gap-6" style={{ padding: narrow ? 14 : 24 }}>
           {/* ---- report ---- */}
           <div className="flex min-w-0 flex-1 flex-col">
             <Beat p={p} at={[0.54, 0.62]} y={10} className="flex items-baseline justify-between">
@@ -248,7 +241,7 @@ export function SceneSurveillance({
             </Beat>
 
             <Beat p={p} at={[0.58, 0.67]} y={14} className="mt-4">
-              <h4 className="text-[27px] leading-[1.08] font-bold tracking-[-0.035em]">
+              <h4 className={narrow ? "text-[19px] leading-[1.1] font-bold tracking-[-0.03em]" : "text-[27px] leading-[1.08] font-bold tracking-[-0.035em]"}>
                 <span className="relative inline-block">
                   {/* The product's signature: a marker stroke, drawn not printed.
                       It sits under the glyphs as a sibling — a negative z-index
@@ -271,7 +264,7 @@ export function SceneSurveillance({
             {/* ---- the night as a ruler ---- */}
             <Beat p={p} at={[0.68, 0.76]} y={12} className="relative mt-6 h-9">
               <span className="absolute inset-x-0 top-3 h-px bg-paper-rule" />
-              {HOURS.map((h) => (
+              {(narrow ? HOURS.filter((h) => h % 6 === 0) : HOURS).map((h) => (
                 <span
                   key={h}
                   className="absolute top-3 flex -translate-x-1/2 flex-col items-center"
@@ -355,7 +348,7 @@ export function SceneSurveillance({
           </div>
 
           {/* ---- the zone a human drew for the model ---- */}
-          {!compact && (
+          {wide && (
             <Beat p={p} at={[0.78, 0.86]} x={20} className="w-[236px] shrink-0">
               <p className="font-mono text-[9.5px] tracking-[0.16em] text-paper-ink-2 uppercase">
                 Kuzatuv zonasi

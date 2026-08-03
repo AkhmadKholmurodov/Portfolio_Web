@@ -42,9 +42,14 @@ export function useIsMobile() {
 }
 
 /**
- * Below `lg`. The project journey uses this to drop each scene's secondary
- * column, so the one that remains is still legible once the stage scales down.
+ * Which of the project journey's three design boxes fits.
+ *
+ * `compact` (tablet) drops each scene's secondary column; `narrow` (phone)
+ * re-lays every scene at roughly its native size, because scaling a tablet
+ * composition down to a phone makes its text unreadable.
  */
-export function useIsCompact() {
-  return useMediaQuery("(max-width: 1023px)");
+export function useSceneSize(): "wide" | "compact" | "narrow" {
+  const narrow = useMediaQuery("(max-width: 639px)");
+  const compact = useMediaQuery("(max-width: 1023px)");
+  return narrow ? "narrow" : compact ? "compact" : "wide";
 }

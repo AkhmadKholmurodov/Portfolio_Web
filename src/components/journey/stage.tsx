@@ -16,13 +16,25 @@ import { cn } from "@/lib/utils";
  * elements whose relationship *is* the point; reflowing them responsively
  * would destroy the likeness, and a single transform cannot.
  *
- * Below `lg` the stage switches to the compact box, where each scene drops its
- * secondary columns so the surviving one is still legible at ~0.7 scale.
+ * There are three boxes because scaling has a floor. A phone gives the stage
+ * roughly 340px: rendering the 520px box there means 0.65 scale, which turns
+ * 8px UI text into 5px and the whole scene into a grey smudge. Each box is
+ * therefore sized so its scale lands near 1, and each scene lays itself out
+ * differently inside it — which is what the real products do too.
  */
 export const DESIGN = {
   wide: { w: 1040, h: 620 },
   compact: { w: 520, h: 620 },
+  narrow: { w: 340, h: 600 },
 } as const;
+
+export type SceneSize = keyof typeof DESIGN;
+
+export type SceneProps = {
+  p: MotionValue<number>;
+  tint: string;
+  size: SceneSize;
+};
 
 export function useFitScale(w: number, h: number) {
   const ref = useRef<HTMLDivElement>(null);

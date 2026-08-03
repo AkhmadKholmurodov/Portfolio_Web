@@ -18,7 +18,7 @@ import {
   Users,
 } from "lucide-react";
 import { motion, useTransform, type MotionValue } from "motion/react";
-import { Beat, Lines, Thumb } from "@/components/journey/stage";
+import { Beat, Lines, Thumb, type SceneProps } from "@/components/journey/stage";
 
 /**
  * Scene 01 — eYaqin on the web.
@@ -86,12 +86,10 @@ function LifecycleStep({
 export function SceneWeb({
   p,
   tint,
-  compact,
-}: {
-  p: MotionValue<number>;
-  tint: string;
-  compact: boolean;
-}) {
+  size,
+}: SceneProps) {
+  const narrow = size === "narrow";
+  const wide = size === "wide";
   // The chip rail drifts as the visitor scrolls, the way it would under a
   // thumb — the detail that sells it as a live surface rather than a still.
   const chipsX = useTransform(p, [0.2, 0.72], [0, -76]);
@@ -99,9 +97,12 @@ export function SceneWeb({
   const rowsDim = useTransform(p, [0.72, 0.82], [1, 0.42]);
   const trackFill = useTransform(p, [0.8, 0.95], [0, 1]);
 
-  // Window width, less the rail and the main column's padding. The compact box
-  // drops the map, so the listings take everything that is left.
-  const listW = compact ? 422 : 572;
+  // Window width, less the rail and the main column's padding. Each box drops
+  // the next column: wide keeps the map, compact keeps the rail, narrow keeps
+  // neither — which is what the real app does at those widths too.
+  const listW = wide ? 572 : narrow ? 314 : 422;
+  const railW = narrow ? 0 : wide ? 72 : 56;
+  const pad = narrow ? 12 : 20;
 
   return (
     <Beat
@@ -128,35 +129,43 @@ export function SceneWeb({
         </div>
 
         <div className="flex min-h-0 flex-1">
-          {/* ---- icon rail ---- */}
-          <div
-            className="flex shrink-0 flex-col items-center gap-1.5 border-r border-line py-4"
-            style={{ width: compact ? 56 : 72 }}
-          >
-            {NAV.map((Icon, i) => (
-              <Beat
-                key={i}
-                p={p}
-                at={[0.05 + i * 0.012, 0.15 + i * 0.012]}
-                x={-10}
-                className="grid h-9 w-9 place-items-center rounded-xl"
-                style={
-                  i === 0
-                    ? { background: `${tint}1c`, boxShadow: `inset 0 0 0 1px ${tint}33` }
-                    : undefined
-                }
-              >
-                <Icon
-                  className={i === 0 ? "h-[17px] w-[17px]" : "h-[17px] w-[17px] text-ink-700"}
-                  style={i === 0 ? { color: tint } : undefined}
-                  strokeWidth={i === 0 ? 2.2 : 1.7}
-                />
-              </Beat>
-            ))}
-          </div>
+          {/* ---- icon rail ---- *
+           * At phone width the real app moves this to a bottom tab bar, so the
+           * scene does the same rather than shrinking a side rail no thumb
+           * could reach. */}
+          {!narrow && (
+            <div
+              className="flex shrink-0 flex-col items-center gap-1.5 border-r border-line py-4"
+              style={{ width: railW }}
+            >
+              {NAV.map((Icon, i) => (
+                <Beat
+                  key={i}
+                  p={p}
+                  at={[0.05 + i * 0.012, 0.15 + i * 0.012]}
+                  x={-10}
+                  className="grid h-9 w-9 place-items-center rounded-xl"
+                  style={
+                    i === 0
+                      ? { background: `${tint}1c`, boxShadow: `inset 0 0 0 1px ${tint}33` }
+                      : undefined
+                  }
+                >
+                  <Icon
+                    className={i === 0 ? "h-[17px] w-[17px]" : "h-[17px] w-[17px] text-ink-700"}
+                    style={i === 0 ? { color: tint } : undefined}
+                    strokeWidth={i === 0 ? 2.2 : 1.7}
+                  />
+                </Beat>
+              ))}
+            </div>
+          )}
 
           {/* ---- main column ---- */}
-          <div className="relative flex min-w-0 flex-1 flex-col p-5">
+          <div
+            className="relative flex min-w-0 flex-1 flex-col"
+            style={{ padding: pad }}
+          >
             {/* header */}
             <Beat p={p} at={[0.08, 0.18]} y={-12} className="flex items-center gap-2.5">
               <span
@@ -166,8 +175,8 @@ export function SceneWeb({
                 Yunusobod · 3 km
                 <ChevronDown className="h-3 w-3" />
               </span>
-              <span className="scene-inset flex h-[30px] flex-1 items-center gap-2 rounded-full px-3 text-[11px] text-ink-700">
-                <Search className="h-3 w-3" />
+              <span className="scene-inset flex h-[30px] min-w-0 flex-1 items-center gap-2 overflow-hidden rounded-full px-3 text-[11px] whitespace-nowrap text-ink-700">
+                <Search className="h-3 w-3 shrink-0" />
                 Nima qidiryapsiz?
               </span>
               <span className="scene-raised relative grid h-[30px] w-[30px] place-items-center rounded-full">
@@ -246,7 +255,7 @@ export function SceneWeb({
                 ))}
               </motion.div>
 
-              {!compact && (
+              {wide && (
                 <Beat
                   p={p}
                   at={[0.24, 0.34]}
@@ -307,14 +316,18 @@ export function SceneWeb({
 
             {/* ---- lifecycle strip ---- */}
             {/* Wide: sits under the listings with the chat panel beside it.
-                Compact: the two stack, because there is no room to sit side by
-                side once the map column is gone. */}
+                Otherwise the two stack, because there is no room to sit side
+                by side once the map column is gone. */}
             <Beat
               p={p}
               at={[0.74, 0.82]}
               y={44}
-              className="absolute left-5 rounded-2xl border border-line bg-ink-900/95 p-3 backdrop-blur"
-              style={{ width: listW, bottom: compact ? 216 : 20 }}
+              className="absolute rounded-2xl border border-line bg-ink-900/95 p-3 backdrop-blur"
+              style={{
+                width: listW,
+                left: pad,
+                bottom: wide ? pad : narrow ? 186 : 216,
+              }}
             >
               <p className="mb-2.5 font-mono text-[9px] tracking-[0.18em] text-ink-700 uppercase">
                 listing lifecycle
@@ -342,8 +355,12 @@ export function SceneWeb({
               p={p}
               at={[0.5, 0.6]}
               y={230}
-              className="scene-raised absolute bottom-0 right-5 flex flex-col overflow-hidden rounded-t-2xl border border-b-0 border-line"
-              style={{ width: compact ? listW : 316, height: compact ? 200 : 268 }}
+              className="scene-raised absolute bottom-0 flex flex-col overflow-hidden rounded-t-2xl border border-b-0 border-line"
+              style={{
+                width: wide ? 316 : listW,
+                height: wide ? 268 : narrow ? 172 : 200,
+                right: pad,
+              }}
             >
               <div className="flex items-center gap-2.5 border-b border-line px-3 py-2.5">
                 <Thumb className="h-7 w-7 rounded-full" tint={tint} seed={4} />
@@ -395,6 +412,33 @@ export function SceneWeb({
             </Beat>
           </div>
         </div>
+
+        {/* ---- bottom tabs, phone width only ---- */}
+        {narrow && (
+          <div className="flex h-11 shrink-0 items-stretch border-t border-line bg-ink-850/80 dark:bg-ink-900/80">
+            {NAV.slice(0, 5).map((Icon, i) => (
+              <Beat
+                key={i}
+                p={p}
+                at={[0.05 + i * 0.012, 0.15 + i * 0.012]}
+                y={8}
+                className="relative grid flex-1 place-items-center"
+              >
+                {i === 0 && (
+                  <span
+                    className="absolute h-7 w-11 rounded-full"
+                    style={{ background: `${tint}1c` }}
+                  />
+                )}
+                <Icon
+                  className={i === 0 ? "relative h-[17px] w-[17px]" : "relative h-[17px] w-[17px] text-ink-700"}
+                  style={i === 0 ? { color: tint } : undefined}
+                  strokeWidth={i === 0 ? 2.2 : 1.7}
+                />
+              </Beat>
+            ))}
+          </div>
+        )}
       </div>
     </Beat>
   );

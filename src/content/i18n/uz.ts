@@ -179,7 +179,7 @@ export const uz: Dict = {
           },
           {
             title: "Backend va ma'lumot",
-            body: "Prisma orqali PostgreSQL (Neon) bilan ishlaydigan route handler'lar. API yo'nalishlar bo'yicha ajratilgan: auth, e'lonlar, faollik, yaqin-atrof qidiruvi.",
+            body: "Prisma orqali PostgreSQL bilan ishlaydigan route handler'lar; baza sig'im muddati kelganda Neon'dan Supabase'ga ko'chirildi. API yo'nalishlar bo'yicha ajratilgan: auth, e'lonlar, faollik, yaqin-atrof qidiruvi.",
           },
           {
             title: "Deploy",
