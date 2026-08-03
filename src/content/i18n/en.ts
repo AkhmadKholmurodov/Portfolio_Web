@@ -197,7 +197,7 @@ export const en = {
       smartguard: {
         name: "SmartGuard",
         subtitle: "AI-powered CCTV surveillance · SuniyKoz",
-        status: "Live in retail production",
+        status: "Live pilot in a shop",
         summary:
           "Small retail stores lose inventory to theft and waste hours reviewing CCTV footage. SmartGuard links IP cameras to Claude Vision to auto-detect suspicious activity and send instant Telegram alerts with snapshots.",
         role: "Engineered the entire platform end to end, including multi-threaded camera pipelines, AI routing logic and the web UI.",
@@ -343,7 +343,7 @@ export const en = {
     certsTitle: "Certifications",
     languagesTitle: "Languages",
     languageNames: { ko: "Korean", en: "English", uz: "Uzbek" },
-    languageLevels: { ko: "Advanced", en: "Advanced", uz: "Native" },
+    languageLevels: { ko: "KIIP Level 5", en: "Advanced", uz: "Native" },
     awardsTitle: "Outside the terminal",
     awards: [
       "National Open Table Tennis Championship — 1st place (2026)",

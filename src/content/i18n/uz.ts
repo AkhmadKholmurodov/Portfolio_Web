@@ -196,7 +196,7 @@ export const uz: Dict = {
       smartguard: {
         name: "SmartGuard",
         subtitle: "AI asosidagi CCTV nazorati · SuniyKoz",
-        status: "Savdo nuqtasida ishlamoqda",
+        status: "Do'konda sinovda ishlamoqda",
         summary:
           "Kichik do'konlar o'g'irlik tufayli mol yo'qotadi va CCTV yozuvlarini ko'rishga soatlab vaqt sarflaydi. SmartGuard IP kameralarni Claude Vision'ga ulab, shubhali harakatni avtomatik aniqlaydi va Telegram orqali suratli xabar yuboradi.",
         role: "Platformani boshidan oxirigacha o'zim qurdim: ko'p oqimli kamera quvurlari, AI yo'naltirish mantiqi va veb-interfeys.",
@@ -342,7 +342,7 @@ export const uz: Dict = {
     certsTitle: "Sertifikatlar",
     languagesTitle: "Tillar",
     languageNames: { ko: "Koreys", en: "Ingliz", uz: "O'zbek" },
-    languageLevels: { ko: "Yuqori", en: "Yuqori", uz: "Ona tili" },
+    languageLevels: { ko: "KIIP 5-daraja", en: "Yuqori", uz: "Ona tili" },
     awardsTitle: "Terminaldan tashqarida",
     awards: [
       "Stol tennisi bo'yicha ochiq milliy chempionat — 1-o'rin (2026)",

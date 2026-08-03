@@ -196,7 +196,7 @@ export const ko: Dict = {
       smartguard: {
         name: "SmartGuard",
         subtitle: "AI 기반 CCTV 관제 · SuniyKoz",
-        status: "소매점 실운영 중",
+        status: "매장 파일럿 운영 중",
         summary:
           "소규모 매장은 도난으로 재고를 잃고, CCTV를 되감아 보느라 시간을 낭비합니다. SmartGuard는 IP 카메라를 Claude Vision에 연결해 의심 행동을 자동 감지하고, 스냅샷과 함께 텔레그램으로 즉시 알림을 보냅니다.",
         role: "멀티스레드 카메라 파이프라인, AI 라우팅 로직, 웹 UI를 포함해 플랫폼 전체를 혼자 설계·구현했습니다.",
@@ -342,7 +342,7 @@ export const ko: Dict = {
     certsTitle: "자격증",
     languagesTitle: "언어",
     languageNames: { ko: "한국어", en: "영어", uz: "우즈베크어" },
-    languageLevels: { ko: "고급", en: "고급", uz: "모국어" },
+    languageLevels: { ko: "KIIP 5단계", en: "고급", uz: "모국어" },
     awardsTitle: "터미널 밖에서",
     awards: [
       "전국 오픈 탁구 선수권 대회 — 1위 (2026)",

@@ -9,7 +9,7 @@ const C = {
   role: "Full-Stack & WebOps Engineer",
   // The two facts a Korean screener checks first, so they sit in the header
   // rather than three sections down.
-  status: "E-7 visa holder  ·  Korean (Advanced) · English (Advanced) · Uzbek (Native)",
+  status: "E-7 visa holder  ·  Korean — KIIP Level 5 (highest)  ·  English (Advanced) · Uzbek (Native)",
   where: "South Korea — open to relocating to Seoul",
   contact: "+82 10-3802-1005  ·  seehyuk2000@gmail.com",
   links: [
@@ -78,11 +78,12 @@ const C = {
     {
       name: "SmartGuard",
       tag: "AI-powered CCTV surveillance  ·  SuniyKoz",
-      date: "Live in retail production",
+      date: "In daily use — pilot store",
       stack: "React 18 · Python · FastAPI · OpenCV · Claude Vision · PostgreSQL · Docker",
       bullets: [
         "Two-tier edge/cloud vision pipeline: local OpenCV motion filtering gates what reaches the Claude vision model, cutting vision-API cost roughly 100× while keeping alert generation under a second.",
         "Pushes a snapshot and a plain-language explanation to Telegram instead of footage to rewind; runs 24/7 on multi-threaded per-camera workers, deployed with Docker.",
+        "Running unattended in a shop in Guzor, Uzbekistan since July — a live pilot I keep extending from the owner's own requests.",
       ],
     },
   ],
@@ -101,7 +102,7 @@ const C = {
   },
 
   awards:
-    "eYaqin entered in the national startup competition, Uzbekistan (2026)  ·  National Open Table Tennis Championship — 1st place (2026)",
+    "eYaqin — entered in the President Tech Award (Uzbekistan, 2026)  ·  National Open Table Tennis Champion (2026)",
 };
 
 /* ------------------------------------------------------------------ *
