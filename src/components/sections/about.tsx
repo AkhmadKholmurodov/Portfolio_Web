@@ -36,7 +36,7 @@ function Portrait() {
       {/* The parallax wraps the photo *and* the links — moving only the photo
           would slide it down over them. */}
       <motion.div style={reduced ? undefined : { y }}>
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02]">
+        <div className="relative overflow-hidden rounded-3xl border border-line bg-surface">
           <Image
             src={profile.photo}
             alt={profile.name}
@@ -61,7 +61,7 @@ function Portrait() {
           </div>
         </div>
 
-        <ul className="mt-4 divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+        <ul className="mt-4 divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-line bg-surface">
           {socials.map((social) => {
             const Icon = socialIcons[social.key];
             return (
@@ -70,7 +70,7 @@ function Portrait() {
                   href={social.href}
                   target={social.key === "email" ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 px-4 py-3 transition-colors duration-300 hover:bg-white/[0.03]"
+                  className="group flex items-center gap-3 px-4 py-3 transition-colors duration-300 hover:bg-surface"
                 >
                   <Icon
                     className="h-4 w-4 shrink-0 text-ink-500 transition-colors group-hover:text-accent"
@@ -117,14 +117,14 @@ export function About() {
               ))}
             </div>
 
-            <Stagger className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] sm:grid-cols-2">
+            <Stagger className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-surface-2 sm:grid-cols-2">
               {/* Index keys on purpose: the list never reorders, and a
                   translated key would remount every cell on a language
                   switch. */}
               {t.about.facts.map((fact, i) => (
                 <StaggerItem
                   key={i}
-                  className="bg-[var(--bg)] p-5 transition-colors duration-500 hover:bg-white/[0.02]"
+                  className="bg-[var(--bg)] p-5 transition-colors duration-500 hover:bg-surface"
                 >
                   <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-500">
                     {fact.label}

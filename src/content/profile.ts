@@ -68,39 +68,85 @@ export const experienceMeta: ExperienceMeta[] = [
   { key: "ccl", period: "2022.05 — 2024.09" },
 ];
 
+/**
+ * The journey's entire colour budget: one ramp, three stops.
+ *
+ * The three products look nothing alike in real life — a warm gold
+ * marketplace, a lime-marker paper report, a neumorphic phone app. Reproducing
+ * their real palettes side by side turns the section into a fruit salad, so
+ * each scene keeps its *form* (surfaces, type, motion, layout) and borrows its
+ * *colour* from here. Matched chroma and a gentle lightness fall mean any two
+ * stops still look related mid cross-fade.
+ *
+ * Stop 1 is `--color-accent` exactly, so the journey never leaves the site
+ * palette. Each stop carries a hex per theme because the scenes build colours
+ * by concatenating alpha, which `var()` cannot do.
+ */
+export const signalRamp = [
+  { css: "var(--color-signal-1)", dark: "#3ADFD7", light: "#007F79" },
+  { css: "var(--color-signal-2)", dark: "#51BEFF", light: "#0076BB" },
+  { css: "var(--color-signal-3)", dark: "#AD8DFD", light: "#7E5DC8" },
+] as const;
+
+export type Signal = (typeof signalRamp)[number];
+
+/**
+ * The stop to paint with, for the theme currently on screen.
+ *
+ * Consumers concatenate alpha onto these (`${hex}44`), which a `var()` cannot
+ * support — so the hex has to be resolved in JS rather than left to CSS. The
+ * light values are each darkened to the lightness that clears 4.5 : 1 on the
+ * light page; the neon originals are invisible on white.
+ */
+export function signalHex(signal: Signal, isDark: boolean) {
+  return isDark ? signal.dark : signal.light;
+}
+
 export type ProjectMeta = {
   key: "eyaqin" | "smartguard" | "eyaqinMobile";
+  /** Which scene the journey stage renders for this project. */
+  scene: "web" | "surveillance" | "mobile";
   index: string;
   year: string;
   href?: string;
   repo?: string;
   tech: string[];
-  /** Two accent stops used for the card's gradient wash. */
-  hue: [string, string];
+  /** Stop on `signalRamp` — the scene's single accent. */
+  signal: Signal;
+  /**
+   * Captures of the product actually running, shown in the case study.
+   * The walkthrough scenes are reconstructions; these are the proof that the
+   * thing exists. File names only — their captions are translated.
+   */
+  shots?: string[];
 };
 
 export const projectsMeta: ProjectMeta[] = [
   {
     key: "eyaqin",
+    scene: "web",
     index: "01",
     year: "2025",
     href: "https://eyaqin-app.vercel.app",
     tech: ["Next.js", "React 19", "TypeScript", "Prisma", "PostgreSQL (Neon)", "Zustand", "Tailwind", "Vercel"],
-    hue: ["oklch(0.72 0.15 195)", "oklch(0.62 0.19 265)"],
+    signal: signalRamp[0],
   },
   {
     key: "smartguard",
+    scene: "surveillance",
     index: "02",
     year: "2025",
     tech: ["React 18", "Python", "FastAPI", "OpenCV", "Claude Vision", "PostgreSQL", "Docker"],
-    hue: ["oklch(0.74 0.17 85)", "oklch(0.62 0.2 25)"],
+    signal: signalRamp[1],
+    shots: ["smartguard-hero", "smartguard-system"],
   },
   {
     key: "eyaqinMobile",
+    scene: "mobile",
     index: "03",
     year: "2026",
     tech: ["React Native", "Expo SDK 54", "Expo Router v6", "TanStack Query", "Supabase", "Socket.io", "Reanimated"],
-    hue: ["oklch(0.72 0.17 300)", "oklch(0.68 0.16 200)"],
+    signal: signalRamp[2],
   },
 ];
 

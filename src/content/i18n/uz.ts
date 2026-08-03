@@ -110,7 +110,31 @@ export const uz: Dict = {
     privateRepo: "Yopiq repozitoriy",
     caseStudy: "Batafsil",
     featuresTitle: "Asosiy imkoniyatlar",
+    shotsTitle: "Ishlab turgan mahsulot",
     close: "Yopish",
+    journey: {
+      hint: "Pastga aylantiring",
+      beats: {
+        eyaqin: [
+          "Mahalla lentasi",
+          "Xaritada radius bo'yicha qidiruv",
+          "Sotuvchi bilan suhbat",
+          "E'lon holatini o'zgartiradi",
+        ],
+        smartguard: [
+          "Do'kon, yopilgandan keyin",
+          "Kamera nishonni ushlaydi",
+          "Kun bitta varaqqa aylanadi",
+          "Odam ko'rib chiqib tasdiqlaydi",
+        ],
+        eyaqinMobile: [
+          "O'sha lenta — endi qo'lda",
+          "Pinlar va tortib chiqadigan panel",
+          "Push bo'lib keladigan xabar",
+          "To'qqiz palitra, biri sizniki",
+        ],
+      },
+    },
     items: {
       eyaqin: {
         name: "eYaqin",
@@ -180,6 +204,16 @@ export const uz: Dict = {
           { value: "100×", label: "VLM API xarajati kamaydi" },
           { value: "1 soniyadan kam", label: "Xabar yaratish" },
           { value: "24/7", label: "Ko'p oqimli ishchi jarayonlar" },
+        ],
+        shots: [
+          {
+            alt: "SmartGuard bosh sahifasi: kechasi 3D do'kon, KAM-03 kamerasi orqali, yo'lakdagi odamni kuzatayotgan aniqlash ramkasi bilan",
+            caption: "Bosh sahifa sizni kamera ortiga o'tkazadi — scroll qilgan sari kezib chiqiladigan real vaqtdagi 3D do'kon, detektor esa nishonni ushlaydi.",
+          },
+          {
+            alt: "SmartGuard imkoniyatlar bo'limi sovuq qog'oz yuzada, 8:00 dan 23:00 gacha bo'lgan chizg'ichda ikkita hodisa belgilangan",
+            caption: "Pastda — butun mahsulot tayanadigan dizayn tizimi: qog'oz yuza, bitta marker rangi va bitta chiziqqa siqilgan kun.",
+          },
         ],
         features: [
           { title: "Edge/cloud gibrid quvur", body: "Mahalliy OpenCV harakat aniqlagichi oddiy kadrlarni bulutgacha filtrlaydi." },
@@ -334,6 +368,7 @@ export const uz: Dict = {
   },
 
   a11y: {
+    theme: "Yorug'/qorong'i rejimni almashtirish",
     languageSwitcher: "Tilni o'zgartirish",
     menu: "Menyu",
     closeMenu: "Menyuni yopish",

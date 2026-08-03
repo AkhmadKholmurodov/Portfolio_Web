@@ -2,14 +2,56 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
+import { useTheme } from "@/components/providers/theme-provider";
 import { locales, localeLabels, type Locale } from "@/content/i18n";
 import { profile, sectionIds, type SectionId } from "@/content/profile";
 import { Magnetic } from "@/components/ui/magnetic";
 import { cn } from "@/lib/utils";
 
 const navItems = sectionIds.filter((id) => id !== "home");
+
+/* ------------------------------------------------------------------ *
+ * Theme toggle
+ * ------------------------------------------------------------------ */
+function ThemeToggle({ className }: { className?: string }) {
+  const { isDark, toggle } = useTheme();
+  const { t } = useLanguage();
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={t.a11y.theme}
+      aria-pressed={isDark}
+      title={t.a11y.theme}
+      className={cn(
+        "group grid h-8 w-8 place-items-center rounded-full border border-line bg-surface backdrop-blur transition-colors duration-300 hover:border-line-strong",
+        className,
+      )}
+    >
+      {/* Both icons stay mounted and swap on a rotation, so the control reads
+          as one object turning rather than two icons blinking. */}
+      <span className="relative grid h-4 w-4 place-items-center">
+        <motion.span
+          className="absolute grid place-items-center text-ink-500 group-hover:text-ink-100"
+          animate={{ opacity: isDark ? 0 : 1, rotate: isDark ? -90 : 0, scale: isDark ? 0.5 : 1 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Sun className="h-4 w-4" />
+        </motion.span>
+        <motion.span
+          className="absolute grid place-items-center text-ink-500 group-hover:text-ink-100"
+          animate={{ opacity: isDark ? 1 : 0, rotate: isDark ? 0 : 90, scale: isDark ? 1 : 0.5 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Moon className="h-4 w-4" />
+        </motion.span>
+      </span>
+    </button>
+  );
+}
 
 /* ------------------------------------------------------------------ *
  * Scroll progress hairline pinned to the top of the viewport.
@@ -72,7 +114,7 @@ function LanguageSwitcher({ className }: { className?: string }) {
       role="group"
       aria-label={t.a11y.languageSwitcher}
       className={cn(
-        "relative flex items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5 backdrop-blur",
+        "relative flex items-center rounded-full border border-line bg-surface p-0.5 backdrop-blur",
         className,
       )}
     >
@@ -150,7 +192,7 @@ export function Nav() {
             className={cn(
               "flex items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-5",
               scrolled
-                ? "glass-strong shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6)]"
+                ? "glass-strong shadow-(--shadow-nav)"
                 : "border border-transparent bg-transparent",
             )}
           >
@@ -182,7 +224,7 @@ export function Nav() {
                   {active === id && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-white/[0.07]"
+                      className="absolute inset-0 rounded-full bg-surface-2"
                       transition={{ type: "spring", stiffness: 400, damping: 34 }}
                     />
                   )}
@@ -192,6 +234,7 @@ export function Nav() {
             </nav>
 
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <LanguageSwitcher className="hidden sm:flex" />
 
               <Magnetic strength={0.2} className="hidden sm:inline-block">
@@ -210,7 +253,7 @@ export function Nav() {
                 type="button"
                 onClick={() => setOpen(true)}
                 aria-label={t.a11y.menu}
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-ink-300 transition-colors hover:text-ink-100 lg:hidden"
+                className="grid h-9 w-9 place-items-center rounded-full border border-line text-ink-300 transition-colors hover:text-ink-100 lg:hidden"
               >
                 <Menu className="h-4 w-4" />
               </button>
@@ -230,12 +273,15 @@ export function Nav() {
           >
             <div className="flex h-full flex-col p-6">
               <div className="flex items-center justify-between">
-                <LanguageSwitcher />
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <LanguageSwitcher />
+                </div>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label={t.a11y.closeMenu}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-ink-300"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink-300"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -254,7 +300,7 @@ export function Nav() {
                       duration: 0.5,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="flex items-baseline gap-4 border-b border-white/5 py-4 text-3xl font-medium tracking-tight text-ink-100"
+                    className="flex items-baseline gap-4 border-b border-line py-4 text-3xl font-medium tracking-tight text-ink-100"
                   >
                     <span className="font-mono text-xs text-accent/70">
                       0{i + 1}

@@ -109,7 +109,33 @@ export const en = {
     privateRepo: "Private repository",
     caseStudy: "Read the detail",
     featuresTitle: "Main features",
+    shotsTitle: "The product running",
     close: "Close",
+    /** Copy for the scroll-driven walkthrough. `beats` label what the stage
+     *  is showing at each phase, in the order the scene plays them. */
+    journey: {
+      hint: "Keep scrolling",
+      beats: {
+        eyaqin: [
+          "The neighbourhood feed",
+          "Radius search on the map",
+          "Buyer and seller talking",
+          "The listing changes state",
+        ],
+        smartguard: [
+          "A shop, after closing",
+          "The camera locks on",
+          "The day becomes a sheet of paper",
+          "A human signs it off",
+        ],
+        eyaqinMobile: [
+          "The same feed, in the hand",
+          "Pins, and a sheet you drag up",
+          "Chat that arrives as a push",
+          "Nine palettes, one you keep",
+        ],
+      },
+    },
     items: {
       eyaqin: {
         name: "eYaqin",
@@ -179,6 +205,16 @@ export const en = {
           { value: "100×", label: "Lower VLM API cost" },
           { value: "Sub-second", label: "Alert generation" },
           { value: "24/7", label: "Multi-threaded workers" },
+        ],
+        shots: [
+          {
+            alt: "SmartGuard's landing page: a 3D convenience store at night, seen through camera KAM-03, with a detection box tracking a person in the aisle",
+            caption: "The landing page puts you behind the camera — a real-time 3D shop you walk through as you scroll, with the detector locking on.",
+          },
+          {
+            alt: "SmartGuard's feature section on cold paper stock, with the day-strip marking two events across an 8:00 to 23:00 ruler",
+            caption: "Below it, the design system the whole product runs on: paper stock, one highlighter accent, and a day compressed into a single strip.",
+          },
         ],
         features: [
           { title: "Hybrid edge/cloud pipeline", body: "Local OpenCV motion detection filters routine frames before the cloud." },
@@ -333,6 +369,7 @@ export const en = {
   },
 
   a11y: {
+    theme: "Switch between light and dark",
     languageSwitcher: "Change language",
     menu: "Menu",
     closeMenu: "Close menu",

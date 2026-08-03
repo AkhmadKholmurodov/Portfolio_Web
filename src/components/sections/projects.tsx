@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import {
   AnimatePresence,
   motion,
@@ -13,12 +14,15 @@ import { useLanguage } from "@/components/providers/language-provider";
 import {
   lifecycleStates,
   projectsMeta,
+  signalHex,
   type ProjectMeta,
 } from "@/content/profile";
 import type { Dict } from "@/content/i18n";
 import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { Magnetic } from "@/components/ui/magnetic";
+import { ProjectJourney } from "@/components/journey/project-journey";
+import { useTheme } from "@/components/providers/theme-provider";
 import { useIsTouch, useReducedMotion } from "@/hooks/use-media";
 import { cn } from "@/lib/utils";
 
@@ -53,6 +57,9 @@ function ProjectCard({
   onOpen: () => void;
 }) {
   const { t } = useLanguage();
+  const { isDark } = useTheme();
+  const hue = signalHex(meta.signal, isDark);
+  const hue2 = signalHex(projectsMeta[1].signal, isDark);
   const ref = useRef<HTMLElement>(null);
   const isTouch = useIsTouch();
   const reduced = useReducedMotion();
@@ -65,7 +72,7 @@ function ProjectCard({
 
   const mx = useMotionValue(50);
   const my = useMotionValue(50);
-  const wash = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, ${meta.hue[0]}22, transparent 60%)`;
+  const wash = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, ${hue}22, transparent 60%)`;
 
   function onMove(e: React.MouseEvent<HTMLElement>) {
     const el = ref.current;
@@ -93,7 +100,7 @@ function ProjectCard({
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={tiltOff ? undefined : { rotateX, rotateY, transformPerspective: 1400 }}
-      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-9 lg:p-11"
+      className="group relative overflow-hidden rounded-3xl border border-line bg-surface p-6 sm:p-9 lg:p-11"
     >
       <motion.div
         aria-hidden
@@ -104,7 +111,7 @@ function ProjectCard({
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-60"
         style={{
-          background: `linear-gradient(90deg, transparent, ${meta.hue[0]}, ${meta.hue[1]}, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${hue}, ${hue2}, transparent)`,
         }}
       />
 
@@ -117,14 +124,14 @@ function ProjectCard({
             <span
               className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em]"
               style={{
-                borderColor: `${meta.hue[0]}44`,
-                color: meta.hue[0],
-                background: `${meta.hue[0]}0f`,
+                borderColor: `${hue}44`,
+                color: hue,
+                background: `${hue}0f`,
               }}
             >
               <span
                 className="h-1.5 w-1.5 rounded-full animate-[blip_2.4s_ease-in-out_infinite]"
-                style={{ background: meta.hue[0] }}
+                style={{ background: hue }}
               />
               {project.status}
             </span>
@@ -146,7 +153,7 @@ function ProjectCard({
             {meta.tech.map((tech) => (
               <li
                 key={tech}
-                className="rounded-md border border-white/[0.07] bg-white/[0.03] px-2 py-1 font-mono text-[11px] text-ink-500"
+                className="rounded-md border border-line bg-surface px-2 py-1 font-mono text-[11px] text-ink-500"
               >
                 {tech}
               </li>
@@ -170,13 +177,13 @@ function ProjectCard({
                 href={meta.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                className="group/link inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
               >
                 {t.projects.viewLive}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-sm text-ink-500">
+              <span className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm text-ink-500">
                 <Lock className="h-3.5 w-3.5" />
                 {t.projects.privateRepo}
               </span>
@@ -184,13 +191,13 @@ function ProjectCard({
           </div>
         </div>
 
-        <dl className="grid grid-cols-3 gap-px self-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] lg:grid-cols-1">
+        <dl className="grid grid-cols-3 gap-px self-start overflow-hidden rounded-2xl border border-line bg-surface-2 lg:grid-cols-1">
           {project.highlights.map((highlight) => (
             <div key={highlight.label} className="bg-[var(--bg)] p-4 lg:p-5">
               <dt className="sr-only">{highlight.label}</dt>
               <dd
                 className="text-lg font-medium tracking-tight sm:text-xl"
-                style={{ color: meta.hue[0] }}
+                style={{ color: hue }}
               >
                 {highlight.value}
               </dd>
@@ -218,6 +225,9 @@ function CaseStudy({
   onClose: () => void;
 }) {
   const { t } = useLanguage();
+  const { isDark } = useTheme();
+  const hue = signalHex(meta.signal, isDark);
+  const hue2 = signalHex(projectsMeta[2].signal, isDark);
   const closeRef = useRef<HTMLButtonElement>(null);
   const steps = flowSteps(project.deepDive);
 
@@ -256,17 +266,17 @@ function CaseStudy({
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 30, opacity: 0, scale: 0.99 }}
         transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-        className="relative max-h-[92svh] w-full max-w-4xl overflow-y-auto overscroll-contain rounded-t-3xl border border-white/12 bg-ink-900 sm:max-h-[88svh] sm:rounded-3xl"
+        className="relative max-h-[92svh] w-full max-w-4xl overflow-y-auto overscroll-contain rounded-t-3xl border border-line bg-ink-900 sm:max-h-[88svh] sm:rounded-3xl"
       >
         <div
           aria-hidden
           className="pointer-events-none sticky top-0 z-10 h-px"
           style={{
-            background: `linear-gradient(90deg, transparent, ${meta.hue[0]}, ${meta.hue[1]}, transparent)`,
+            background: `linear-gradient(90deg, transparent, ${hue}, ${hue2}, transparent)`,
           }}
         />
 
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-white/[0.07] bg-ink-900/92 px-6 py-5 backdrop-blur sm:px-9">
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-line bg-ink-900/92 px-6 py-5 backdrop-blur sm:px-9">
           <div>
             <span className="font-mono text-[11px] tracking-[0.2em] text-ink-500">
               {meta.index} / {meta.year}
@@ -281,26 +291,53 @@ function CaseStudy({
             type="button"
             onClick={onClose}
             aria-label={t.projects.close}
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 text-ink-300 transition-colors hover:border-white/25 hover:text-ink-100"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line text-ink-300 transition-colors hover:border-line-strong hover:text-ink-100"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         <div className="space-y-12 px-6 py-9 sm:px-9 sm:py-11">
+          {/* Proof first. Everything below this is a claim; these are captures
+              of the thing actually running. */}
+          {meta.shots && "shots" in project && (
+            <div>
+              <h4 className="eyebrow">{t.projects.shotsTitle}</h4>
+              <div className="mt-5 space-y-6">
+                {meta.shots.map((shot, i) => (
+                  <figure key={shot}>
+                    <div className="overflow-hidden rounded-2xl border border-line bg-ink-950">
+                      <Image
+                        src={`/shots/${shot}.webp`}
+                        alt={project.shots[i].alt}
+                        width={1000}
+                        height={625}
+                        sizes="(min-width: 640px) 46rem, 100vw"
+                        className="h-auto w-full"
+                      />
+                    </div>
+                    <figcaption className="mt-2.5 text-[13px] leading-relaxed text-ink-500">
+                      {project.shots[i].caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Features */}
           <div>
             <h4 className="eyebrow">{t.projects.featuresTitle}</h4>
-            <div className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] sm:grid-cols-2">
+            <div className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-line bg-surface-2 sm:grid-cols-2">
               {project.features.map((feature, i) => (
                 <div
                   key={feature.title}
-                  className="bg-ink-900 p-5 transition-colors duration-500 hover:bg-white/[0.02]"
+                  className="bg-ink-900 p-5 transition-colors duration-500 hover:bg-surface"
                 >
                   <div className="flex items-baseline gap-2.5">
                     <span
                       className="font-mono text-[11px]"
-                      style={{ color: meta.hue[0] }}
+                      style={{ color: hue }}
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -329,14 +366,14 @@ function CaseStudy({
               {steps.map((step, i) => (
                 <li
                   key={step.label}
-                  className="relative flex flex-col gap-1 rounded-xl border border-white/[0.07] bg-white/[0.02] p-4 sm:flex-row sm:items-center sm:gap-5"
+                  className="relative flex flex-col gap-1 rounded-xl border border-line bg-surface p-4 sm:flex-row sm:items-center sm:gap-5"
                 >
                   <div className="flex shrink-0 items-center gap-3 sm:w-56">
                     <span
                       className="grid h-6 w-6 shrink-0 place-items-center rounded-md font-mono text-[10px]"
                       style={{
-                        background: `${meta.hue[0]}18`,
-                        color: meta.hue[0],
+                        background: `${hue}18`,
+                        color: hue,
                       }}
                     >
                       {i + 1}
@@ -345,14 +382,14 @@ function CaseStudy({
                       {step.label}
                     </code>
                   </div>
-                  <p className="text-[13px] leading-relaxed text-ink-500 sm:pl-5 sm:border-l sm:border-white/[0.07]">
+                  <p className="text-[13px] leading-relaxed text-ink-500 sm:pl-5 sm:border-l sm:border-line">
                     {step.body}
                   </p>
                 </li>
               ))}
             </ol>
 
-            <div className="mt-7 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
+            <div className="mt-7 rounded-2xl border border-line bg-surface p-5">
               <h5 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
                 {project.deepDive.whyTitle}
               </h5>
@@ -365,7 +402,7 @@ function CaseStudy({
                     <span
                       aria-hidden
                       className="mt-2 h-1 w-1 shrink-0 rounded-full"
-                      style={{ background: meta.hue[0] }}
+                      style={{ background: hue }}
                     />
                     {line}
                   </li>
@@ -379,7 +416,7 @@ function CaseStudy({
             {project.architecture.map((block) => (
               <div
                 key={block.title}
-                className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5"
+                className="rounded-2xl border border-line bg-surface p-5"
               >
                 <h5 className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-300">
                   {block.title}
@@ -392,7 +429,7 @@ function CaseStudy({
           </div>
 
           {/* Next */}
-          <div className="border-t border-white/[0.07] pt-7">
+          <div className="border-t border-line pt-7">
             <h5 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
               {project.nextTitle}
             </h5>
@@ -434,30 +471,40 @@ function CaseStudy({
 export function Projects() {
   const { t } = useLanguage();
   const [openKey, setOpenKey] = useState<ProjectKey | null>(null);
+  const reduced = useReducedMotion();
 
   const openMeta = projectsMeta.find((p) => p.key === openKey);
 
   return (
-    <Section id="projects">
+    <Section id="projects" className={cn(!reduced && "pb-16 sm:pb-24 lg:pb-28")}>
       <Container>
         <SectionHeader
           eyebrow={t.projects.eyebrow}
           title={t.projects.title}
           lead={t.projects.lead}
         />
-
-        <div className={cn("space-y-6 sm:space-y-8")}>
-          {projectsMeta.map((meta, i) => (
-            <Reveal key={meta.key} delay={i * 0.06} y={40}>
-              <ProjectCard
-                meta={meta}
-                project={t.projects.items[meta.key]}
-                onOpen={() => setOpenKey(meta.key)}
-              />
-            </Reveal>
-          ))}
-        </div>
       </Container>
+
+      {/* The walkthrough is the section. Under reduced motion a scroll-driven
+          stage is not a downgrade to soften — it is the wrong thing entirely,
+          so that visitor gets the same three projects as static cards. */}
+      {reduced ? (
+        <Container>
+          <div className="space-y-6 sm:space-y-8">
+            {projectsMeta.map((meta, i) => (
+              <Reveal key={meta.key} delay={i * 0.06} y={40}>
+                <ProjectCard
+                  meta={meta}
+                  project={t.projects.items[meta.key]}
+                  onOpen={() => setOpenKey(meta.key)}
+                />
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      ) : (
+        <ProjectJourney onOpen={setOpenKey} />
+      )}
 
       <AnimatePresence>
         {openMeta && (

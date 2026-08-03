@@ -11,10 +11,39 @@ import {
   NODES,
   nodeIndex,
 } from "@/components/three/topology";
+import { useTheme } from "@/components/providers/theme-provider";
 import { useIsMobile, useReducedMotion } from "@/hooks/use-media";
 
 const ACCENT = "#3fd8d1";
 const HOSTILE = "#ff6b5e";
+
+/**
+ * The palette was drawn for a black backdrop: pastels that glow, composited
+ * additively. Both assumptions invert on a light page — additive blending
+ * burns straight to white, and a pastel on white has no contrast left. Light
+ * mode therefore darkens and saturates every stop, and composites normally.
+ */
+function useSceneInk() {
+  const { isDark } = useTheme();
+
+  return useMemo(() => {
+    const shade = (hex: string) =>
+      isDark
+        ? hex
+        : `#${new THREE.Color(hex).offsetHSL(0, 0.16, -0.34).getHexString()}`;
+
+    return {
+      isDark,
+      shade,
+      blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
+      haloOpacity: isDark ? 0.55 : 0.3,
+      linkOpacity: isDark ? 0.3 : 0.24,
+      labelShadow: isDark
+        ? "0 1px 6px rgba(0,0,0,0.9)"
+        : "0 1px 6px oklch(0.972 0.003 250 / 0.95)",
+    };
+  }, [isDark]);
+}
 
 /* Shared soft dot, used for node glows and for the packets. */
 function makeDotTexture() {
@@ -49,6 +78,7 @@ function Nodes({
   pulses: React.RefObject<Float32Array>;
   showLabels: boolean;
 }) {
+  const ink = useSceneInk();
   const cores = useRef<(THREE.Mesh | null)[]>([]);
   const halos = useRef<(THREE.Sprite | null)[]>([]);
 
@@ -66,7 +96,7 @@ function Nodes({
   return (
     <>
       {NODES.map((node, i) => {
-        const color = NODE_COLORS[node.kind];
+        const color = ink.shade(NODE_COLORS[node.kind]);
         return (
           <group key={node.id} position={node.position}>
             <mesh
@@ -88,9 +118,9 @@ function Nodes({
                 map={dot}
                 color={color}
                 transparent
-                opacity={0.55}
+                opacity={ink.haloOpacity}
                 depthWrite={false}
-                blending={THREE.AdditiveBlending}
+                blending={ink.blending}
               />
             </sprite>
 
@@ -106,7 +136,7 @@ function Nodes({
                   style={{
                     color,
                     // Keeps the tag legible where it crosses a link or a halo.
-                    textShadow: "0 1px 6px rgba(0,0,0,0.9)",
+                    textShadow: ink.labelShadow,
                   }}
                 >
                   {node.label}
@@ -124,6 +154,7 @@ function Nodes({
  * Links — static hairlines between connected nodes.
  * ------------------------------------------------------------------ */
 function Links() {
+  const ink = useSceneInk();
   const geometry = useMemo(() => {
     const points: number[] = [];
     for (const edge of EDGES) {
@@ -141,9 +172,9 @@ function Links() {
   return (
     <lineSegments geometry={geometry}>
       <lineBasicMaterial
-        color={ACCENT}
+        color={ink.shade(ACCENT)}
         transparent
-        opacity={0.3}
+        opacity={ink.linkOpacity}
         depthWrite={false}
       />
     </lineSegments>
@@ -170,6 +201,8 @@ function Packets({
   pulses: React.RefObject<Float32Array>;
   reduced: boolean;
 }) {
+  const ink = useSceneInk();
+  const { shade } = ink;
   const points = useRef<THREE.Points>(null);
 
   const { packets, geometry, positions } = useMemo(() => {
@@ -199,8 +232,8 @@ function Packets({
     const pos = new Float32Array(list.length * 3);
     const col = new Float32Array(list.length * 3);
 
-    const normal = new THREE.Color(ACCENT);
-    const hostile = new THREE.Color(HOSTILE);
+    const normal = new THREE.Color(shade(ACCENT));
+    const hostile = new THREE.Color(shade(HOSTILE));
     list.forEach((packet, i) => {
       const c = packet.hostile ? hostile : normal;
       col[i * 3] = c.r;
@@ -213,7 +246,7 @@ function Packets({
     geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
 
     return { packets: list, geometry: geo, positions: pos };
-  }, []);
+  }, [shade]);
 
   useEffect(() => () => geometry.dispose(), [geometry]);
 
@@ -255,7 +288,7 @@ function Packets({
         transparent
         opacity={0.95}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={ink.blending}
       />
     </points>
   );
@@ -280,6 +313,7 @@ function writePositions(packets: Packet[], out: Float32Array, offset: number) {
  * Heartbeat — an uptime ping expanding out of the app node.
  * ------------------------------------------------------------------ */
 function Heartbeat({ reduced }: { reduced: boolean }) {
+  const ink = useSceneInk();
   const ring = useRef<THREE.Mesh>(null);
   const material = useRef<THREE.MeshBasicMaterial>(null);
   const clock = useRef(0);
@@ -304,7 +338,7 @@ function Heartbeat({ reduced }: { reduced: boolean }) {
       <ringGeometry args={[0.44, 0.455, 96]} />
       <meshBasicMaterial
         ref={material}
-        color={ACCENT}
+        color={ink.shade(ACCENT)}
         transparent
         opacity={0}
         side={THREE.DoubleSide}
@@ -318,6 +352,7 @@ function Heartbeat({ reduced }: { reduced: boolean }) {
  * Dust — depth cue behind the graph.
  * ------------------------------------------------------------------ */
 function Dust({ count, dot, reduced }: { count: number; dot: THREE.Texture; reduced: boolean }) {
+  const ink = useSceneInk();
   const points = useRef<THREE.Points>(null);
 
   const geometry = useMemo(() => {
@@ -347,10 +382,10 @@ function Dust({ count, dot, reduced }: { count: number; dot: THREE.Texture; redu
         size={0.038}
         sizeAttenuation
         transparent
-        opacity={0.42}
+        opacity={ink.isDark ? 0.42 : 0.3}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
-        color={ACCENT}
+        blending={ink.blending}
+        color={ink.shade(ACCENT)}
       />
     </points>
   );

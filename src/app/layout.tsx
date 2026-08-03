@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import { en } from "@/content/i18n/en";
 import { profile } from "@/content/profile";
+import { themeScript } from "@/components/providers/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,6 +17,13 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+/** eYaqin's real display face — the project journey renders its UI verbatim. */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://akhmad.dev";
 
@@ -38,6 +46,10 @@ export const metadata: Metadata = {
     "South Korea",
     "Akhmad Kholmurodov",
   ],
+  // `images` is deliberately absent from both: `app/opengraph-image.tsx`
+  // supplies a 1200×630 card, and file-based metadata overrides this object.
+  // The old entry pointed at the 413×531 portrait, which every platform
+  // letterboxed or cropped to a sliver.
   openGraph: {
     type: "profile",
     url: siteUrl,
@@ -46,21 +58,24 @@ export const metadata: Metadata = {
     siteName: profile.name,
     locale: "en_US",
     alternateLocale: ["ko_KR", "uz_UZ"],
-    images: [{ url: profile.photo, width: 412, height: 527, alt: profile.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: en.meta.title,
     description: en.meta.description,
-    images: [profile.photo],
   },
   alternates: { canonical: siteUrl },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0d10",
-  colorScheme: "dark",
+  // Matches each theme's page background, so the mobile browser chrome and the
+  // page never disagree about which one the visitor is in.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f6f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0d10" },
+  ],
+  colorScheme: "light dark",
 };
 
 /** Structured data so search results show the role, not just the title. */
@@ -103,9 +118,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Sets data-theme before the first paint. Static string under our own
+            control — no user input reaches it. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full">
         {/* Entrance animations are prerendered in their hidden state. Without
             JS nothing would ever reveal them, so no-JS visitors get the page

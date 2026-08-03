@@ -37,7 +37,7 @@ export function SpotlightCard({
       className={cn(
         "group/card relative overflow-hidden rounded-2xl glass",
         glow && "edge-glow",
-        "transition-colors duration-500 hover:bg-white/[0.045]",
+        "transition-colors duration-500 hover:bg-surface",
         className,
       )}
     >

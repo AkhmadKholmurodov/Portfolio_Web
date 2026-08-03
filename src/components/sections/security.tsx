@@ -38,7 +38,7 @@ export function Security() {
               <StaggerItem key={i} className="h-full">
                 <SpotlightCard className="h-full p-6">
                   <div className="flex items-center justify-between">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-accent">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-line bg-surface text-accent">
                       <Icon className="h-4 w-4" strokeWidth={1.6} />
                     </span>
                     <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
@@ -60,7 +60,7 @@ export function Security() {
         <div className="mt-16 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           {/* Certifications */}
           <Reveal>
-            <div className="h-full rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <div className="h-full rounded-2xl border border-line bg-surface p-6">
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 {t.security.certsTitle}
               </h3>
@@ -87,7 +87,7 @@ export function Security() {
 
           {/* Languages */}
           <Reveal delay={0.08}>
-            <div className="h-full rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <div className="h-full rounded-2xl border border-line bg-surface p-6">
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 {t.security.languagesTitle}
               </h3>
@@ -102,7 +102,7 @@ export function Security() {
                         {t.security.languageLevels[lang.key]}
                       </span>
                     </div>
-                    <div className="mt-2 h-px w-full bg-white/10">
+                    <div className="mt-2 h-px w-full bg-surface-2">
                       <motion.div
                         className="h-px bg-gradient-to-r from-accent to-accent-2"
                         initial={{ scaleX: 0 }}
@@ -125,7 +125,7 @@ export function Security() {
 
         {/* Awards — the human line at the end of a technical section. */}
         <Reveal delay={0.12}>
-          <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+          <div className="mt-4 rounded-2xl border border-line bg-surface p-6">
             <div className="flex items-center gap-2.5">
               <Award className="h-4 w-4 text-accent" strokeWidth={1.6} />
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
@@ -136,7 +136,7 @@ export function Security() {
               {t.security.awards.map((award) => (
                 <li
                   key={award}
-                  className="rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1.5 text-[12px] text-ink-300"
+                  className="rounded-full border border-line bg-surface px-3 py-1.5 text-[12px] text-ink-300"
                 >
                   {award}
                 </li>

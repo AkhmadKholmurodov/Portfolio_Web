@@ -72,7 +72,7 @@ export function Contact() {
                   type="button"
                   onClick={copyEmail}
                   aria-label={t.contact.copy}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3.5 font-mono text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-3.5 font-mono text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
                 >
                   {copied ? (
                     <Check className="h-3.5 w-3.5 text-accent" />
@@ -99,7 +99,7 @@ export function Contact() {
                   href={social.href}
                   target={social.key === "email" ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
+                  className="group flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
                 >
                   <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors group-hover:text-accent/70">
                     {social.label}
@@ -120,14 +120,14 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/[0.07]">
+    <footer className="relative border-t border-line">
       <Container>
         <div className="flex flex-col items-center justify-between gap-5 py-8 sm:flex-row">
           <p className="text-[12px] text-ink-500">
             © {year} {profile.name}. {t.footer.rights}
           </p>
 
-          <p className="order-3 text-[12px] text-ink-700 sm:order-none">
+          <p className="order-3 text-[12px] text-ink-500 sm:order-none">
             {t.footer.built}
           </p>
 

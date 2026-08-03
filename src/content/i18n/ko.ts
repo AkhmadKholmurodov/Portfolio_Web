@@ -110,7 +110,31 @@ export const ko: Dict = {
     privateRepo: "비공개 저장소",
     caseStudy: "자세히 보기",
     featuresTitle: "주요 기능",
+    shotsTitle: "실제로 동작하는 제품",
     close: "닫기",
+    journey: {
+      hint: "계속 스크롤하세요",
+      beats: {
+        eyaqin: [
+          "동네 피드",
+          "지도 위 반경 검색",
+          "구매자와 판매자의 대화",
+          "매물 상태가 바뀝니다",
+        ],
+        smartguard: [
+          "문을 닫은 뒤의 가게",
+          "카메라가 대상을 포착합니다",
+          "하루가 한 장의 종이가 됩니다",
+          "사람이 최종 확인합니다",
+        ],
+        eyaqinMobile: [
+          "같은 피드를 손안에서",
+          "핀, 그리고 끌어올리는 시트",
+          "푸시로 도착하는 채팅",
+          "아홉 개의 팔레트, 하나는 당신 것",
+        ],
+      },
+    },
     items: {
       eyaqin: {
         name: "eYaqin",
@@ -180,6 +204,16 @@ export const ko: Dict = {
           { value: "100배", label: "VLM API 비용 절감" },
           { value: "1초 이내", label: "알림 생성" },
           { value: "24/7", label: "멀티스레드 워커" },
+        ],
+        shots: [
+          {
+            alt: "SmartGuard 랜딩 페이지: 밤의 3D 편의점을 KAM-03 카메라로 본 화면, 통로의 사람을 추적하는 감지 박스",
+            caption: "랜딩 페이지는 방문자를 카메라 뒤에 세웁니다 — 스크롤하며 걸어 들어가는 실시간 3D 매장, 그리고 대상을 포착하는 감지기.",
+          },
+          {
+            alt: "차가운 종이 질감 위에 놓인 SmartGuard 기능 섹션, 8:00부터 23:00까지의 눈금에 두 건의 이벤트가 표시된 하루 스트립",
+            caption: "그 아래에는 제품 전체가 따르는 디자인 시스템이 있습니다: 종이 질감, 단 하나의 형광 강조색, 그리고 한 줄로 압축된 하루.",
+          },
         ],
         features: [
           { title: "엣지/클라우드 하이브리드", body: "로컬 OpenCV 모션 감지가 일상적인 프레임을 먼저 걸러냅니다." },
@@ -334,6 +368,7 @@ export const ko: Dict = {
   },
 
   a11y: {
+    theme: "밝은/어두운 모드 전환",
     languageSwitcher: "언어 변경",
     menu: "메뉴",
     closeMenu: "메뉴 닫기",

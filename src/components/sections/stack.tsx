@@ -31,7 +31,7 @@ export function Stack() {
       {/* Soft wash so the section separates from the one above it. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line-strong to-transparent"
       />
 
       <Container>
@@ -48,7 +48,7 @@ export function Stack() {
               <StaggerItem key={group.key} className="h-full">
                 <SpotlightCard className="h-full p-6">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-accent">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-line bg-surface text-accent">
                       <Icon className="h-4 w-4" strokeWidth={1.6} />
                     </span>
                     <h3 className="text-sm font-medium tracking-tight text-ink-100">
@@ -60,7 +60,7 @@ export function Stack() {
                     {group.items.map((item) => (
                       <li
                         key={item}
-                        className="rounded-md border border-white/[0.07] bg-white/[0.03] px-2 py-1 font-mono text-[11px] text-ink-300 transition-colors duration-300 group-hover/card:border-white/12"
+                        className="rounded-md border border-line bg-surface px-2 py-1 font-mono text-[11px] text-ink-300 transition-colors duration-300 group-hover/card:border-line"
                       >
                         {item}
                       </li>

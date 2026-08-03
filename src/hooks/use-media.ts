@@ -40,3 +40,11 @@ export function useIsTouch() {
 export function useIsMobile() {
   return useMediaQuery("(max-width: 767px)");
 }
+
+/**
+ * Below `lg`. The project journey uses this to drop each scene's secondary
+ * column, so the one that remains is still legible once the stage scales down.
+ */
+export function useIsCompact() {
+  return useMediaQuery("(max-width: 1023px)");
+}

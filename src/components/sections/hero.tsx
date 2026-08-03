@@ -158,7 +158,7 @@ export function Hero() {
             <Magnetic strength={0.28}>
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-ink-100 transition-colors duration-300 hover:border-accent/50 hover:bg-accent/[0.06]"
+                className="group inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink-100 transition-colors duration-300 hover:border-accent/50 hover:bg-accent/[0.06]"
               >
                 {t.hero.ctaContact}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -173,7 +173,7 @@ export function Hero() {
             className="mt-14 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-4"
           >
             {t.hero.stats.map((stat) => (
-              <div key={stat.label} className="border-l border-white/10 pl-4">
+              <div key={stat.label} className="border-l border-line pl-4">
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="text-2xl font-medium tracking-tight text-ink-100 sm:text-3xl">
                   {stat.value}

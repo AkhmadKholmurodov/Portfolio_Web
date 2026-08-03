@@ -36,7 +36,7 @@ export function Experience() {
           {/* Rail: static hairline plus an accent fill driven by scroll. */}
           <div
             aria-hidden
-            className="absolute left-0 top-2 hidden h-[calc(100%-1rem)] w-px bg-white/10 sm:block"
+            className="absolute left-0 top-2 hidden h-[calc(100%-1rem)] w-px bg-surface-2 sm:block"
           >
             <motion.div
               style={{ scaleY }}
@@ -76,7 +76,7 @@ export function Experience() {
                           href={meta.site}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-1 rounded-full border border-white/10 px-2.5 py-0.5 font-mono text-[11px] text-ink-500 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
+                          className="group inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink-500 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
                         >
                           {meta.site.replace("https://", "")}
                           <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -87,7 +87,7 @@ export function Experience() {
                     <p className="mt-2 text-[13px] text-ink-500">{role.context}</p>
                   </Reveal>
 
-                  <ul className="mt-7 space-y-3.5 border-l border-white/[0.07] pl-5 sm:border-l-0 sm:pl-0">
+                  <ul className="mt-7 space-y-3.5 border-l border-line pl-5 sm:border-l-0 sm:pl-0">
                     {role.bullets.map((bullet, i) => (
                       <Reveal as="li" key={i} delay={0.06 * i} y={16}>
                         <div className="flex gap-3">
