@@ -50,23 +50,6 @@ export const stackGroups = [
   },
 ] as const;
 
-/** Rendered in the infinite marquee under the hero. */
-export const marqueeTech = [
-  "TypeScript", "Next.js", "React 19", "React Native", "Node.js", "Python",
-  "FastAPI", "Prisma", "PostgreSQL", "Docker", "Kubernetes", "Tailwind CSS",
-  "Vercel", "Supabase", "Socket.io", "OWASP",
-] as const;
-
-export type ExperienceMeta = {
-  key: "sambu" | "ccl";
-  period: string;
-  site?: string;
-};
-
-export const experienceMeta: ExperienceMeta[] = [
-  { key: "sambu", period: "2025.09 — Present", site: "https://lowshop.net" },
-  { key: "ccl", period: "2022.05 — 2024.09" },
-];
 
 /**
  * The journey's entire colour budget: one ramp, three stops.
@@ -90,6 +73,17 @@ export const signalRamp = [
 
 export type Signal = (typeof signalRamp)[number];
 
+
+export type ExperienceMeta = {
+  key: "sambu" | "ccl";
+  period: string;
+  site?: string;
+};
+
+export const experienceMeta: ExperienceMeta[] = [
+  { key: "sambu", period: "2025.09 — Present", site: "https://lowshop.net" },
+  { key: "ccl", period: "2022.05 — 2024.09" },
+];
 
 export type ProjectMeta = {
   key: "eyaqin" | "smartguard" | "eyaqinMobile";

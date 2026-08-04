@@ -37,9 +37,6 @@ export function useIsTouch() {
   return useMediaQuery("(hover: none), (pointer: coarse)");
 }
 
-export function useIsMobile() {
-  return useMediaQuery("(max-width: 767px)");
-}
 
 /**
  * Which of the project journey's three design boxes fits.

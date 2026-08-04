@@ -87,60 +87,64 @@
 /* ------------------------------------------------------------------ *
  * Palette
  *
- * Sampled from the portrait in the hero — specifically from the panelled wall
- * he is standing against (#282B24), a desaturated sage that reads as almost
- * black until something warm sits next to it. The page is that wall taken
- * down to its darkest value, and every neutral holds the same hue angle, so
- * nothing on the page can read as a second colour.
+ * Sampled from the wall he is standing against in the hero photograph — a
+ * lit studio backdrop that runs #EEECEF at the top to #E4E0D7 at the floor.
+ * The page is that wall: a cool silver at hue 285 with almost no chroma, so
+ * the only saturated things on any screen are his skin and the one red pin
+ * on his lapel.
  *
- * He keeps his own colour. Warm skin on a cool ground is the only real
- * contrast in the composition, and it only works because the ground never
- * competes: one sage, one photograph.
+ * The `ink` scale keeps its meaning from the dark build — low numbers are
+ * text, high numbers are surfaces — so every one of the ~150 call sites is
+ * unchanged. Only the lightness order inverts.
  * ------------------------------------------------------------------ */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --ink-950: oklch(0.145 0.008 138); /* page */
-  --ink-900: oklch(0.185 0.010 138); /* raised card */
-  --ink-850: oklch(0.225 0.011 138);
-  --ink-800: oklch(0.28 0.012 138);
-  --ink-700: oklch(0.50 0.013 138);  /* decoration only */
-  --ink-500: oklch(0.63 0.015 138);  /* meta — 5.5:1 */
-  --ink-300: oklch(0.785 0.013 138); /* body — 9.8:1 */
-  --ink-100: oklch(0.95 0.007 138);  /* headings — 16.6:1 */
+  --ink-950: oklch(0.955 0.003 285); /* page   #F0F0F2 */
+  --ink-900: oklch(0.99 0.002 285);  /* raised card — brighter than the page */
+  --ink-850: oklch(0.925 0.004 285); /* inset / recessed */
+  --ink-800: oklch(0.86 0.005 285);
+  --ink-700: oklch(0.70 0.008 285);  /* decoration only */
+  --ink-500: oklch(0.53 0.012 285);  /* meta — 4.6:1 */
+  --ink-300: oklch(0.38 0.014 285);  /* body — 8.8:1 */
+  --ink-100: oklch(0.21 0.012 285);  /* headings — 15.6:1 */
 
-  --accent: oklch(0.82 0.052 138);
-  --accent-soft: oklch(0.72 0.05 138);
-  --accent-2: oklch(0.88 0.032 144);
+  /* Polished graphite. On a silver page the accent has to be the dark thing,
+     which is also what makes it read as metal rather than as a colour. */
+  --accent: oklch(0.42 0.028 285);
+  --accent-soft: oklch(0.50 0.026 285);
+  --accent-2: oklch(0.32 0.022 285);
 
   /* Three stops for the project journey. Same hue as the accent, separated by
      lightness rather than by hue, so three scenes never become three colours. */
-  --signal-1: oklch(0.82 0.052 138);
-  --signal-2: oklch(0.72 0.045 132);
-  --signal-3: oklch(0.88 0.032 146);
+  --signal-1: oklch(0.42 0.028 285);
+  --signal-2: oklch(0.50 0.024 275);
+  --signal-3: oklch(0.34 0.024 295);
 
-  --line: oklch(0.9 0.016 138 / 0.1);
-  --line-strong: oklch(0.9 0.016 138 / 0.2);
-  --surface: oklch(0.9 0.016 138 / 0.03);
-  --surface-2: oklch(0.9 0.016 138 / 0.07);
+  --line: oklch(0.21 0.012 285 / 0.12);
+  --line-strong: oklch(0.21 0.012 285 / 0.22);
+  --surface: oklch(0.21 0.012 285 / 0.035);
+  --surface-2: oklch(0.21 0.012 285 / 0.07);
 
   /* Hover is a change in *light*, never in hue. The accent marks what a thing
      is — a live status, the name, a section eyebrow — so if it also marked
      what the pointer happens to be touching, the page would flash on every
-     mouse move and the accent would stop meaning anything. The hairline
-     brightens instead, which is the same gesture in one channel. */
-  --line-hover: oklch(0.9 0.016 138 / 0.34);
-  --tint-hover: oklch(0.9 0.016 138 / 0.05);
+     mouse move and the accent would stop meaning anything. On a light page
+     the hairline darkens rather than brightens; same gesture, one channel. */
+  --line-hover: oklch(0.21 0.012 285 / 0.36);
+  --tint-hover: oklch(0.21 0.012 285 / 0.05);
 
-  --glass: oklch(0.9 0.016 138 / 0.03);
-  --glass-strong: oklch(0.2 0.011 138 / 0.76);
-  --neu-light: oklch(1 0 0 / 0.045);
-  --neu-dark: oklch(0 0 0 / 0.55);
-  --grid-a: oklch(0.9 0.016 138 / 0.05);
-  --grid-b: oklch(0.9 0.016 138 / 0.035);
-  --on-accent: oklch(0.17 0.016 138);
-  --shadow-scene: 0 40px 90px -30px oklch(0 0 0 / 0.9);
-  --shadow-nav: 0 8px 40px -12px oklch(0 0 0 / 0.6);
+  --glass: oklch(1 0 0 / 0.55);
+  --glass-strong: oklch(0.99 0.002 285 / 0.78);
+  /* Neumorphism inverts wholesale: the highlight is now the white and the
+     shadow is the soft grey, not the other way round. */
+  --neu-light: oklch(1 0 0 / 0.95);
+  --neu-dark: oklch(0.21 0.012 285 / 0.14);
+  --grid-a: oklch(0.21 0.012 285 / 0.06);
+  --grid-b: oklch(0.21 0.012 285 / 0.04);
+  --on-accent: oklch(0.99 0.002 285);
+  --shadow-scene: 0 40px 90px -34px oklch(0.21 0.012 285 / 0.28);
+  --shadow-nav: 0 8px 34px -14px oklch(0.21 0.012 285 / 0.22);
 
   --bg: var(--ink-950);
   --fg: var(--ink-100);
@@ -200,8 +204,8 @@ body {
   pointer-events: none;
   /* Overlay lifts grain out of a dark field; on a light one it has to bite
      downwards instead, or the texture simply disappears. */
-  opacity: 0.035;
-  mix-blend-mode: overlay;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
 }
 

@@ -70,8 +70,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Matches the page background exactly, so the mobile browser chrome and the
   // page never show a seam.
-  themeColor: "#0a0805",
-  colorScheme: "dark",
+  themeColor: "#F0F0F2",
+  colorScheme: "light",
 };
 
 /** Structured data so search results show the role, not just the title. */

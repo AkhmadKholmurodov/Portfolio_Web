@@ -34,17 +34,24 @@ export function Portfolio() {
 
       <main>
         <Hero />
-        <About />
-        <SectionSeam />
-        <Stack />
-        <SectionSeam />
-        <Experience />
-        <SectionSeam />
-        <Projects />
-        <SectionSeam />
-        <Security />
-        <SectionSeam />
-        <Contact />
+
+        {/* The hero is sticky, so this is what climbs over it: an opaque sheet
+            with a lifted top edge. The hand-off reads as the next page
+            arriving rather than the first one leaving, and it costs one
+            wrapper — the scroll doing the work is the real one. */}
+        <div className="relative z-10 rounded-t-[2rem] bg-ink-950 shadow-[0_-26px_60px_-30px_var(--line-strong)] sm:rounded-t-[2.5rem]">
+          <About />
+          <SectionSeam />
+          <Stack />
+          <SectionSeam />
+          <Experience />
+          <SectionSeam />
+          <Projects />
+          <SectionSeam />
+          <Security />
+          <SectionSeam />
+          <Contact />
+        </div>
       </main>
 
       <Footer />
