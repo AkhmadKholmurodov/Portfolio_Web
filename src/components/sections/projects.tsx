@@ -14,7 +14,6 @@ import { useLanguage } from "@/components/providers/language-provider";
 import {
   lifecycleStates,
   projectsMeta,
-  signalHex,
   type ProjectMeta,
 } from "@/content/profile";
 import type { Dict } from "@/content/i18n";
@@ -22,7 +21,6 @@ import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { Magnetic } from "@/components/ui/magnetic";
 import { ProjectJourney } from "@/components/journey/project-journey";
-import { useTheme } from "@/components/providers/theme-provider";
 import { useIsTouch, useReducedMotion } from "@/hooks/use-media";
 import { cn } from "@/lib/utils";
 
@@ -57,9 +55,8 @@ function ProjectCard({
   onOpen: () => void;
 }) {
   const { t } = useLanguage();
-  const { isDark } = useTheme();
-  const hue = signalHex(meta.signal, isDark);
-  const hue2 = signalHex(projectsMeta[1].signal, isDark);
+  const hue = meta.signal.hex;
+  const hue2 = projectsMeta[1].signal.hex;
   const ref = useRef<HTMLElement>(null);
   const isTouch = useIsTouch();
   const reduced = useReducedMotion();
@@ -177,7 +174,7 @@ function ProjectCard({
                 href={meta.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                className="group/link inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
               >
                 {t.projects.viewLive}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
@@ -225,9 +222,8 @@ function CaseStudy({
   onClose: () => void;
 }) {
   const { t } = useLanguage();
-  const { isDark } = useTheme();
-  const hue = signalHex(meta.signal, isDark);
-  const hue2 = signalHex(projectsMeta[2].signal, isDark);
+  const hue = meta.signal.hex;
+  const hue2 = projectsMeta[2].signal.hex;
   const closeRef = useRef<HTMLButtonElement>(null);
   const steps = flowSteps(project.deepDive);
 

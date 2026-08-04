@@ -1,400 +1,227 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 import * as THREE from "three";
-import {
-  EDGES,
-  HOSTILE_EDGE,
-  NODE_COLORS,
-  NODES,
-  nodeIndex,
-} from "@/components/three/topology";
-import { useTheme } from "@/components/providers/theme-provider";
 import { useIsMobile, useReducedMotion } from "@/hooks/use-media";
 
-const ACCENT = "#3fd8d1";
-const HOSTILE = "#ff6b5e";
+/**
+ * The hero backdrop: three orbits, one light on each, going round forever.
+ *
+ * The previous scene drew a labelled service topology. It was accurate and
+ * completely illegible — six node types, tiny captions and drifting particles
+ * behind a scrim, which reads as generic "tech sparkles". That is the one
+ * thing a portfolio backdrop must not be.
+ *
+ * This says a single thing instead, and says it without a caption: something
+ * is running, and it does not stop. That is the headline — "I build web
+ * products end to end, and then I keep them running" — and the first stat,
+ * 99.9% uptime, rendered as motion rather than as another label.
+ */
+
+const ACCENT = "#B4CDAC";
+
+/** Radius, tilt, angular speed and head size. Negative speed runs backwards. */
+const ORBITS = [
+  { r: 0.9, tilt: [0.52, 0.2, 0.1], speed: 0.34, head: 0.075 },
+  { r: 1.45, tilt: [-0.6, 0.58, -0.22], speed: -0.21, head: 0.062 },
+  { r: 2.0, tilt: [0.3, -0.8, 0.42], speed: 0.14, head: 0.05 },
+] as const;
+
+/** Points behind the head. The trail is what makes the motion read as speed. */
+const TRAIL = 26;
+
+/** Soft radial dot, shared by every light in the scene. */
+function useDotTexture() {
+  return useMemo(() => {
+    const size = 64;
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      g.addColorStop(0, "rgba(255,255,255,1)");
+      g.addColorStop(0.25, "rgba(255,255,255,0.6)");
+      g.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, size, size);
+    }
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }, []);
+}
 
 /**
- * The palette was drawn for a black backdrop: pastels that glow, composited
- * additively. Both assumptions invert on a light page — additive blending
- * burns straight to white, and a pastel on white has no contrast left. Light
- * mode therefore darkens and saturates every stop, and composites normally.
+ * One palette, sampled from the gilding in the portrait beside it. The scene
+ * is made of light — additive blending on a near-black page, which is the only
+ * background glow actually works on.
  */
-function useSceneInk() {
-  const { isDark } = useTheme();
-
-  return useMemo(() => {
-    const shade = (hex: string) =>
-      isDark
-        ? hex
-        : `#${new THREE.Color(hex).offsetHSL(0, 0.16, -0.34).getHexString()}`;
-
-    return {
-      isDark,
-      shade,
-      blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
-      haloOpacity: isDark ? 0.55 : 0.3,
-      linkOpacity: isDark ? 0.3 : 0.24,
-      labelShadow: isDark
-        ? "0 1px 6px rgba(0,0,0,0.9)"
-        : "0 1px 6px oklch(0.972 0.003 250 / 0.95)",
-    };
-  }, [isDark]);
-}
-
-/* Shared soft dot, used for node glows and for the packets. */
-function makeDotTexture() {
-  const size = 64;
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = size;
-  const ctx = canvas.getContext("2d");
-  if (ctx) {
-    const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-    g.addColorStop(0, "rgba(255,255,255,1)");
-    g.addColorStop(0.3, "rgba(255,255,255,0.55)");
-    g.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, size, size);
-  }
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
-}
-
-const nodeVectors = NODES.map((n) => new THREE.Vector3(...n.position));
-
-/* ------------------------------------------------------------------ *
- * Nodes — a solid core, a soft halo, and a scale that reacts to events.
- * ------------------------------------------------------------------ */
-function Nodes({
-  dot,
-  pulses,
-  showLabels,
-}: {
-  dot: THREE.Texture;
-  pulses: React.RefObject<Float32Array>;
-  showLabels: boolean;
-}) {
-  const ink = useSceneInk();
-  const cores = useRef<(THREE.Mesh | null)[]>([]);
-  const halos = useRef<(THREE.Sprite | null)[]>([]);
-
-  useFrame((_, delta) => {
-    const p = pulses.current;
-    for (let i = 0; i < NODES.length; i++) {
-      // Every pulse decays back to rest; events top it back up.
-      p[i] = Math.max(0, p[i] - delta * 2.2);
-      const swell = 1 + p[i] * 0.9;
-      cores.current[i]?.scale.setScalar(swell);
-      halos.current[i]?.scale.setScalar(NODES[i].size * 5.5 * (1 + p[i] * 0.6));
-    }
-  });
-
-  return (
-    <>
-      {NODES.map((node, i) => {
-        const color = ink.shade(NODE_COLORS[node.kind]);
-        return (
-          <group key={node.id} position={node.position}>
-            <mesh
-              ref={(el) => {
-                cores.current[i] = el;
-              }}
-            >
-              <octahedronGeometry args={[node.size, 0]} />
-              <meshBasicMaterial color={color} />
-            </mesh>
-
-            <sprite
-              ref={(el) => {
-                halos.current[i] = el;
-              }}
-              scale={node.size * 5.5}
-            >
-              <spriteMaterial
-                map={dot}
-                color={color}
-                transparent
-                opacity={ink.haloOpacity}
-                depthWrite={false}
-                blending={ink.blending}
-              />
-            </sprite>
-
-            {showLabels && (
-              <Html
-                center
-                position={[0, -node.size - 0.24, 0]}
-                style={{ pointerEvents: "none", userSelect: "none" }}
-                zIndexRange={[10, 0]}
-              >
-                <span
-                  className="whitespace-nowrap font-mono text-[10px] tracking-[0.2em]"
-                  style={{
-                    color,
-                    // Keeps the tag legible where it crosses a link or a halo.
-                    textShadow: ink.labelShadow,
-                  }}
-                >
-                  {node.label}
-                </span>
-              </Html>
-            )}
-          </group>
-        );
-      })}
-    </>
-  );
-}
-
-/* ------------------------------------------------------------------ *
- * Links — static hairlines between connected nodes.
- * ------------------------------------------------------------------ */
-function Links() {
-  const ink = useSceneInk();
-  const geometry = useMemo(() => {
-    const points: number[] = [];
-    for (const edge of EDGES) {
-      const a = nodeVectors[nodeIndex.get(edge.from)!];
-      const b = nodeVectors[nodeIndex.get(edge.to)!];
-      points.push(a.x, a.y, a.z, b.x, b.y, b.z);
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.Float32BufferAttribute(points, 3));
-    return geo;
-  }, []);
-
-  useEffect(() => () => geometry.dispose(), [geometry]);
-
-  return (
-    <lineSegments geometry={geometry}>
-      <lineBasicMaterial
-        color={ink.shade(ACCENT)}
-        transparent
-        opacity={ink.linkOpacity}
-        depthWrite={false}
-      />
-    </lineSegments>
-  );
-}
-
-/* ------------------------------------------------------------------ *
- * Packets — the traffic. Most are ordinary requests travelling an edge;
- * a few are hostile and die at the boundary instead of reaching the app.
- * ------------------------------------------------------------------ */
-type Packet = {
-  edge: number;
-  t: number;
-  speed: number;
-  hostile: boolean;
+const INK = {
+  color: new THREE.Color(ACCENT),
+  blending: THREE.AdditiveBlending,
+  ringOpacity: 0.18,
+  headOpacity: 0.95,
+  coreOpacity: 0.42,
+  coreHalo: 0.95,
+  coreDot: 0.16,
 };
 
-function Packets({
+/** Places a point on a tilted circle. */
+function orbitPoint(out: THREE.Vector3, r: number, angle: number, m: THREE.Matrix4) {
+  return out.set(Math.cos(angle) * r, 0, Math.sin(angle) * r).applyMatrix4(m);
+}
+
+/* ------------------------------------------------------------------ *
+ * One orbit: a faint ring, and a head dragging a fading trail.
+ * ------------------------------------------------------------------ */
+function Orbit({
+  spec,
   dot,
-  pulses,
   reduced,
+  index,
 }: {
+  spec: (typeof ORBITS)[number];
   dot: THREE.Texture;
-  pulses: React.RefObject<Float32Array>;
   reduced: boolean;
+  index: number;
 }) {
-  const ink = useSceneInk();
-  const { shade } = ink;
-  const points = useRef<THREE.Points>(null);
+  const ink = INK;
+  const angle = useRef(index * 2.1);
+  const scratch = useMemo(() => new THREE.Vector3(), []);
 
-  const { packets, geometry, positions } = useMemo(() => {
-    const list: Packet[] = [];
+  const matrix = useMemo(
+    () =>
+      new THREE.Matrix4().makeRotationFromEuler(
+        new THREE.Euler(spec.tilt[0], spec.tilt[1], spec.tilt[2]),
+      ),
+    [spec.tilt],
+  );
 
-    EDGES.forEach((edge, edgeIdx) => {
-      for (let i = 0; i < edge.traffic; i++) {
-        list.push({
-          edge: edgeIdx,
-          t: (i + Math.random()) / edge.traffic,
-          speed: 0.16 + Math.random() * 0.14,
-          hostile: false,
-        });
-      }
-    });
-
-    // Three attackers on the public edge, spaced so they arrive apart.
-    for (let i = 0; i < 3; i++) {
-      list.push({
-        edge: HOSTILE_EDGE,
-        t: i / 3,
-        speed: 0.24,
-        hostile: true,
-      });
+  const ring = useMemo(() => {
+    const segments = 128;
+    const pts: THREE.Vector3[] = [];
+    for (let i = 0; i <= segments; i++) {
+      pts.push(orbitPoint(new THREE.Vector3(), spec.r, (i / segments) * Math.PI * 2, matrix));
     }
+    return new THREE.BufferGeometry().setFromPoints(pts);
+  }, [spec.r, matrix]);
 
-    const pos = new Float32Array(list.length * 3);
-    const col = new Float32Array(list.length * 3);
+  const { geometry, positions } = useMemo(() => {
+    const positions = new Float32Array(TRAIL * 3);
+    const colors = new Float32Array(TRAIL * 3);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    return { geometry, positions };
+  }, []);
 
-    const normal = new THREE.Color(shade(ACCENT));
-    const hostile = new THREE.Color(shade(HOSTILE));
-    list.forEach((packet, i) => {
-      const c = packet.hostile ? hostile : normal;
-      col[i * 3] = c.r;
-      col[i * 3 + 1] = c.g;
-      col[i * 3 + 2] = c.b;
-    });
+  /** Writes the head and its trail for one angle. */
+  const write = useMemo(() => {
+    return (a: number) => {
+      for (let i = 0; i < TRAIL; i++) {
+        // Trail spacing widens with radius so every orbit reads the same length.
+        const back = (i / TRAIL) * (2.1 / spec.r);
+        orbitPoint(scratch, spec.r, a - Math.sign(spec.speed) * back, matrix);
+        positions[i * 3] = scratch.x;
+        positions[i * 3 + 1] = scratch.y;
+        positions[i * 3 + 2] = scratch.z;
+      }
+      geometry.getAttribute("position").needsUpdate = true;
+    };
+  }, [geometry, positions, matrix, scratch, spec.r, spec.speed]);
 
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
-
-    return { packets: list, geometry: geo, positions: pos };
-  }, [shade]);
-
-  useEffect(() => () => geometry.dispose(), [geometry]);
-
-  // Seed the buffer so the first frame is not a cluster at the origin.
-  useEffect(() => {
-    writePositions(packets, positions, 0);
-    geometry.attributes.position.needsUpdate = true;
-  }, [packets, positions, geometry]);
+  // Colour carries the fade: under additive blending a darker point simply
+  // contributes less light, which is cheaper than per-point alpha.
+  useMemo(() => {
+    const colors = geometry.getAttribute("color") as THREE.BufferAttribute;
+    for (let i = 0; i < TRAIL; i++) {
+      const fade = Math.pow(1 - i / TRAIL, 3);
+      colors.setXYZ(i, ink.color.r * fade, ink.color.g * fade, ink.color.b * fade);
+    }
+    colors.needsUpdate = true;
+    // Seeded here too, so the first painted frame is never a cluster at 0,0,0.
+    write(angle.current);
+  }, [geometry, ink.color, write]);
 
   useFrame((_, delta) => {
     if (reduced) return;
-
-    for (const packet of packets) {
-      packet.t += packet.speed * delta;
-
-      if (packet.hostile) {
-        // Stopped just short of the edge node, then sent back to the start.
-        if (packet.t >= 0.88) {
-          packet.t = 0;
-          pulses.current[nodeIndex.get(EDGES[packet.edge].to)!] = 1;
-        }
-      } else if (packet.t >= 1) {
-        packet.t -= 1;
-        pulses.current[nodeIndex.get(EDGES[packet.edge].to)!] = 0.55;
-      }
-    }
-
-    writePositions(packets, positions, 0);
-    geometry.attributes.position.needsUpdate = true;
+    angle.current += spec.speed * delta;
+    write(angle.current);
   });
 
   return (
-    <points ref={points} geometry={geometry}>
-      <pointsMaterial
-        map={dot}
-        size={0.14}
-        sizeAttenuation
-        vertexColors
-        transparent
-        opacity={0.95}
-        depthWrite={false}
-        blending={ink.blending}
-      />
-    </points>
-  );
-}
+    <group>
+      <lineLoop geometry={ring}>
+        <lineBasicMaterial
+          color={ink.color}
+          transparent
+          opacity={ink.ringOpacity}
+          depthWrite={false}
+        />
+      </lineLoop>
 
-function writePositions(packets: Packet[], out: Float32Array, offset: number) {
-  for (let i = 0; i < packets.length; i++) {
-    const packet = packets[i];
-    const edge = EDGES[packet.edge];
-    const a = nodeVectors[nodeIndex.get(edge.from)!];
-    const b = nodeVectors[nodeIndex.get(edge.to)!];
-    const t = packet.t;
-
-    const j = (offset + i) * 3;
-    out[j] = a.x + (b.x - a.x) * t;
-    out[j + 1] = a.y + (b.y - a.y) * t;
-    out[j + 2] = a.z + (b.z - a.z) * t;
-  }
-}
-
-/* ------------------------------------------------------------------ *
- * Heartbeat — an uptime ping expanding out of the app node.
- * ------------------------------------------------------------------ */
-function Heartbeat({ reduced }: { reduced: boolean }) {
-  const ink = useSceneInk();
-  const ring = useRef<THREE.Mesh>(null);
-  const material = useRef<THREE.MeshBasicMaterial>(null);
-  const clock = useRef(0);
-  const appPosition = nodeVectors[nodeIndex.get("app")!];
-
-  useFrame((state, delta) => {
-    if (reduced || !ring.current || !material.current) return;
-
-    // Face the camera, so the ping reads as a clean circle rather than an
-    // ellipse lying at some arbitrary angle.
-    ring.current.quaternion.copy(state.camera.quaternion);
-
-    clock.current = (clock.current + delta * 0.34) % 1;
-    const t = clock.current;
-    ring.current.scale.setScalar(0.25 + t * 3.4);
-    // Ease the fade so the ring dissolves rather than snapping off.
-    material.current.opacity = (1 - t) * (1 - t) * 0.22;
-  });
-
-  return (
-    <mesh ref={ring} position={appPosition}>
-      <ringGeometry args={[0.44, 0.455, 96]} />
-      <meshBasicMaterial
-        ref={material}
-        color={ink.shade(ACCENT)}
-        transparent
-        opacity={0}
-        side={THREE.DoubleSide}
-        depthWrite={false}
-      />
-    </mesh>
+      <points geometry={geometry}>
+        <pointsMaterial
+          map={dot}
+          size={spec.head}
+          sizeAttenuation
+          vertexColors
+          transparent
+          opacity={ink.headOpacity}
+          depthWrite={false}
+          blending={ink.blending}
+        />
+      </points>
+    </group>
   );
 }
 
 /* ------------------------------------------------------------------ *
- * Dust — depth cue behind the graph.
+ * The thing being orbited. It breathes rather than pulses, so it never
+ * competes with the headline for attention.
  * ------------------------------------------------------------------ */
-function Dust({ count, dot, reduced }: { count: number; dot: THREE.Texture; reduced: boolean }) {
-  const ink = useSceneInk();
-  const points = useRef<THREE.Points>(null);
+function Core({ dot, reduced }: { dot: THREE.Texture; reduced: boolean }) {
+  const ink = INK;
+  const halo = useRef<THREE.Sprite>(null);
 
-  const geometry = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 11;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 9;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 7 - 1.5;
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    return geo;
-  }, [count]);
-
-  useEffect(() => () => geometry.dispose(), [geometry]);
-
-  useFrame((state, delta) => {
-    if (reduced || !points.current) return;
-    points.current.rotation.y += delta * 0.012;
-    points.current.position.y = Math.sin(state.clock.elapsedTime * 0.15) * 0.12;
+  useFrame((state) => {
+    if (reduced || !halo.current) return;
+    halo.current.scale.setScalar(ink.coreHalo * (1 + Math.sin(state.clock.elapsedTime * 0.55) * 0.08));
   });
 
   return (
-    <points ref={points} geometry={geometry}>
-      <pointsMaterial
-        map={dot}
-        size={0.038}
-        sizeAttenuation
-        transparent
-        opacity={ink.isDark ? 0.42 : 0.3}
-        depthWrite={false}
-        blending={ink.blending}
-        color={ink.shade(ACCENT)}
-      />
-    </points>
+    <group>
+      {/* Soft field, then the point itself — no solid geometry, so the centre
+          reads as the same kind of thing as the lights going round it. */}
+      <sprite ref={halo} scale={ink.coreHalo}>
+        <spriteMaterial
+          map={dot}
+          color={ink.color}
+          transparent
+          opacity={ink.coreOpacity}
+          depthWrite={false}
+          blending={ink.blending}
+        />
+      </sprite>
+      <sprite scale={ink.coreDot}>
+        <spriteMaterial
+          map={dot}
+          color={ink.color}
+          transparent
+          opacity={0.95}
+          depthWrite={false}
+          blending={ink.blending}
+        />
+      </sprite>
+    </group>
   );
 }
 
 /* ------------------------------------------------------------------ *
- * Rig — the graph drifts rather than spins, so the labels stay readable.
+ * Rig — the whole system leans towards the pointer, very slightly.
  * ------------------------------------------------------------------ */
-function Graph({
+function Rig({
   reduced,
   parallax,
   children,
@@ -408,14 +235,14 @@ function Graph({
 
   useFrame((state, delta) => {
     const g = group.current;
-    if (!g || reduced) return;
+    if (!g) return;
 
-    const t = state.clock.elapsedTime;
-    const targetY = Math.sin(t * 0.2) * 0.26 + (parallax ? pointer.x * 0.22 : 0);
-    const targetX = Math.sin(t * 0.15) * 0.1 - (parallax ? pointer.y * 0.16 : 0);
+    const drift = reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.11) * 0.09;
+    const targetY = (parallax ? pointer.x * 0.22 : 0) + drift;
+    const targetX = parallax ? -pointer.y * 0.14 : 0;
 
-    // Frame-rate independent damping.
-    const k = 1 - Math.pow(0.002, delta);
+    // Frame-rate independent damping, so the lean never overshoots.
+    const k = 1 - Math.pow(0.001, delta);
     g.rotation.y += (targetY - g.rotation.y) * k;
     g.rotation.x += (targetX - g.rotation.x) * k;
   });
@@ -423,39 +250,33 @@ function Graph({
   return <group ref={group}>{children}</group>;
 }
 
-/* ------------------------------------------------------------------ *
- * Scene
- * ------------------------------------------------------------------ */
 export default function HeroScene({ active = true }: { active?: boolean }) {
   const reduced = useReducedMotion();
   const isMobile = useIsMobile();
 
-  // Animating traffic while the visitor reads the case studies is pure waste.
-  const running = active && !reduced;
-
-  const dot = useMemo(() => makeDotTexture(), []);
-  useEffect(() => () => dot.dispose(), [dot]);
-
-  // One decaying pulse per node, written by packet arrivals, read by Nodes.
-  const pulses = useRef<Float32Array>(new Float32Array(NODES.length));
-
   return (
     <Canvas
-      camera={{ position: [0, 0, 8.1], fov: 42 }}
-      dpr={[1, isMobile ? 1.25 : 1.6]}
+      camera={{ position: [0, 1.1, 10], fov: 38 }}
+      dpr={[1, isMobile ? 1.25 : 1.75]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      frameloop={running ? "always" : "never"}
+      frameloop={active && !reduced ? "always" : "demand"}
       // The canvas is decoration; the text underneath carries the meaning.
       aria-hidden
     >
-      <Dust count={isMobile ? 200 : 420} dot={dot} reduced={reduced} />
-
-      <Graph reduced={reduced} parallax={!isMobile}>
-        <Links />
-        <Nodes dot={dot} pulses={pulses} showLabels={!isMobile} />
-        <Packets dot={dot} pulses={pulses} reduced={reduced} />
-        <Heartbeat reduced={reduced} />
-      </Graph>
+      <SceneBody reduced={reduced} parallax={!isMobile} />
     </Canvas>
+  );
+}
+
+function SceneBody({ reduced, parallax }: { reduced: boolean; parallax: boolean }) {
+  const dot = useDotTexture();
+
+  return (
+    <Rig reduced={reduced} parallax={parallax}>
+      <Core dot={dot} reduced={reduced} />
+      {ORBITS.map((spec, i) => (
+        <Orbit key={i} spec={spec} dot={dot} reduced={reduced} index={i} />
+      ))}
+    </Rig>
   );
 }

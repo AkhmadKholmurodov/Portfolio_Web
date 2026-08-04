@@ -72,7 +72,7 @@ export function Contact() {
                   type="button"
                   onClick={copyEmail}
                   aria-label={t.contact.copy}
-                  className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-3.5 font-mono text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-3.5 font-mono text-[13px] text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
                 >
                   {copied ? (
                     <Check className="h-3.5 w-3.5 text-accent" />
@@ -99,9 +99,9 @@ export function Contact() {
                   href={social.href}
                   target={social.key === "email" ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
+                  className="group flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors group-hover:text-accent/70">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors group-hover:text-ink-100/70">
                     {social.label}
                   </span>
                   {social.handle}
@@ -133,7 +133,7 @@ export function Footer() {
 
           <a
             href="#home"
-            className="group flex items-center gap-2 text-[12px] text-ink-500 transition-colors hover:text-accent"
+            className="group flex items-center gap-2 text-[12px] text-ink-500 transition-colors hover:text-ink-100"
           >
             {t.footer.backToTop}
             <ArrowUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" />

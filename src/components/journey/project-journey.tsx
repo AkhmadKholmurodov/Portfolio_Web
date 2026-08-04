@@ -12,12 +12,11 @@ import {
 } from "motion/react";
 import { ArrowUpRight, Lock } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
-import { projectsMeta, signalHex, type ProjectMeta } from "@/content/profile";
+import { projectsMeta, type ProjectMeta } from "@/content/profile";
 import { DESIGN, useFitScale, type SceneSize } from "@/components/journey/stage";
 import { SceneWeb } from "@/components/journey/scene-web";
 import { SceneSurveillance } from "@/components/journey/scene-surveillance";
 import { SceneMobile } from "@/components/journey/scene-mobile";
-import { useTheme } from "@/components/providers/theme-provider";
 import { useSceneSize } from "@/hooks/use-media";
 import { cn } from "@/lib/utils";
 
@@ -201,8 +200,7 @@ function SceneLayer({
   scale: number;
   size: SceneSize;
 }) {
-  const { isDark } = useTheme();
-  const hue = signalHex(meta.signal, isDark);
+  const hue = meta.signal.hex;
 
   const start = index / count;
   const end = (index + 1) / count;
@@ -306,9 +304,9 @@ function Rail({
         <AnimatePresence mode="wait">
           <motion.span
             key={beatLabel}
-            initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.34, ease: EASE }}
             className="text-right text-[13px] text-ink-300"
           >
@@ -337,8 +335,7 @@ function RailSegment({
   active: boolean;
   narrow: boolean;
 }) {
-  const { isDark } = useTheme();
-  const hue = signalHex(meta.signal, isDark);
+  const hue = meta.signal.hex;
   const fill = useTransform(progress, [index / count, (index + 1) / count], [0, 1]);
 
   return (
@@ -395,8 +392,7 @@ function Caption({
   onOpen: () => void;
 }) {
   const { t } = useLanguage();
-  const { isDark } = useTheme();
-  const hue = signalHex(meta.signal, isDark);
+  const hue = meta.signal.hex;
 
   return (
     <div className="mt-2 flex shrink-0 flex-col gap-2 border-t border-line pt-2 sm:mt-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:pt-4">
@@ -406,9 +402,9 @@ function Caption({
         <AnimatePresence mode="wait">
           <motion.div
             key={meta.key}
-            initial={{ opacity: 0, y: 14, filter: "blur(5px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.36, ease: EASE }}
             className="min-w-0"
           >
@@ -470,7 +466,7 @@ function Caption({
             href={meta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link inline-flex items-center gap-1.5 rounded-full border border-line-strong px-3.5 py-1.5 text-[12.5px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent sm:gap-2 sm:px-4 sm:py-2 sm:text-[13px]"
+            className="group/link inline-flex items-center gap-1.5 rounded-full border border-line-strong px-3.5 py-1.5 text-[12.5px] text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100 sm:gap-2 sm:px-4 sm:py-2 sm:text-[13px]"
           >
             {t.projects.viewLive}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />

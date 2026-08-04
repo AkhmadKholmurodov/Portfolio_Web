@@ -368,7 +368,6 @@ export const uz: Dict = {
   },
 
   a11y: {
-    theme: "Yorug'/qorong'i rejimni almashtirish",
     languageSwitcher: "Tilni o'zgartirish",
     menu: "Menyu",
     closeMenu: "Menyuni yopish",

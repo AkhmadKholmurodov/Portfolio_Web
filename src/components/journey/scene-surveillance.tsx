@@ -130,11 +130,11 @@ export function SceneSurveillance({
           style={{ width: 46, height: 118 }}
         >
           <span
-            className="absolute left-1/2 top-0 h-[26px] w-[26px] -translate-x-1/2 rounded-full bg-[#07090b]"
+            className="absolute left-1/2 top-0 h-[26px] w-[26px] -translate-x-1/2 rounded-full bg-[#0a0806]"
             style={{ boxShadow: `-1.5px -1px 0 ${tint}55, 0 0 20px rgba(0,0,0,0.9)` }}
           />
           <span
-            className="absolute inset-x-1.5 top-[24px] bottom-0 rounded-t-[18px] bg-[#07090b]"
+            className="absolute inset-x-1.5 top-[24px] bottom-0 rounded-t-[18px] bg-[#0a0806]"
             style={{ boxShadow: `-1.5px 0 0 ${tint}4d` }}
           />
         </Beat>
@@ -164,7 +164,7 @@ export function SceneSurveillance({
           </span>
           <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.14em] text-white/45">
             <span
-              className="h-1.5 w-1.5 rounded-full bg-red-500"
+              className="h-1.5 w-1.5 rounded-full bg-rec"
               style={{ animation: "rec-blink 1.6s linear infinite" }}
             />
             REC · 1920×1080 · 24 fps
@@ -195,7 +195,7 @@ export function SceneSurveillance({
           at={[0.26, 0.34]}
           y={-6}
           className="absolute -top-[19px] left-0 rounded-[3px] px-1.5 py-[2px] font-mono text-[9px] font-semibold whitespace-nowrap"
-          style={{ background: tint, color: "#0d1113" }}
+          style={{ background: tint, color: "var(--color-on-accent)" }}
         >
           odam · 0.94
         </Beat>

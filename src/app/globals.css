@@ -1,17 +1,14 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
 /* ------------------------------------------------------------------ *
  * Design tokens
  *
- * Every colour token is a pointer to a runtime variable rather than a literal,
- * so the two themes are two blocks of values further down and nothing else in
- * the codebase has to know a theme exists.
+ * Every colour token points at a runtime variable rather than a literal, so
+ * the palette lives in exactly one block further down and the 150-odd call
+ * sites never name a colour.
  *
- * The `ink` scale is *semantic, not literal*: low numbers are text, high
- * numbers are surfaces. That is what lets light mode simply invert it — all
- * 150-odd `text-ink-*` / `bg-ink-*` call sites flip for free.
+ * The `ink` scale is semantic, not literal: low numbers are text, high numbers
+ * are surfaces.
  * ------------------------------------------------------------------ */
 @theme {
   --color-ink-950: var(--ink-950);
@@ -36,8 +33,10 @@
      friends, which vanish the moment the page is not dark. */
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-line-hover: var(--line-hover);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-tint: var(--tint-hover);
   /* Text sitting on an accent-coloured fill. Dark mode paints a bright accent
      and needs dark glyphs; light mode paints a deep one and needs pale glyphs. */
   --color-on-accent: var(--on-accent);
@@ -49,6 +48,11 @@
   --color-paper-rule: oklch(0.858 0.006 250);
   --color-paper-ink: oklch(0.235 0.012 250);
   --color-paper-ink-2: oklch(0.46 0.011 250);
+
+  /* The one red on the page: a camera's REC dot, which stops meaning
+     "recording" the moment it stops being red. Desaturated so it reads as a
+     lamp inside the scene rather than as a second brand colour. */
+  --color-rec: oklch(0.58 0.15 28);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
@@ -80,103 +84,69 @@
 /* ------------------------------------------------------------------ *
  * Base
  * ------------------------------------------------------------------ */
-/* ---- Light: the default the page renders in ---- *
- * A soft off-white rather than pure white, so a full-screen page never
- * glares. Text tiers are pinned to measured contrast on that background:
- * 16.7 : 1 for headings, 10.8 : 1 body, 5.9 : 1 meta, 3.6 : 1 for the faint
- * tier that only ever carries decoration.                                   */
+/* ------------------------------------------------------------------ *
+ * Palette
+ *
+ * Sampled from the portrait in the hero — specifically from the panelled wall
+ * he is standing against (#282B24), a desaturated sage that reads as almost
+ * black until something warm sits next to it. The page is that wall taken
+ * down to its darkest value, and every neutral holds the same hue angle, so
+ * nothing on the page can read as a second colour.
+ *
+ * He keeps his own colour. Warm skin on a cool ground is the only real
+ * contrast in the composition, and it only works because the ground never
+ * competes: one sage, one photograph.
+ * ------------------------------------------------------------------ */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --ink-950: oklch(0.972 0.003 250); /* page */
-  --ink-900: oklch(1 0 0);           /* raised card */
-  --ink-850: oklch(0.945 0.003 250); /* recessed */
-  --ink-800: oklch(0.9 0.004 250);   /* strong fill */
-  --ink-700: oklch(0.6 0.01 250);    /* decoration only */
-  --ink-500: oklch(0.485 0.01 250);  /* meta */
-  --ink-300: oklch(0.34 0.01 250);   /* body */
-  --ink-100: oklch(0.2 0.012 250);   /* headings */
+  --ink-950: oklch(0.145 0.008 138); /* page */
+  --ink-900: oklch(0.185 0.010 138); /* raised card */
+  --ink-850: oklch(0.225 0.011 138);
+  --ink-800: oklch(0.28 0.012 138);
+  --ink-700: oklch(0.50 0.013 138);  /* decoration only */
+  --ink-500: oklch(0.63 0.015 138);  /* meta — 5.5:1 */
+  --ink-300: oklch(0.785 0.013 138); /* body — 9.8:1 */
+  --ink-100: oklch(0.95 0.007 138);  /* headings — 16.6:1 */
 
-  /* The neon stops are unreadable on white, so light mode runs the same three
-     hues at the lightness each needs to clear 4.5 : 1. */
-  --accent: oklch(0.519 0.13 190);
-  --accent-soft: oklch(0.47 0.11 190);
-  --accent-2: oklch(0.564 0.16 295);
-  --signal-1: oklch(0.519 0.13 190);
-  --signal-2: oklch(0.542 0.145 242);
-  --signal-3: oklch(0.564 0.16 295);
+  --accent: oklch(0.82 0.052 138);
+  --accent-soft: oklch(0.72 0.05 138);
+  --accent-2: oklch(0.88 0.032 144);
 
-  --line: oklch(0.2 0.012 250 / 0.12);
-  --line-strong: oklch(0.2 0.012 250 / 0.22);
-  --surface: oklch(0.2 0.012 250 / 0.035);
-  --surface-2: oklch(0.2 0.012 250 / 0.07);
+  /* Three stops for the project journey. Same hue as the accent, separated by
+     lightness rather than by hue, so three scenes never become three colours. */
+  --signal-1: oklch(0.82 0.052 138);
+  --signal-2: oklch(0.72 0.045 132);
+  --signal-3: oklch(0.88 0.032 146);
 
-  --glass: oklch(1 0 0 / 0.62);
-  --glass-strong: oklch(1 0 0 / 0.82);
-  /* Neumorphism inverts cleanly: the lit edge is white in both themes, but on
-     paper the depth side is a soft grey rather than near-black. */
-  --neu-light: oklch(1 0 0 / 0.9);
-  --neu-dark: oklch(0.2 0.012 250 / 0.14);
-  --grid-a: oklch(0.2 0.012 250 / 0.09);
-  --grid-b: oklch(0.2 0.012 250 / 0.06);
-  --on-accent: oklch(0.98 0.002 250);
-  --shadow-scene: 0 30px 70px -28px oklch(0.2 0.012 250 / 0.28);
-  --shadow-nav: 0 8px 34px -14px oklch(0.2 0.012 250 / 0.22);
+  --line: oklch(0.9 0.016 138 / 0.1);
+  --line-strong: oklch(0.9 0.016 138 / 0.2);
+  --surface: oklch(0.9 0.016 138 / 0.03);
+  --surface-2: oklch(0.9 0.016 138 / 0.07);
+
+  /* Hover is a change in *light*, never in hue. The accent marks what a thing
+     is — a live status, the name, a section eyebrow — so if it also marked
+     what the pointer happens to be touching, the page would flash on every
+     mouse move and the accent would stop meaning anything. The hairline
+     brightens instead, which is the same gesture in one channel. */
+  --line-hover: oklch(0.9 0.016 138 / 0.34);
+  --tint-hover: oklch(0.9 0.016 138 / 0.05);
+
+  --glass: oklch(0.9 0.016 138 / 0.03);
+  --glass-strong: oklch(0.2 0.011 138 / 0.76);
+  --neu-light: oklch(1 0 0 / 0.045);
+  --neu-dark: oklch(0 0 0 / 0.55);
+  --grid-a: oklch(0.9 0.016 138 / 0.05);
+  --grid-b: oklch(0.9 0.016 138 / 0.035);
+  --on-accent: oklch(0.17 0.016 138);
+  --shadow-scene: 0 40px 90px -30px oklch(0 0 0 / 0.9);
+  --shadow-nav: 0 8px 40px -12px oklch(0 0 0 / 0.6);
 
   --bg: var(--ink-950);
   --fg: var(--ink-100);
   --header-h: 4.5rem;
 }
 
-/* ---- Dark ---- */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-
-  --ink-950: oklch(0.12 0.006 250);
-  --ink-900: oklch(0.16 0.007 250);
-  --ink-850: oklch(0.2 0.008 250);
-  --ink-800: oklch(0.25 0.009 250);
-  --ink-700: oklch(0.48 0.01 250);
-  --ink-500: oklch(0.6 0.012 250);
-  --ink-300: oklch(0.74 0.01 250);
-  --ink-100: oklch(0.93 0.005 250);
-
-  --accent: oklch(0.82 0.13 190);
-  --accent-soft: oklch(0.72 0.11 190);
-  --accent-2: oklch(0.7 0.17 295);
-  --signal-1: oklch(0.82 0.13 190);
-  --signal-2: oklch(0.77 0.145 242);
-  --signal-3: oklch(0.72 0.16 295);
-
-  --line: oklch(1 0 0 / 0.08);
-  --line-strong: oklch(1 0 0 / 0.16);
-  --surface: oklch(1 0 0 / 0.025);
-  --surface-2: oklch(1 0 0 / 0.06);
-
-  --glass: oklch(1 0 0 / 0.028);
-  --glass-strong: oklch(0.18 0.008 255 / 0.72);
-  --neu-light: oklch(1 0 0 / 0.045);
-  --neu-dark: oklch(0 0 0 / 0.55);
-  --grid-a: oklch(1 0 0 / 0.05);
-  --grid-b: oklch(1 0 0 / 0.035);
-  --on-accent: oklch(0.16 0.02 200);
-  --shadow-scene: 0 40px 90px -30px oklch(0 0 0 / 0.9);
-  --shadow-nav: 0 8px 40px -12px oklch(0 0 0 / 0.6);
-
-  --bg: oklch(0.145 0.008 255);
-  --fg: oklch(0.95 0.004 255);
-}
-
-/* The theme swap is a deliberate act, so it gets a short cross-fade rather
-   than snapping. Transforms are excluded — animating those would drag every
-   scroll-driven element on the page through the transition. */
-html.theme-ready body,
-html.theme-ready body * {
-  transition:
-    background-color 0.3s var(--ease-out-expo),
-    border-color 0.3s var(--ease-out-expo),
-    color 0.3s var(--ease-out-expo);
-}
 
 * {
   border-color: var(--line);
@@ -231,12 +201,8 @@ body {
   /* Overlay lifts grain out of a dark field; on a light one it has to bite
      downwards instead, or the texture simply disappears. */
   opacity: 0.035;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
-}
-
-[data-theme="dark"] .noise::after {
   mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
 }
 
 .grid-lines {
@@ -271,7 +237,7 @@ body {
   padding: 1px;
   background: radial-gradient(
     420px circle at var(--mx, 50%) var(--my, 0%),
-    var(--color-accent) 0%,
+    var(--line-hover) 0%,
     transparent 65%
   );
   -webkit-mask:
@@ -285,7 +251,7 @@ body {
 }
 .edge-glow:hover::before,
 .edge-glow:focus-within::before {
-  opacity: 0.75;
+  opacity: 1;
 }
 
 /* ------------------------------------------------------------------ *

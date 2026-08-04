@@ -9,6 +9,8 @@ import { useIsTouch, useReducedMotion } from "@/hooks/use-media";
  * grows over interactive elements. Hidden entirely on touch / reduced-motion,
  * and it never replaces the native cursor — it sits on top of it.
  */
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Cursor() {
   const isTouch = useIsTouch();
   const reduced = useReducedMotion();
@@ -50,23 +52,25 @@ export function Cursor() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[100]">
       <motion.div
-        className="absolute h-1.5 w-1.5 rounded-full bg-accent"
+        className="absolute h-1.5 w-1.5 rounded-full bg-ink-100"
         style={{ x, y, translateX: "-50%", translateY: "-50%" }}
         animate={{ opacity: visible ? 1 : 0, scale: active ? 0 : 1 }}
-        transition={{ duration: 0.18 }}
+        transition={{ duration: 0.22, ease: EASE }}
       />
+      {/* The ring is the same neutral hairline the page uses everywhere else,
+          so the pointer reads as a light source rather than as a coloured
+          object floating over the design. */}
       <motion.div
-        className="absolute rounded-full border border-accent/60"
+        className="absolute rounded-full border"
         style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
         animate={{
-          width: active ? 44 : 26,
-          height: active ? 44 : 26,
-          opacity: visible ? (active ? 0.9 : 0.4) : 0,
-          backgroundColor: active
-            ? "color-mix(in oklch, var(--color-accent) 12%, transparent)"
-            : "transparent",
+          width: active ? 42 : 24,
+          height: active ? 42 : 24,
+          opacity: visible ? (active ? 1 : 0.5) : 0,
+          borderColor: active ? "var(--line-hover)" : "var(--line-strong)",
+          backgroundColor: active ? "var(--tint-hover)" : "transparent",
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+        transition={{ type: "spring", stiffness: 260, damping: 26, mass: 0.6 }}
       />
     </div>
   );

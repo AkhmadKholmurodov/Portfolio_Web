@@ -76,7 +76,7 @@ export function Experience() {
                           href={meta.site}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink-500 transition-colors duration-300 hover:border-accent/40 hover:text-accent"
+                          className="group inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink-500 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
                         >
                           {meta.site.replace("https://", "")}
                           <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

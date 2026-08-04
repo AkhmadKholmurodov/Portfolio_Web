@@ -369,7 +369,6 @@ export const en = {
   },
 
   a11y: {
-    theme: "Switch between light and dark",
     languageSwitcher: "Change language",
     menu: "Menu",
     closeMenu: "Close menu",

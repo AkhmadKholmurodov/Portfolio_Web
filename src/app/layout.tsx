@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import { en } from "@/content/i18n/en";
 import { profile } from "@/content/profile";
-import { themeScript } from "@/components/providers/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -69,13 +68,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // Matches each theme's page background, so the mobile browser chrome and the
-  // page never disagree about which one the visitor is in.
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f6f8" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0d10" },
-  ],
-  colorScheme: "light dark",
+  // Matches the page background exactly, so the mobile browser chrome and the
+  // page never show a seam.
+  themeColor: "#0a0805",
+  colorScheme: "dark",
 };
 
 /** Structured data so search results show the role, not just the title. */
@@ -121,11 +117,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Sets data-theme before the first paint. Static string under our own
-            control — no user input reaches it. */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className="min-h-full">
         {/* Entrance animations are prerendered in their hidden state. Without
             JS nothing would ever reveal them, so no-JS visitors get the page

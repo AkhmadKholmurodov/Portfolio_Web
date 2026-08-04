@@ -1,7 +1,6 @@
 "use client";
 
 import { LanguageProvider } from "@/components/providers/language-provider";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Nav } from "@/components/nav";
 import { Cursor } from "@/components/ui/cursor";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
@@ -12,39 +11,43 @@ import { Experience } from "@/components/sections/experience";
 import { Projects } from "@/components/sections/projects";
 import { Security } from "@/components/sections/security";
 import { Contact, Footer } from "@/components/sections/contact";
+import { SectionSeam } from "@/components/ui/section";
 
 /**
- * Single client boundary for the whole page: the theme and language contexts,
- * the 3D hero and every scroll-driven animation live below it.
+ * Single client boundary for the whole page: the language context, the 3D hero
+ * and every scroll-driven animation live below it.
  */
 export function Portfolio() {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <SmoothScroll />
-        <Cursor />
+    <LanguageProvider>
+      <SmoothScroll />
+      <Cursor />
 
-        <a
-          href="#about"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-ink-100 focus:px-4 focus:py-2 focus:text-sm focus:text-ink-950"
-        >
-          Skip to content
-        </a>
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-ink-100 focus:px-4 focus:py-2 focus:text-sm focus:text-ink-950"
+      >
+        Skip to content
+      </a>
 
-        <Nav />
+      <Nav />
 
-        <main>
-          <Hero />
-          <About />
-          <Stack />
-          <Experience />
-          <Projects />
-          <Security />
-          <Contact />
-        </main>
+      <main>
+        <Hero />
+        <About />
+        <SectionSeam />
+        <Stack />
+        <SectionSeam />
+        <Experience />
+        <SectionSeam />
+        <Projects />
+        <SectionSeam />
+        <Security />
+        <SectionSeam />
+        <Contact />
+      </main>
 
-        <Footer />
-      </LanguageProvider>
-    </ThemeProvider>
+      <Footer />
+    </LanguageProvider>
   );
 }

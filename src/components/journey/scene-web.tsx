@@ -113,9 +113,9 @@ export function SceneWeb({
       className="h-full w-full"
       style={{ transformOrigin: "50% 55%" }}
     >
-      <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-ink-900 shadow-(--shadow-scene) dark:bg-ink-950">
+      <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-ink-950 shadow-(--shadow-scene)">
         {/* ---- browser chrome ---- */}
-        <div className="flex h-10 shrink-0 items-center gap-3 border-b border-line bg-ink-850/70 px-4 dark:bg-ink-900/70">
+        <div className="flex h-10 shrink-0 items-center gap-3 border-b border-line bg-ink-900/70 px-4">
           <div className="flex gap-1.5">
             {[0, 1, 2].map((i) => (
               <span key={i} className="h-2.5 w-2.5 rounded-full bg-surface-2" />
@@ -415,7 +415,7 @@ export function SceneWeb({
 
         {/* ---- bottom tabs, phone width only ---- */}
         {narrow && (
-          <div className="flex h-11 shrink-0 items-stretch border-t border-line bg-ink-850/80 dark:bg-ink-900/80">
+          <div className="flex h-11 shrink-0 items-stretch border-t border-line bg-ink-900/80">
             {NAV.slice(0, 5).map((Icon, i) => (
               <Beat
                 key={i}

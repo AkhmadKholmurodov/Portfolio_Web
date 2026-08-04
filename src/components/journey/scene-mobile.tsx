@@ -83,15 +83,15 @@ const BUBBLES = [
  * colour schemes into the section.
  */
 const PALETTES = [
-  { bg: "#161616", fg: "#FFFFF0" },
-  { bg: "#0E1B1A", fg: "#3ADFD7" },
-  { bg: "#0F1720", fg: "#51BEFF" },
-  { bg: "#16121F", fg: "#AD8DFD" },
-  { bg: "#101F1E", fg: "#009C96" },
-  { bg: "#111A22", fg: "#1882C0" },
-  { bg: "#EEF0F3", fg: "#1B2025" },
-  { bg: "#E4F4F3", fg: "#009C96" },
-  { bg: "#ECE7F8", fg: "#795DBA" },
+  { bg: "#0F120E", fg: "#ECF0EB" }, /* chalk    */
+  { bg: "#0E120D", fg: "#CEDDC9" }, /* mist     */
+  { bg: "#101410", fg: "#B4CDAC" }, /* sage     */
+  { bg: "#111511", fg: "#96AC8E" }, /* moss     */
+  { bg: "#131612", fg: "#7E9576" }, /* fern     */
+  { bg: "#151813", fg: "#6B8163" }, /* pine     */
+  { bg: "#EDF1EC", fg: "#1B2119" }, /* paper    */
+  { bg: "#E4EBE2", fg: "#3E4C39" }, /* linen    */
+  { bg: "#DDE6DA", fg: "#2A3527" }, /* slate    */
 ];
 
 const ALPHA = (pct: number) =>
@@ -128,6 +128,8 @@ export function SceneMobile({
 
   // The palette setting, applied for real: one custom property re-skins the app.
   const liveTint = useTransform(p, [0.8, 0.89], [tint, PALETTES[1].fg]);
+  // PALETTES[1] is mist — a clear lightness jump from any of the three
+  // signal stops, without leaving the hue.
   const paletteChoice = useTransform(p, (v): number => (v >= 0.845 ? 1 : 0));
 
   return (
@@ -177,7 +179,7 @@ export function SceneMobile({
           }
         >
           <div
-            className="relative overflow-hidden bg-ink-900 dark:bg-ink-950"
+            className="relative overflow-hidden bg-ink-950"
             style={{ width: SW, height: dev.sh, borderRadius: dev.ri }}
           >
             {/* dynamic island */}
@@ -205,7 +207,7 @@ export function SceneMobile({
 
             {/* tab bar */}
             <div
-              className="absolute inset-x-0 bottom-0 border-t border-line bg-ink-850/95 backdrop-blur dark:bg-ink-900/95"
+              className="absolute inset-x-0 bottom-0 border-t border-line bg-ink-900/95 backdrop-blur"
               style={{ height: dev.tabs }}
             >
               <motion.span

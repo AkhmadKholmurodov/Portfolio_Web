@@ -1,7 +1,42 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Reveal, SplitWords } from "@/components/ui/reveal";
+import { DUR, EASE_OUT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+
+/**
+ * The join between two sections.
+ *
+ * A hairline that draws itself outward from the middle as it comes into view,
+ * with a single mark at the centre. It exists so the page reads as one
+ * continuous document rather than a stack of unrelated blocks — which is the
+ * whole job of a seam, and why it should be almost invisible while doing it.
+ */
+export function SectionSeam() {
+  const inView = { once: true, margin: "-18% 0px -18% 0px" } as const;
+
+  return (
+    <div aria-hidden className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+      <div className="relative h-px">
+        <motion.div
+          className="h-px w-full origin-center bg-gradient-to-r from-transparent via-line-strong to-transparent"
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
+          viewport={inView}
+          transition={{ duration: 1.2, ease: EASE_OUT }}
+        />
+        <motion.span
+          className="absolute left-1/2 top-1/2 h-[5px] w-[5px] -translate-x-1/2 -translate-y-1/2 rotate-45 bg-accent"
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 0.9 }}
+          viewport={inView}
+          transition={{ duration: DUR.base, delay: 0.4, ease: EASE_OUT }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function Section({
   id,
@@ -65,7 +100,13 @@ export function SectionHeader({
             align === "center" && "justify-center",
           )}
         >
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-accent/70" />
+          <motion.span
+            className="h-px w-8 origin-left bg-gradient-to-r from-transparent to-accent/70"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: DUR.slow, ease: EASE_OUT }}
+          />
           <span className="eyebrow">{eyebrow}</span>
         </div>
       </Reveal>

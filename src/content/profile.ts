@@ -75,32 +75,21 @@ export const experienceMeta: ExperienceMeta[] = [
  * marketplace, a lime-marker paper report, a neumorphic phone app. Reproducing
  * their real palettes side by side turns the section into a fruit salad, so
  * each scene keeps its *form* (surfaces, type, motion, layout) and borrows its
- * *colour* from here. Matched chroma and a gentle lightness fall mean any two
- * stops still look related mid cross-fade.
+ * *colour* from here. The three stops share one hue and differ only in
+ * lightness, so three scenes never become three colours.
  *
  * Stop 1 is `--color-accent` exactly, so the journey never leaves the site
- * palette. Each stop carries a hex per theme because the scenes build colours
- * by concatenating alpha, which `var()` cannot do.
+ * palette. Each stop also carries a literal hex, because the scenes build
+ * colours by concatenating alpha (`${hex}44`), which `var()` cannot do.
  */
 export const signalRamp = [
-  { css: "var(--color-signal-1)", dark: "#3ADFD7", light: "#007F79" },
-  { css: "var(--color-signal-2)", dark: "#51BEFF", light: "#0076BB" },
-  { css: "var(--color-signal-3)", dark: "#AD8DFD", light: "#7E5DC8" },
+  { css: "var(--color-signal-1)", hex: "#B4CDAC" },
+  { css: "var(--color-signal-2)", hex: "#96AC8E" },
+  { css: "var(--color-signal-3)", hex: "#CEDDC9" },
 ] as const;
 
 export type Signal = (typeof signalRamp)[number];
 
-/**
- * The stop to paint with, for the theme currently on screen.
- *
- * Consumers concatenate alpha onto these (`${hex}44`), which a `var()` cannot
- * support — so the hex has to be resolved in JS rather than left to CSS. The
- * light values are each darkened to the lightness that clears 4.5 : 1 on the
- * light page; the neon originals are invisible on white.
- */
-export function signalHex(signal: Signal, isDark: boolean) {
-  return isDark ? signal.dark : signal.light;
-}
 
 export type ProjectMeta = {
   key: "eyaqin" | "smartguard" | "eyaqinMobile";

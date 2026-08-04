@@ -73,7 +73,7 @@ function Portrait() {
                   className="group flex items-center gap-3 px-4 py-3 transition-colors duration-300 hover:bg-surface"
                 >
                   <Icon
-                    className="h-4 w-4 shrink-0 text-ink-500 transition-colors group-hover:text-accent"
+                    className="h-4 w-4 shrink-0 text-ink-500 transition-colors group-hover:text-ink-100"
                     strokeWidth={1.6}
                   />
                   <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
@@ -82,7 +82,7 @@ function Portrait() {
                   <span className="ml-auto truncate text-[13px] text-ink-300 transition-colors group-hover:text-ink-100">
                     {social.handle}
                   </span>
-                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-ink-700 transition-all duration-300 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-ink-700 transition-all duration-300 group-hover:text-ink-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </li>
             );

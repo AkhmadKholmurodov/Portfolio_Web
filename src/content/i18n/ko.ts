@@ -368,7 +368,6 @@ export const ko: Dict = {
   },
 
   a11y: {
-    theme: "밝은/어두운 모드 전환",
     languageSwitcher: "언어 변경",
     menu: "메뉴",
     closeMenu: "메뉴 닫기",

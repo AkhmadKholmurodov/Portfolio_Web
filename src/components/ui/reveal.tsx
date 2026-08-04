@@ -3,8 +3,7 @@
 import { Children, cloneElement, isValidElement } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { DUR, EASE_OUT, VIEWPORT, lead } from "@/lib/motion";
 
 /* ------------------------------------------------------------------ *
  * Reveal — fades a block up as it scrolls into view, once.
@@ -27,10 +26,10 @@ export function Reveal({
   return (
     <Comp
       className={className}
-      initial={{ opacity: 0, y, filter: "blur(6px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
-      transition={{ duration: 0.85, delay, ease: EASE }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={VIEWPORT}
+      transition={lead(DUR.base, delay)}
     >
       {children}
     </Comp>
@@ -94,10 +93,10 @@ export function StaggerItem({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 22, filter: "blur(5px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
-      transition={{ duration: 0.7, delay: 0.05 + index * 0.07, ease: EASE }}
+      transition={lead(DUR.base, 0.04 + index * 0.06)}
     >
       {children}
     </motion.div>
@@ -106,7 +105,10 @@ export function StaggerItem({
 
 /* ------------------------------------------------------------------ *
  * SplitWords — headline animation, one word at a time.
- * Words stay inside a clipping row so they rise out of nothing.
+ *
+ * Words stay inside a clipping row so they rise out of nothing. There is no
+ * fade: the row already hides the word completely, and cross-fading a masked
+ * reveal only softens the edge that makes it read as type being set.
  * ------------------------------------------------------------------ */
 export function SplitWords({
   text,
@@ -132,13 +134,13 @@ export function SplitWords({
         >
           <motion.span
             className={cn("inline-block", wordClassName)}
-            initial={{ y: "105%", opacity: 0 }}
-            whileInView={{ y: "0%", opacity: 1 }}
+            initial={{ y: "105%" }}
+            whileInView={{ y: "0%" }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{
-              duration: 0.9,
+              duration: DUR.slow,
               delay: delay + i * stagger,
-              ease: EASE,
+              ease: EASE_OUT,
             }}
           >
             {word}

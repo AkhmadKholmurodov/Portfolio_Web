@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
 import { marqueeTech, profile } from "@/content/profile";
 import { Container } from "@/components/ui/section";
@@ -11,6 +12,7 @@ import { Magnetic } from "@/components/ui/magnetic";
 import { Marquee } from "@/components/ui/marquee";
 import { useDeferredMount } from "@/hooks/use-deferred-mount";
 import { useIsMobile, useReducedMotion } from "@/hooks/use-media";
+import { DUR, EASE_OUT, lead } from "@/lib/motion";
 
 // WebGL has no server-rendered form, and the bundle is heavy enough that it
 // should not block the first paint of the headline.
@@ -33,8 +35,6 @@ function SceneGlow() {
   );
 }
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 export function Hero() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
@@ -53,6 +53,9 @@ export function Hero() {
   });
 
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  // He drifts slower than the text, which is what reads as depth.
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 46]);
+  const portraitOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
   const sceneScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
 
@@ -75,18 +78,45 @@ export function Hero() {
         }}
       />
 
+      {/* The orbits sit behind him, so the light passes at his shoulder. */}
       <motion.div
         aria-hidden
         style={{ scale: sceneScale }}
-        className="pointer-events-none absolute inset-0 opacity-45 sm:opacity-60 lg:left-auto lg:right-[-6%] lg:w-[62%] lg:opacity-100"
+        className="pointer-events-none absolute inset-0 opacity-45 sm:opacity-60 lg:left-auto lg:right-[16%] lg:top-[-16%] lg:w-[56%] lg:opacity-100"
       >
         {sceneReady ? <HeroScene active={heroInView} /> : <SceneGlow />}
       </motion.div>
 
-      {/* Keeps the headline legible where it overlaps the blob. */}
+      {/* The portrait. Graded to the page's own palette and masked at every
+          edge, so he is standing in the background rather than pasted onto it.
+          A phone has no room to stand him beside the headline, so there he
+          moves behind it and drops to a whisper — present, never competing. */}
+      <motion.div
+        aria-hidden
+        style={{ y: portraitY, opacity: portraitOpacity }}
+        className="pointer-events-none absolute inset-y-0 right-[-18%] flex w-[92%] justify-end opacity-[0.18] sm:right-[-8%] sm:w-[72%] sm:opacity-40 md:right-0 md:w-[54%] md:opacity-100 lg:w-[46%] xl:w-[42%]"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.6, delay: 0.15, ease: EASE_OUT }}
+          className="relative h-full w-full"
+        >
+          <Image
+            src="/hero-portrait.webp"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1280px) 42vw, (min-width: 768px) 54vw, 92vw"
+            className="object-cover object-[58%_top]"
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Keeps the headline legible where it crosses him. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[var(--bg)]/70 to-transparent lg:via-[var(--bg)]/35"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[var(--bg)]/92 to-[var(--bg)]/55 md:via-[var(--bg)]/80 md:to-transparent lg:via-[var(--bg)]/45"
       />
 
       <Container className="relative">
@@ -94,16 +124,12 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
+            transition={lead(DUR.base)}
             className="flex flex-wrap items-center gap-3"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.07] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-[blip_2.4s_ease-in-out_infinite]" />
               {t.hero.available}
-            </span>
-            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
-              <MapPin className="h-3 w-3" />
-              {t.about.photoCaption}
             </span>
           </motion.div>
 
@@ -114,7 +140,7 @@ export function Hero() {
                   className="block"
                   initial={{ y: "108%" }}
                   animate={{ y: "0%" }}
-                  transition={{ duration: 1.1, delay: 0.08 + i * 0.09, ease: EASE }}
+                  transition={{ duration: 1.1, delay: 0.08 + i * 0.09, ease: EASE_OUT }}
                 >
                   {i === 1 ? (
                     <span className="text-gradient">{line}</span>
@@ -129,7 +155,7 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.34, ease: EASE }}
+            transition={lead(0.8, 0.34)}
             className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-accent-soft sm:text-[13px]"
           >
             {t.hero.role}
@@ -138,7 +164,7 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
+            transition={lead(0.8, 0.42)}
             className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-ink-300 sm:text-lg"
           >
             {t.hero.intro}
@@ -147,7 +173,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: EASE }}
+            transition={lead(0.8, 0.5)}
             className="mt-9 flex flex-wrap items-center gap-3"
           >
             <Magnetic strength={0.28}>
@@ -164,7 +190,7 @@ export function Hero() {
             <Magnetic strength={0.28}>
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink-100 transition-colors duration-300 hover:border-accent/50 hover:bg-accent/[0.06]"
+                className="group inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink-100 transition-colors duration-300 hover:border-line-hover hover:bg-tint"
               >
                 {t.hero.ctaContact}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
