@@ -42,7 +42,11 @@ import { Beat, Thumb, type SceneProps } from "@/components/journey/stage";
  * property re-skins the whole device at once, exactly like the real setting.
  */
 
-const SCREEN_W = 282;
+/** The device shrinks on a phone: a 1:1 handset cannot fit inside a handset. */
+const DEVICE = {
+  wide: { sw: 282, sh: 562, tabs: 56, frame: 300, pad: 9, r: 42, ri: 34 },
+  narrow: { sw: 230, sh: 400, tabs: 48, frame: 248, pad: 8, r: 34, ri: 27 },
+} as const;
 const TAB_COUNT = 5;
 
 const TABS = [House, MapIcon, Users, MessageCircle, User];
@@ -100,15 +104,18 @@ export function SceneMobile({
 }: SceneProps) {
   const narrow = size === "narrow";
   const wide = size === "wide";
+  const dev = narrow ? DEVICE.narrow : DEVICE.wide;
+  const SW = dev.sw;
+
   const screenX = useTransform(
     p,
     [0.26, 0.4, 0.5, 0.64],
-    [0, -SCREEN_W, -SCREEN_W, -SCREEN_W * 2],
+    [0, -SW, -SW, -SW * 2],
   );
 
   // The pill tracks the swipe rather than the tap — same timings as `screenX`,
   // which is what makes the two feel mechanically linked.
-  const tabW = SCREEN_W / TAB_COUNT;
+  const tabW = SW / TAB_COUNT;
   const pillX = useTransform(
     p,
     [0.26, 0.4, 0.5, 0.64],
@@ -156,10 +163,12 @@ export function SceneMobile({
         style={{ perspective: 1600 }}
       >
         <motion.div
-          className="relative rounded-[42px] border border-line bg-ink-850 p-[9px] shadow-(--shadow-scene)"
+          className="relative border border-line bg-ink-850 shadow-(--shadow-scene)"
           style={
             {
-              width: 300,
+              width: dev.frame,
+              padding: dev.pad,
+              borderRadius: dev.r,
               rotateY,
               rotateX,
               transformStyle: "preserve-3d",
@@ -168,8 +177,8 @@ export function SceneMobile({
           }
         >
           <div
-            className="relative overflow-hidden rounded-[34px] bg-ink-900 dark:bg-ink-950"
-            style={{ width: SCREEN_W, height: 562 }}
+            className="relative overflow-hidden bg-ink-900 dark:bg-ink-950"
+            style={{ width: SW, height: dev.sh, borderRadius: dev.ri }}
           >
             {/* dynamic island */}
             <span className="absolute left-1/2 top-2.5 z-30 h-[22px] w-[78px] -translate-x-1/2 rounded-full bg-black" />
@@ -186,16 +195,19 @@ export function SceneMobile({
 
             {/* the three screens, swiped by the page scroll */}
             <motion.div
-              className="flex h-[472px]"
-              style={{ x: screenX, width: SCREEN_W * 3 }}
+              className="flex"
+              style={{ x: screenX, width: SW * 3, height: dev.sh - 34 - dev.tabs }}
             >
-              <HomeScreen p={p} tint={tint} />
-              <MapScreen p={p} tint={tint} />
-              <ChatScreen p={p} tint={tint} />
+              <HomeScreen p={p} tint={tint} sw={SW} narrow={narrow} />
+              <MapScreen p={p} tint={tint} sw={SW} />
+              <ChatScreen p={p} tint={tint} sw={SW} />
             </motion.div>
 
             {/* tab bar */}
-            <div className="absolute inset-x-0 bottom-0 h-[56px] border-t border-line bg-ink-850/95 backdrop-blur dark:bg-ink-900/95">
+            <div
+              className="absolute inset-x-0 bottom-0 border-t border-line bg-ink-850/95 backdrop-blur dark:bg-ink-900/95"
+              style={{ height: dev.tabs }}
+            >
               <motion.span
                 className="absolute top-[9px] h-[30px] rounded-full"
                 style={{
@@ -221,7 +233,7 @@ export function SceneMobile({
           compact box cannot push it past its own edge. */}
       <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 gap-1.5">
         {SCREEN_LABELS.map((label, i) => (
-          <ScreenDot key={label} index={i} screenX={screenX} label={label} />
+          <ScreenDot key={label} index={i} screenX={screenX} label={label} sw={SW} />
         ))}
       </div>
     </div>
@@ -232,13 +244,15 @@ function ScreenDot({
   index,
   screenX,
   label,
+  sw,
 }: {
   index: number;
   screenX: MotionValue<number>;
   label: string;
+  sw: number;
 }) {
   const active = useTransform(screenX, (v): number =>
-    Math.round(-v / SCREEN_W) === index ? 1 : 0,
+    Math.round(-v / sw) === index ? 1 : 0,
   );
   const opacity = useTransform(active, [0, 1], [0.28, 1]);
   const width = useTransform(active, [0, 1], [5, 18]);
@@ -255,9 +269,9 @@ function ScreenDot({
 /* ------------------------------------------------------------------ *
  * Screens
  * ------------------------------------------------------------------ */
-function HomeScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
+function HomeScreen({ p, tint, sw, narrow }: { p: MotionValue<number>; tint: string; sw: number; narrow: boolean }) {
   return (
-    <div className="flex flex-col px-4 pt-1" style={{ width: SCREEN_W }}>
+    <div className="flex flex-col px-4 pt-1" style={{ width: sw }}>
       <Beat p={p} at={[0.06, 0.15]} y={-10} className="flex items-center gap-2">
         <span
           className="flex items-center gap-1 text-[12.5px] font-semibold"
@@ -272,7 +286,7 @@ function HomeScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
       </Beat>
 
       <Beat p={p} at={[0.09, 0.19]} y={12} className="mt-3 grid grid-cols-4 gap-y-3">
-        {CATEGORIES.map(({ Icon, label }) => (
+        {(narrow ? CATEGORIES.slice(0, 4) : CATEGORIES).map(({ Icon, label }) => (
           <span key={label} className="flex flex-col items-center gap-1.5">
             <span
               className="scene-raised grid h-[38px] w-[38px] place-items-center rounded-2xl"
@@ -291,7 +305,7 @@ function HomeScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
       </Beat>
 
       <div className="mt-2 flex flex-col gap-2">
-        {CARDS.map((c, i) => (
+        {(narrow ? CARDS.slice(0, 2) : CARDS).map((c, i) => (
           <Beat
             key={c.title}
             p={p}
@@ -322,7 +336,7 @@ function HomeScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
   );
 }
 
-function MapScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
+function MapScreen({ p, tint, sw }: { p: MotionValue<number>; tint: string; sw: number }) {
   const pins = [
     { x: 26, y: 24, label: "1.8 mln" },
     { x: 64, y: 34, label: "4.9 mln" },
@@ -330,7 +344,7 @@ function MapScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
   ];
 
   return (
-    <div className="relative" style={{ width: SCREEN_W }}>
+    <div className="relative" style={{ width: sw }}>
       {/* Same plate as the desktop map, drawn heavier — at phone scale the
           desktop line weight disappears. */}
       <div
@@ -406,9 +420,9 @@ function MapScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
   );
 }
 
-function ChatScreen({ p, tint }: { p: MotionValue<number>; tint: string }) {
+function ChatScreen({ p, tint, sw }: { p: MotionValue<number>; tint: string; sw: number }) {
   return (
-    <div className="flex flex-col px-4 pt-1" style={{ width: SCREEN_W }}>
+    <div className="flex flex-col px-4 pt-1" style={{ width: sw }}>
       <Beat p={p} at={[0.52, 0.6]} y={-8} className="flex items-center gap-2 pb-2.5">
         <Thumb className="h-7 w-7 rounded-full" tint={tint} seed={1} />
         <span className="flex flex-col">

@@ -10,6 +10,7 @@ import { Container } from "@/components/ui/section";
 import { Magnetic } from "@/components/ui/magnetic";
 import { Marquee } from "@/components/ui/marquee";
 import { useDeferredMount } from "@/hooks/use-deferred-mount";
+import { useIsMobile, useReducedMotion } from "@/hooks/use-media";
 
 // WebGL has no server-rendered form, and the bundle is heavy enough that it
 // should not block the first paint of the headline.
@@ -37,7 +38,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function Hero() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const sceneReady = useDeferredMount();
+  // A phone pays ~230 KB gzipped for three.js plus a WebGL context, for a
+  // decorative backdrop it barely has room to show. The static glow reads
+  // close enough there, so the download never starts.
+  const isPhone = useIsMobile();
+  const reduced = useReducedMotion();
+  const sceneReady = useDeferredMount() && !isPhone && !reduced;
   // Freeze the render loop once the hero has left the viewport.
   const heroInView = useInView(ref, { amount: 0.08 });
 

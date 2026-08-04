@@ -106,7 +106,3 @@ export function useLanguage() {
   return ctx;
 }
 
-/** Shorthand for components that only need the dictionary. */
-export function useT() {
-  return useLanguage().t;
-}

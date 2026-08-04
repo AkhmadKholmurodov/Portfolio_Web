@@ -53,6 +53,7 @@ export function ProjectJourney({
   const { t } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
   const size = useSceneSize();
+  const narrow = size === "narrow";
   const count = projectsMeta.length;
 
   const { scrollYProgress: trackedProgress } = useScroll({
@@ -126,18 +127,25 @@ export function ProjectJourney({
       ))}
 
       <div className="sticky top-0 h-svh w-full overflow-hidden">
+        {/* Every pixel this chrome takes is a pixel the stage cannot use, and
+            on a 640px-tall phone that trade decides whether the scene is
+            legible at all. */}
         <div
-          className="mx-auto flex h-full w-full max-w-7xl flex-col px-5 pb-6 sm:px-8"
-          style={{ paddingTop: "calc(var(--header-h) + 0.75rem)" }}
+          className="mx-auto flex h-full w-full max-w-7xl flex-col px-4 pb-3 sm:px-8 sm:pb-6"
+          // The floating nav pill bottoms out at ~70px once the page is scrolled —
+          // and the journey is only ever seen scrolled. Less clearance than this
+          // and the rail slides under it.
+          style={{ paddingTop: narrow ? "4.75rem" : "calc(var(--header-h) + 0.75rem)" }}
         >
           <Rail
             progress={scrollYProgress}
             count={count}
             activeScene={scene}
             beatLabel={beats[beat]}
+            narrow={narrow}
           />
 
-          <div ref={fitRef} className="relative mt-4 min-h-0 flex-1">
+          <div ref={fitRef} className="relative mt-2 min-h-0 flex-1 sm:mt-4">
             {projectsMeta.map((m, i) => (
               <SceneLayer
                 key={m.key}
@@ -226,21 +234,34 @@ function SceneLayer({
       className="absolute inset-0 grid place-items-center"
       style={{ opacity, pointerEvents: "none", willChange: "opacity" }}
     >
-      {/* Fit first, then the cross-fade's own depth move — two transforms that
-          must not overwrite each other, hence two elements. */}
+      {/* Three boxes, because a transform does not change layout size.
+          The outer one takes the *scaled* dimensions so the grid centres
+          something that actually fits: asked to centre a box taller than its
+          container, the browser clamps it to the top edge instead, and the
+          scene hangs off the bottom of the stage over the caption.
+          The middle one scales from its top-left corner to fill that box
+          exactly, and the inner one carries the cross-fade's depth move. */}
       <div
         style={{
-          width: design.w,
-          height: design.h,
-          transform: `scale(${scale})`,
+          width: design.w * scale,
+          height: design.h * scale,
           // Until the stage has measured itself there is no honest size to
           // draw at; a frame of unscaled 1040px artwork would blow the layout.
           visibility: scale ? "visible" : "hidden",
         }}
       >
-        <motion.div className="h-full w-full" style={{ scale: depth }}>
-          <Scene p={local} tint={hue} size={size} />
-        </motion.div>
+        <div
+          style={{
+            width: design.w,
+            height: design.h,
+            transform: `scale(${scale})`,
+            transformOrigin: "0 0",
+          }}
+        >
+          <motion.div className="h-full w-full" style={{ scale: depth }}>
+            <Scene p={local} tint={hue} size={size} />
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
@@ -254,11 +275,13 @@ function Rail({
   count,
   activeScene,
   beatLabel,
+  narrow,
 }: {
   progress: MotionValue<number>;
   count: number;
   activeScene: number;
   beatLabel: string;
+  narrow: boolean;
 }) {
   const { t } = useLanguage();
 
@@ -274,6 +297,7 @@ function Rail({
             progress={progress}
             name={t.projects.items[m.key].name}
             active={i === activeScene}
+            narrow={narrow}
           />
         ))}
       </div>
@@ -303,6 +327,7 @@ function RailSegment({
   progress,
   name,
   active,
+  narrow,
 }: {
   meta: ProjectMeta;
   index: number;
@@ -310,6 +335,7 @@ function RailSegment({
   progress: MotionValue<number>;
   name: string;
   active: boolean;
+  narrow: boolean;
 }) {
   const { isDark } = useTheme();
   const hue = signalHex(meta.signal, isDark);
@@ -323,21 +349,24 @@ function RailSegment({
     >
       <div className="flex items-baseline gap-1.5">
         <span
-          className="font-mono text-[10px] tracking-[0.18em] transition-colors duration-500"
+          className={cn(
+            "font-mono tracking-[0.18em] transition-colors duration-500",
+            narrow ? "text-[9px]" : "text-[10px]",
+          )}
           style={{ color: active ? hue : undefined }}
         >
           <span className={cn(!active && "text-ink-700")}>{meta.index}</span>
         </span>
         <span
           className={cn(
-            "truncate text-[12px] transition-colors duration-500 sm:text-[13px]",
+            narrow ? "truncate text-[11px]" : "truncate text-[12px] sm:text-[13px]",
             active ? "text-ink-100" : "text-ink-700 group-hover:text-ink-500",
           )}
         >
           {name}
         </span>
       </div>
-      <div className="mt-2 h-px w-full bg-surface-2">
+      <div className="mt-1.5 h-px w-full bg-surface-2 sm:mt-2">
         <motion.div
           className="h-full origin-left"
           style={{ scaleX: fill, background: hue }}
@@ -370,7 +399,7 @@ function Caption({
   const hue = signalHex(meta.signal, isDark);
 
   return (
-    <div className="mt-4 flex shrink-0 flex-col gap-4 border-t border-line pt-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+    <div className="mt-2 flex shrink-0 flex-col gap-2 border-t border-line pt-2 sm:mt-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:pt-4">
       {/* `mode="wait"` empties this slot for the length of the exit. Reserving
           the height stops the stage above from lurching on every handover. */}
       <div className="min-w-0 sm:min-h-[104px]">
@@ -407,7 +436,7 @@ function Caption({
               <span className="text-2xl font-medium tracking-[-0.03em] sm:text-3xl lg:text-4xl">
                 {name}
               </span>
-              <span className="text-[13px] text-ink-500 sm:text-[14px]">{subtitle}</span>
+              <span className="text-[12px] text-ink-500 sm:text-[14px]">{subtitle}</span>
             </h3>
 
             {size === "wide" && (
@@ -426,11 +455,11 @@ function Caption({
         </AnimatePresence>
       </div>
 
-      <div className="flex shrink-0 flex-wrap items-center gap-2.5">
+      <div className="flex shrink-0 flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={onOpen}
-          className="group/btn inline-flex items-center gap-2 rounded-full bg-ink-100 px-4 py-2 text-[13px] font-medium text-ink-950 transition-colors duration-300 hover:bg-accent"
+          className="group/btn inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-3.5 py-1.5 text-[12.5px] font-medium text-ink-950 transition-colors duration-300 hover:bg-accent sm:gap-2 sm:px-4 sm:py-2 sm:text-[13px]"
         >
           {t.projects.caseStudy}
           <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
@@ -441,13 +470,13 @@ function Caption({
             href={meta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link inline-flex items-center gap-2 rounded-full border border-line-strong px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+            className="group/link inline-flex items-center gap-1.5 rounded-full border border-line-strong px-3.5 py-1.5 text-[12.5px] text-ink-300 transition-colors duration-300 hover:border-accent/50 hover:text-accent sm:gap-2 sm:px-4 sm:py-2 sm:text-[13px]"
           >
             {t.projects.viewLive}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
           </a>
         ) : (
-          <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[13px] text-ink-500">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 text-[12.5px] text-ink-500 sm:gap-2 sm:px-4 sm:py-2 sm:text-[13px]">
             <Lock className="h-3 w-3" />
             {t.projects.privateRepo}
           </span>

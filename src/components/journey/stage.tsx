@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValueEvent,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { motion, useMotionTemplate, useTransform, type MotionValue } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -25,7 +19,7 @@ import { cn } from "@/lib/utils";
 export const DESIGN = {
   wide: { w: 1040, h: 620 },
   compact: { w: 520, h: 620 },
-  narrow: { w: 340, h: 600 },
+  narrow: { w: 340, h: 480 },
 } as const;
 
 export type SceneSize = keyof typeof DESIGN;
@@ -44,10 +38,21 @@ export function useFitScale(w: number, h: number) {
     const el = ref.current;
     if (!el) return;
 
-    const ro = new ResizeObserver((entries) => {
-      const box = entries[0]?.contentRect;
-      if (!box?.width || !box.height) return;
-      setScale(Math.min(box.width / w, box.height / h));
+    const fit = (width: number, height: number) => {
+      if (!width || !height) return;
+      setScale(Math.min(width / w, height / h));
+    };
+
+    // Measured once directly before observing. A ResizeObserver's first
+    // callback only arrives once the browser paints the frame, and a
+    // background or throttled tab may not paint for a long time — leaving
+    // `scale` at 0 and, with it, the entire section invisible.
+    const box = el.getBoundingClientRect();
+    fit(box.width, box.height);
+
+    const ro = new ResizeObserver(([entry]) => {
+      const r = entry.contentRect;
+      fit(r.width, r.height);
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -125,19 +130,6 @@ export function Beat({
 /* ------------------------------------------------------------------ *
  * Helpers
  * ------------------------------------------------------------------ */
-
-/** Which named beat the scene is currently on — drives the caption label. */
-export function useBeatIndex(p: MotionValue<number>, marks: readonly number[]) {
-  const [index, setIndex] = useState(0);
-
-  useMotionValueEvent(p, "change", (v) => {
-    let next = 0;
-    for (let i = 0; i < marks.length; i++) if (v >= marks[i]) next = i;
-    setIndex(next);
-  });
-
-  return index;
-}
 
 /** Placeholder for product imagery the portfolio does not ship. */
 export function Thumb({
