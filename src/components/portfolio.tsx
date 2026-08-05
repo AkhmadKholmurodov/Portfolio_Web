@@ -3,6 +3,7 @@
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { Nav } from "@/components/nav";
 import { Cursor } from "@/components/ui/cursor";
+import { WaterGlass } from "@/components/ui/water-glass";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
@@ -21,6 +22,7 @@ export function Portfolio() {
   return (
     <LanguageProvider>
       <SmoothScroll />
+      <WaterGlass />
       <Cursor />
 
       <a

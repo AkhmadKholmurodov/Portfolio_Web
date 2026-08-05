@@ -20,11 +20,11 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /** The signal ramp, as hex — Satori cannot parse `oklch()`. */
-const RAMP = ["#3ADFD7", "#51BEFF", "#AD8DFD"];
-const BG = "#080A0D";
-const FG = "#EDEFF1";
-const MUTED = "#A6ABB1";
-const LINE = "#1E2226";
+const RAMP = ["#4B4B5C", "#616172", "#31313E"];
+const BG = "#F0F0F2";
+const FG = "#18181E";
+const MUTED = "#6B6B73";
+const LINE = "#D6D6DB";
 
 /** Three decision-relevant facts. Short enough to stay on one line each — a
  *  wrapped pill reads as a layout bug at preview size. */

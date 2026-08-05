@@ -61,7 +61,7 @@ function Portrait() {
           </div>
         </div>
 
-        <ul className="mt-4 divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-line bg-surface">
+        <ul className="mt-4 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">
           {socials.map((social) => {
             const Icon = socialIcons[social.key];
             return (

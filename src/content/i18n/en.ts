@@ -19,6 +19,8 @@ export const en = {
   hero: {
     available: "Open to opportunities",
     role: "Full-Stack & WebOps Engineer",
+    /** Country and right-to-work only — never a city. See `about.facts`. */
+    location: "South Korea · E-7 visa",
     tagline:
       "I build web products end to end — and then I keep them running.",
     intro:
@@ -26,6 +28,15 @@ export const en = {
     ctaWork: "See the work",
     ctaContact: "Get in touch",
     scroll: "Scroll",
+    /** Header over the status panel. A label, not a claim. */
+    systemsTitle: "Systems in production",
+    stateLive: "Live",
+    statePilot: "Pilot",
+    systems: {
+      lowshop: { value: "99.9%", label: "Uptime · SAMBU's D2C storefront" },
+      eyaqin: { value: "Solo", label: "Full-stack build · marketplace" },
+      smartguard: { value: "100×", label: "Lower vision API cost · in a shop" },
+    },
     stats: [
       { value: "3+", label: "Years in production" },
       { value: "99.9%", label: "Uptime on lowshop.net" },
@@ -363,7 +374,7 @@ export const en = {
   },
 
   footer: {
-    built: "Built with Next.js, React Three Fiber and Motion.",
+    built: "Built with Next.js, Tailwind and Motion.",
     rights: "All rights reserved.",
     backToTop: "Back to top",
   },

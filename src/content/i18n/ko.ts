@@ -21,12 +21,21 @@ export const ko: Dict = {
   hero: {
     available: "새로운 기회를 찾고 있습니다",
     role: "풀스택 & WebOps 엔지니어",
+    location: "대한민국 · E-7 비자",
     tagline: "웹 제품을 처음부터 끝까지 만들고, 계속 살아 있게 운영합니다.",
     intro:
       "한국에서 3년간 실서비스 플랫폼을 담당했습니다. 프런트는 Next.js, 뒤에는 Node와 Python, 그 아래에는 Linux와 Docker — 그리고 그 전체를 공격자의 체크리스트로 다시 봅니다.",
     ctaWork: "작업 보기",
     ctaContact: "연락하기",
     scroll: "스크롤",
+    systemsTitle: "운영 중인 시스템",
+    stateLive: "운영 중",
+    statePilot: "파일럿",
+    systems: {
+      lowshop: { value: "99.9%", label: "가동률 · SAMBU D2C 스토어" },
+      eyaqin: { value: "Solo", label: "풀스택 단독 개발 · 마켓플레이스" },
+      smartguard: { value: "100배", label: "비전 API 비용 절감 · 매장 파일럿" },
+    },
     stats: [
       { value: "3년+", label: "실서비스 경력" },
       { value: "99.9%", label: "lowshop.net 가동률" },
@@ -362,7 +371,7 @@ export const ko: Dict = {
   },
 
   footer: {
-    built: "Next.js, React Three Fiber, Motion으로 제작했습니다.",
+    built: "Next.js, Tailwind, Motion으로 제작했습니다.",
     rights: "All rights reserved.",
     backToTop: "맨 위로",
   },

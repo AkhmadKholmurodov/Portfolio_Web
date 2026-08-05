@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Reveal, SplitWords } from "@/components/ui/reveal";
+import { Scramble } from "@/components/ui/text-fx";
 import { DUR, EASE_OUT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -107,7 +108,9 @@ export function SectionHeader({
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: DUR.slow, ease: EASE_OUT }}
           />
-          <span className="eyebrow">{eyebrow}</span>
+          <span className="eyebrow">
+            <Scramble text={eyebrow} delay={0.1} dwell={26} startOnView />
+          </span>
         </div>
       </Reveal>
 

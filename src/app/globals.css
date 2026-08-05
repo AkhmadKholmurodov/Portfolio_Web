@@ -59,7 +59,25 @@
   --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* A real spring, sampled rather than approximated.
+   *
+   * `cubic-bezier` cannot express a spring: it has one hump, so the classic
+   * "bouncy" bezier fakes the overshoot by leaving and never returning
+   * properly. `linear()` takes an arbitrary list of samples, so this is the
+   * actual displacement curve of a damped harmonic oscillator — stiffness 200,
+   * damping 16, mass 0.7, ζ≈0.68 — settling in 0.54s with a 5.6% overshoot.
+   * Generated, not hand-tuned; the numbers above reproduce it exactly.
+   *
+   * It stays on the compositor like any other easing, which is the point: the
+   * same motion from a JS spring costs a frameloop and a main-thread tick per
+   * frame, per element. */
+  --ease-spring: linear(
+    0, 0.0361, 0.1261, 0.2465, 0.3792, 0.5114, 0.6342, 0.7424, 0.8332, 0.9061,
+    0.9619, 1.0024, 1.0296, 1.0461, 1.0541, 1.0559, 1.0533, 1.0479, 1.041,
+    1.0336, 1.0262, 1.0195, 1.0136, 1.0086, 1.0047, 1.0017, 0.9996, 0.9982,
+    0.9973, 0.9969, 0.9969, 0.9971, 1
+  );
 
   --animate-marquee: marquee 42s linear infinite;
   --animate-shimmer: shimmer 2.6s linear infinite;
@@ -74,6 +92,71 @@
 @keyframes shimmer {
   from { background-position: 200% 0; }
   to { background-position: -200% 0; }
+}
+
+/* The first screen's entrance.
+ *
+ * These are CSS rather than JS because the hero must never be able to show up
+ * blank. A JS mount animation that starts from `opacity: 0` is a promise to
+ * paint later, and anything that stops the frameloop before the delay elapses
+ * — a stalled tab, a slow hydration, an interrupted render — turns that
+ * promise into an empty page. `animation-fill-mode: both` cannot fail that
+ * way: the browser owns the end state, and the compositor owns the frames. */
+@keyframes hero-rise {
+  from { transform: translateY(112%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes hero-lift {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Rain.
+ *
+ * Each glyph falls in from above its own clipping row, and the two extra
+ * frames are what make it water rather than a slide: the character enters
+ * stretched along its fall (a drop elongates as it accelerates), overshoots
+ * its resting line by a hair, and squashes as it lands before settling. That
+ * is the shape of a drop hitting a surface, and it is three transforms.
+ *
+ * `transform-origin: bottom` puts the squash on the baseline, where the
+ * landing happens. Everything here is transform only, so the whole headline
+ * costs the compositor and nothing else. */
+@keyframes char-rain {
+  0%   { transform: translateY(-145%) scaleY(1.32); }
+  58%  { transform: translateY(4%) scaleY(0.93); }
+  78%  { transform: translateY(-1.5%) scaleY(1.02); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+.hero-rise {
+  animation: hero-rise 1.15s var(--ease-out-expo) both;
+}
+
+.char-rain {
+  transform-origin: center bottom;
+  animation: char-rain 1.05s var(--ease-out-expo) both;
+}
+
+/* A line that draws itself.
+ *
+ * `stroke-dashoffset` is the usual way to do this and it repaints the path
+ * every frame on the main thread. Scaling the element horizontally from its
+ * left edge produces the same read — a line arriving left to right — and stays
+ * on the compositor, which is the page's standing rule for motion. */
+@keyframes draw-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.draw-in {
+  transform-origin: left center;
+  animation: draw-in 1.1s var(--ease-out-expo) both;
+}
+
+.hero-lift {
+  animation: hero-lift 0.8s var(--ease-spring) both;
 }
 
 @keyframes blip {
@@ -351,12 +434,64 @@ body {
   color: transparent;
 }
 
+/* Was 11px at `ink-500`, which is a 4.6:1 hairline of a font at a size people
+   genuinely could not read. Up two steps, tracking eased off to compensate,
+   and onto the accent, which carries 7.5:1. */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------------ *
+ * Water
+ *
+ * Two effects share one idea: the page is behind glass, and the pointer and
+ * the scroll both leave water on it. Both are built from transforms and
+ * opacity only — a real refraction (`feDisplacementMap`, `backdrop-filter`)
+ * re-rasterises the area under it every frame, and this page runs it across
+ * the whole viewport.
+ * ------------------------------------------------------------------ */
+
+/* A bead of water: bright where the light enters at the top-left, dark at the
+   bottom edge where it pools, and a faint rim all the way round. */
+.droplet {
+  background:
+    radial-gradient(
+      120% 120% at 32% 26%,
+      oklch(1 0 0 / 0.75) 0%,
+      oklch(1 0 0 / 0.18) 34%,
+      transparent 62%
+    ),
+    radial-gradient(
+      100% 100% at 50% 88%,
+      oklch(0.21 0.012 285 / 0.16) 0%,
+      transparent 60%
+    );
+  box-shadow:
+    inset 0 0 0 1px oklch(0.21 0.012 285 / 0.1),
+    0 1px 3px -1px oklch(0.21 0.012 285 / 0.18);
+}
+
+/* A drip that has run and is thinning out behind the head of the drop. */
+.droplet-trail {
+  background: linear-gradient(
+    to top,
+    oklch(0.21 0.012 285 / 0.13),
+    transparent
+  );
+}
+
+@keyframes ripple {
+  from { transform: scale(0.4); opacity: 0.55; }
+  to   { transform: scale(2.4); opacity: 0; }
+}
+
+.ripple {
+  animation: ripple 0.85s var(--ease-out-expo) both;
 }
 
 /* ------------------------------------------------------------------ *

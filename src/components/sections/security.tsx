@@ -64,7 +64,7 @@ export function Security() {
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 {t.security.certsTitle}
               </h3>
-              <ul className="mt-5 divide-y divide-white/[0.07]">
+              <ul className="mt-5 divide-y divide-line">
                 {certifications.map((cert) => (
                   <li
                     key={cert.key}

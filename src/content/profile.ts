@@ -64,15 +64,59 @@ export const stackGroups = [
  * Stop 1 is `--color-accent` exactly, so the journey never leaves the site
  * palette. Each stop also carries a literal hex, because the scenes build
  * colours by concatenating alpha (`${hex}44`), which `var()` cannot do.
+ *
+ * **The hex and the `css` must resolve to the same colour.** They are two
+ * spellings of one stop, and nothing enforces that — so when the palette in
+ * `globals.css` moves, these move with it or the ramp silently forks and the
+ * journey renders one hue through `var()` and a different one through the
+ * alpha-concatenated literals. That is exactly what happened when the page
+ * went from the dark sage build to this one: the vars became graphite and
+ * these stayed green.
  */
 export const signalRamp = [
-  { css: "var(--color-signal-1)", hex: "#B4CDAC" },
-  { css: "var(--color-signal-2)", hex: "#96AC8E" },
-  { css: "var(--color-signal-3)", hex: "#CEDDC9" },
+  { css: "var(--color-signal-1)", hex: "#4B4B5C" },
+  { css: "var(--color-signal-2)", hex: "#5F6271" },
+  { css: "var(--color-signal-3)", hex: "#393643" },
 ] as const;
 
 export type Signal = (typeof signalRamp)[number];
 
+
+/**
+ * The three systems the hero puts on the board.
+ *
+ * This is a status panel built only out of things that are true and checkable
+ * — a name, where it lives on this page, and whether it is in production or
+ * still a pilot. There is deliberately no time series, no response time and no
+ * "last updated": a sparkline of invented telemetry beside a real uptime
+ * figure reads as live monitoring, and inventing that is not a design choice.
+ * The trend line is a static glyph and the number under it is his own.
+ */
+export const heroSystems = [
+  {
+    key: "lowshop",
+    name: "lowshop.net",
+    href: "#work",
+    state: "live",
+    tech: ["Next.js", "Node", "Linux"],
+  },
+  {
+    key: "eyaqin",
+    name: "eYaqin",
+    href: "#projects",
+    state: "live",
+    tech: ["Next.js", "Prisma", "Postgres"],
+  },
+  {
+    key: "smartguard",
+    name: "SmartGuard",
+    href: "#projects",
+    state: "pilot",
+    tech: ["Python", "FastAPI", "Docker"],
+  },
+] as const;
+
+export type HeroSystem = (typeof heroSystems)[number];
 
 export type ExperienceMeta = {
   key: "sambu" | "ccl";

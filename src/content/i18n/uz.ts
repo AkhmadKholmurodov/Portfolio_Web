@@ -21,12 +21,21 @@ export const uz: Dict = {
   hero: {
     available: "Yangi imkoniyatlarga ochiqman",
     role: "Full-Stack va WebOps muhandisi",
+    location: "Janubiy Koreya · E-7 vizasi",
     tagline: "Veb-mahsulotlarni boshidan oxirigacha quraman — va ularni ishlab turishini ta'minlayman.",
     intro:
       "Janubiy Koreyada uch yillik ishlab chiqarish platformalari tajribasi. Oldinda Next.js, ortida Node va Python, tagida Linux va Docker — va bularning barchasi ustidan hujumchi nigohi.",
     ctaWork: "Ishlarni ko'rish",
     ctaContact: "Bog'lanish",
     scroll: "Pastga",
+    systemsTitle: "Ishlab turgan tizimlar",
+    stateLive: "Jonli",
+    statePilot: "Pilot",
+    systems: {
+      lowshop: { value: "99.9%", label: "Uptime · SAMBU D2C do'koni" },
+      eyaqin: { value: "Solo", label: "To'liq stack · marketplace" },
+      smartguard: { value: "100×", label: "Vision API xarajati · do'konda" },
+    },
     stats: [
       { value: "3+", label: "Yil ishlab chiqarishda" },
       { value: "99.9%", label: "lowshop.net uptime" },
@@ -362,7 +371,7 @@ export const uz: Dict = {
   },
 
   footer: {
-    built: "Next.js, React Three Fiber va Motion yordamida qurilgan.",
+    built: "Next.js, Tailwind va Motion yordamida qurilgan.",
     rights: "Barcha huquqlar himoyalangan.",
     backToTop: "Yuqoriga",
   },

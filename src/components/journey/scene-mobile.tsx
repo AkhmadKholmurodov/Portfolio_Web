@@ -83,15 +83,15 @@ const BUBBLES = [
  * colour schemes into the section.
  */
 const PALETTES = [
-  { bg: "#0F120E", fg: "#ECF0EB" }, /* chalk    */
-  { bg: "#0E120D", fg: "#CEDDC9" }, /* mist     */
-  { bg: "#101410", fg: "#B4CDAC" }, /* sage     */
-  { bg: "#111511", fg: "#96AC8E" }, /* moss     */
-  { bg: "#131612", fg: "#7E9576" }, /* fern     */
-  { bg: "#151813", fg: "#6B8163" }, /* pine     */
-  { bg: "#EDF1EC", fg: "#1B2119" }, /* paper    */
-  { bg: "#E4EBE2", fg: "#3E4C39" }, /* linen    */
-  { bg: "#DDE6DA", fg: "#2A3527" }, /* slate    */
+  { bg: "#F6F6F8", fg: "#18181E" }, /* ink       */
+  { bg: "#F0F0F4", fg: "#31313E" }, /* graphite  */
+  { bg: "#EAEAEF", fg: "#4B4B5C" }, /* pewter    */
+  { bg: "#F4F2F6", fg: "#3E3E4E" }, /* platinum  */
+  { bg: "#EEEFF3", fg: "#2A2A38" }, /* steel     */
+  { bg: "#F8F8FA", fg: "#454553" }, /* chalk     */
+  { bg: "#1B1B22", fg: "#EDEDF1" }, /* night     */
+  { bg: "#22222B", fg: "#D6D6DE" }, /* slate     */
+  { bg: "#141419", fg: "#C7C7D2" }, /* obsidian  */
 ];
 
 const ALPHA = (pct: number) =>
@@ -128,7 +128,7 @@ export function SceneMobile({
 
   // The palette setting, applied for real: one custom property re-skins the app.
   const liveTint = useTransform(p, [0.8, 0.89], [tint, PALETTES[1].fg]);
-  // PALETTES[1] is mist — a clear lightness jump from any of the three
+  // PALETTES[1] is graphite — a clear lightness jump from any of the three
   // signal stops, without leaving the hue.
   const paletteChoice = useTransform(p, (v): number => (v >= 0.845 ? 1 : 0));
 
