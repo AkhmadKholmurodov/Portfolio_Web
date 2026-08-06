@@ -124,10 +124,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* The ledger.
-          Four numbers, each with the system it came from written underneath.
-          A metric without a source is a claim; a metric with one is a fact
-          somebody can go and check, and every number here survives that. */}
+     
       <div className="shell mt-14 w-full md:mt-20">
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 md:grid-cols-4 md:gap-x-10">
           {metrics.map((m, i) => {
