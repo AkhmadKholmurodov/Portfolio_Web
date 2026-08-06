@@ -1,145 +1,103 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowUp, ArrowUpRight, Check, Copy } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Download, Mail, Phone } from "lucide-react";
+import { Section } from "@/components/site/section";
+import { Button } from "@/components/ui/button";
+import { Reveal, RevealGroup, RevealItem } from "@/components/magicui/reveal";
 import { useLanguage } from "@/components/providers/language-provider";
 import { profile, socials } from "@/content/profile";
-import { Container, Section } from "@/components/ui/section";
-import { Reveal, SplitWords } from "@/components/ui/reveal";
-import { Magnetic } from "@/components/ui/magnetic";
+import { GitHubIcon, LinkedInIcon } from "@/components/site/icons";
 
+const ICONS = {
+  github: GitHubIcon,
+  linkedin: LinkedInIcon,
+  email: Mail,
+  phone: Phone,
+} as const;
+
+/** The ask. Two buttons and four rows, and no form. */
 export function Contact() {
   const { t } = useLanguage();
-  const [copied, setCopied] = useState(false);
-
-  async function copyEmail() {
-    try {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard can be blocked; the mailto link below still works.
-    }
-  }
 
   return (
-    <Section id="contact" className="noise relative overflow-hidden pb-16">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(75% 55% at 50% 100%, color-mix(in oklch, var(--color-accent) 11%, transparent), transparent 72%)",
-        }}
-      />
-      <div aria-hidden className="pointer-events-none absolute inset-0 grid-lines opacity-50" />
-
-      <Container className="relative">
-        <div className="flex flex-col items-center text-center">
+    <Section id="contact" className="pb-32 md:pb-44">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-20">
+        <div>
           <Reveal>
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-gradient-to-r from-transparent to-accent/70" />
-              <span className="eyebrow">{t.contact.eyebrow}</span>
-              <span className="h-px w-8 bg-gradient-to-l from-transparent to-accent/70" />
-            </div>
-          </Reveal>
-
-          <h2 className="mt-7 text-[clamp(2.5rem,8vw,6rem)] font-medium leading-[0.95] tracking-[-0.045em]">
-            <SplitWords text={t.contact.title} />
-          </h2>
-
-          <Reveal delay={0.12}>
-            <p className="mt-6 max-w-lg text-pretty text-base leading-relaxed text-ink-300">
+            <p className="label">{t.contact.label}</p>
+            <h2 className="display-1 mt-6 text-ink-100">{t.contact.title}</h2>
+            <p className="mt-8 max-w-2xl text-base leading-relaxed text-ink-300 md:text-lg">
               {t.contact.lead}
             </p>
           </Reveal>
 
-          <Reveal delay={0.2}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <Magnetic strength={0.3}>
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink-100 px-7 py-3.5 text-sm font-medium text-ink-950"
-                >
-                  <span className="relative z-10">{t.contact.emailCta}</span>
-                  <ArrowUpRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-accent to-accent-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
-                </a>
-              </Magnetic>
+          <Reveal className="mt-10 flex flex-wrap gap-3" y={16}>
+            <Button asChild size="lg">
+              <a href={`mailto:${profile.email}`}>
+                <Mail />
+                {t.contact.emailCta}
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <a href={profile.resume} download>
+                <Download />
+                {t.contact.resumeCta}
+              </a>
+            </Button>
+          </Reveal>
 
-              <Magnetic strength={0.3}>
-                <button
-                  type="button"
-                  onClick={copyEmail}
-                  aria-label={t.contact.copy}
-                  className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-3.5 font-mono text-[13px] text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
-                >
-                  {copied ? (
-                    <Check className="h-3.5 w-3.5 text-accent" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" />
-                  )}
-                  {copied ? t.contact.copied : profile.email}
-                </button>
-              </Magnetic>
+          <p className="mt-5 font-mono text-[0.6875rem] tracking-wide text-ink-600">
+            {t.contact.responseTime}
+          </p>
+        </div>
+
+        {/* The one candid photograph on the home page, and it is here on
+            purpose: the section is asking a stranger to write to a person,
+            and every other picture on this page is of a suit or a product.
+            This is also the face that carries the phone layout, where the
+            hero portrait is dropped. */}
+        <Reveal y={22} className="w-full max-w-sm lg:w-80">
+          <figure>
+            <div className="media-frame lift-card rounded-2xl border border-line">
+              <Image
+                src="/photos/cafe.webp"
+                alt={t.about.photos.cafe}
+                width={960}
+                height={1280}
+                sizes="(max-width: 1024px) 24rem, 20rem"
+                className="h-auto w-full"
+              />
             </div>
-          </Reveal>
+            <figcaption className="mt-3 font-mono text-[0.625rem] tracking-wide text-ink-700">
+              {t.about.photos.cafe}
+            </figcaption>
+          </figure>
+        </Reveal>
+      </div>
 
-          <Reveal delay={0.28}>
-            <p className="mt-8 max-w-md text-pretty text-[13px] leading-relaxed text-ink-500">
-              {t.contact.availability}
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.34}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-              {socials.map((social) => (
-                <a
-                  key={social.key}
-                  href={social.href}
-                  target={social.key === "email" ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] text-ink-300 transition-colors duration-300 hover:border-line-hover hover:text-ink-100"
-                >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors group-hover:text-ink-100/70">
-                    {social.label}
-                  </span>
+      <RevealGroup className="mt-20 border-t border-line" stagger={0.06}>
+        {socials.map((social) => {
+          const Icon = ICONS[social.key];
+          return (
+            <RevealItem key={social.key}>
+              <a
+                href={social.href}
+                target={social.key === "github" || social.key === "linkedin" ? "_blank" : undefined}
+                rel="noreferrer noopener"
+                className="group flex items-center gap-5 border-b border-line py-5 transition-colors duration-400 ease-(--ease-out-expo) hover:border-line-hover"
+              >
+                <Icon className="size-4 shrink-0 text-ink-700 transition-colors duration-400 group-hover:text-ink-300" />
+                <span className="label w-24 shrink-0">{social.label}</span>
+                <span className="min-w-0 flex-1 truncate text-[0.9375rem] text-ink-200">
                   {social.handle}
-                </a>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </Container>
+                </span>
+                <ArrowUpRight className="size-4 shrink-0 text-ink-700 transition-all duration-400 ease-(--ease-out-expo) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink-300" />
+              </a>
+            </RevealItem>
+          );
+        })}
+      </RevealGroup>
     </Section>
-  );
-}
-
-export function Footer() {
-  const { t } = useLanguage();
-  const year = new Date().getFullYear();
-
-  return (
-    <footer className="relative border-t border-line">
-      <Container>
-        <div className="flex flex-col items-center justify-between gap-5 py-8 sm:flex-row">
-          <p className="text-[12px] text-ink-500">
-            © {year} {profile.name}. {t.footer.rights}
-          </p>
-
-          <p className="order-3 text-[12px] text-ink-500 sm:order-none">
-            {t.footer.built}
-          </p>
-
-          <a
-            href="#home"
-            className="group flex items-center gap-2 text-[12px] text-ink-500 transition-colors hover:text-ink-100"
-          >
-            {t.footer.backToTop}
-            <ArrowUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" />
-          </a>
-        </div>
-      </Container>
-    </footer>
   );
 }

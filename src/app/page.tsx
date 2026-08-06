@@ -1,5 +1,25 @@
-import { Portfolio } from "@/components/portfolio";
+import { Hero } from "@/components/sections/hero";
+import { Build } from "@/components/sections/build";
+import { Run } from "@/components/sections/run";
+import { BreakSection } from "@/components/sections/break-section";
+import { Stack } from "@/components/sections/stack";
+import { Contact } from "@/components/sections/contact";
 
+/**
+ * Build, run, break, then the ask. The order is the argument: what he made,
+ * that he keeps it alive, that he attacks it himself — and only then the
+ * toolkit, because a list of technologies means nothing until you have seen
+ * what was done with them.
+ */
 export default function Page() {
-  return <Portfolio />;
+  return (
+    <>
+      <Hero />
+      <Build />
+      <Run />
+      <BreakSection />
+      <Stack />
+      <Contact />
+    </>
+  );
 }

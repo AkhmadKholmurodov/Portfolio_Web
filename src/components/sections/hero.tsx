@@ -1,311 +1,164 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
+import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 import { useLanguage } from "@/components/providers/language-provider";
-import { heroSystems, profile, type HeroSystem } from "@/content/profile";
-import { Container } from "@/components/ui/section";
-import { Magnetic } from "@/components/ui/magnetic";
-import { CountUp, Scramble, SplitChars } from "@/components/ui/text-fx";
-import { cn } from "@/lib/utils";
+import { metrics, profile } from "@/content/profile";
+import { Tooltip } from "@/components/ui/tooltip";
 
 /**
- * The first screen as an operator's board, set on a centre axis.
- *
- * Every portfolio says "I build web products". His claim is narrower and
- * harder: he builds them *and then keeps them running*. A sentence cannot
- * carry that — a panel of the three systems he actually operates can, and it
- * turns the first screen from an assertion into an exhibit. A recruiter gets
- * the name, the role and the right to work in the first two seconds, and the
- * evidence for all of it in the next two, without scrolling.
- *
- * The panel is built only from checkable facts: a product name, whether it is
- * in production or a pilot, and one number he stands behind. There is no
- * invented telemetry in it — see the note on `heroSystems`.
- *
- * Everything hangs off one vertical axis. A centred masthead has no slack to
- * distribute, which is what makes it hold together at any width: there is no
- * long side and short side to fall out of balance, so the composition that
- * works on a laptop is the same one that works on a phone.
+ * The first screen. Three sentences that are the whole argument of the site,
+ * four numbers that are all checkable, and nothing else.
  */
 export function Hero() {
   const { t } = useLanguage();
-  const ref = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -70]);
-  const contentFade = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-
-  const [first, ...rest] = profile.name.split(" ");
-  const lines = [first, rest.join(" ")];
-
-  // Years and languages only. Uptime and the cost cut are on the board above,
-  // and a proof bar that repeats the panel is just the same claim twice.
-  const footnote = [t.hero.stats[0], t.hero.stats[3]];
+  const lines = [t.hero.line1, t.hero.line2, t.hero.line3];
 
   return (
     <section
-      ref={ref}
       id="home"
-      className="sticky top-0 flex h-[100svh] flex-col overflow-hidden bg-ink-950"
+      className="relative flex min-h-[100svh] flex-col justify-end pt-28 pb-8 md:justify-center md:pt-32 md:pb-10"
     >
-      <div
-        aria-hidden
-        className="grid-lines pointer-events-none absolute inset-0 opacity-40"
-      />
+      <div className="shell w-full">
+        <p
+          className="label lift-in flex items-center gap-2.5"
+          style={{ animationDelay: "80ms" }}
+        >
+          <span className="size-1.5 animate-breathe rounded-full bg-signal" />
+          {t.hero.label}
+        </p>
 
-      <motion.div
-        style={{ y: contentY, opacity: contentFade }}
-        className="relative flex flex-1 items-center pt-(--header-h)"
-      >
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="hero-lift inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.06] px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.16em] text-accent">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-[blip_2.4s_ease-in-out_infinite]" />
-              <Scramble text={t.hero.available} delay={0.55} />
+        <h1 className="display-1 mt-7 text-ink-100">
+          {lines.map((line, i) => (
+            // Each line is clipped by its own row so it can slide up from
+            // underneath rather than fading in place — the difference between
+            // type that arrives and type that appears.
+            <span key={i} className="block overflow-hidden pb-[0.06em]">
+              <span
+                className="rise-in block"
+                style={{ animationDelay: `${140 + i * 110}ms` }}
+              >
+                {line}
+              </span>
             </span>
+          ))}
+        </h1>
 
-            {/* Two blocks with a real space between them, not two forced
-                lines. Each name is an `inline-block`, so a line can break
-                between them but never inside one — the phone gets two lines
-                and the desktop gets one, from the same markup and without a
-                breakpoint deciding it. */}
-            <h1 className="mt-3.5 text-[clamp(2.1rem,8.6vw,2.9rem)] font-medium leading-[0.98] tracking-[-0.045em] text-ink-100 sm:text-[clamp(2.6rem,4.6vw,3.9rem)] sm:leading-[1] md:mt-4">
-              <SplitChars text={lines[0]} delay={0.14} />{" "}
-              <SplitChars text={lines[1]} delay={0.14 + lines[0].length * 0.02} />
-            </h1>
+        {/* The portrait sits beside the lead rather than beside the headline:
+            at full size the headline needs the whole measure, and squeezing it
+            to make room for a photograph would cost the one thing the first
+            screen is actually for.
 
+            It is also where the schematic's origin node is — the traces
+            behind it radiate out from roughly this point, so on a wide screen
+            the network appears to come out from behind him. That is the
+            section's whole claim, drawn.
+
+            Below `md` it is dropped: on a phone the hero is already four
+            screens of type, and a thumbnail-sized portrait squeezing the lead
+            paragraph into a ten-line column helps nobody. The face arrives
+            further down instead, at full width. */}
+        <div className="mt-9 grid gap-9 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-12 lg:gap-16">
+          <div>
             <p
-              style={{ animationDelay: "0.42s" }}
-              className="hero-lift mt-3.5 text-xl font-medium tracking-tight text-ink-100 sm:text-2xl md:mt-4"
+              className="lift-in max-w-xl text-[0.9375rem] leading-relaxed text-ink-300 md:text-base"
+              style={{ animationDelay: "520ms" }}
             >
-              {t.hero.role}
+              {t.hero.lead}
             </p>
 
-            <p
-              style={{ animationDelay: "0.5s" }}
-              className="hero-lift mt-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[0.16em] text-ink-300"
-            >
-              <Scramble text={t.hero.location} delay={0.78} dwell={26} />
-            </p>
-
-            {/* Wide enough to read as a picture of a person rather than a
-                headshot crop: at 3:2 the frame holds a little over half the
-                source height, which is hair to waist.
-
-                The `svh` cap is what keeps that true across phones. A hero
-                this dense — name, role, right-to-work, three systems, three
-                actions — has a fixed budget, and on a short screen the
-                photograph is the only element that can give height back. It
-                yields to a head-and-shoulders band there and opens back up to
-                the full 3:2 the moment there is room. */}
             <div
-              style={{ animationDelay: "0.3s" }}
-              // Two ways of sizing one box. On a phone width is the scarce
-              // thing, so the frame takes the column and a height cap trims
-              // the ratio — it becomes a shallower band and crops tighter. On
-              // a desktop height is the scarce thing, so the height leads and
-              // `w-fit` lets the 3:2 resolve the width, which keeps the full
-              // hair-to-waist crop instead of shearing the shoulders off.
-              className="hero-lift relative mx-auto mt-4 aspect-3/2 max-h-[23svh] w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-surface shadow-(--shadow-scene) sm:mt-5 md:mt-6 md:h-[22svh] md:max-h-none md:w-fit md:max-w-none"
+              className="lift-in mt-8 flex flex-wrap items-center gap-3"
+              style={{ animationDelay: "620ms" }}
             >
-              <Image
-                src="/hero-portrait.webp"
-                alt={`${profile.name} — ${t.hero.role}`}
-                width={800}
-                height={1000}
-                preload
-                sizes="(max-width: 768px) 24rem, 28rem"
-                // 6% down puts the crop at 30–563 of 1000: headroom above the
-                // hair, waist at the bottom. `object-top` would cut his chin.
-                className="h-full w-full object-cover object-[center_6%]"
-              />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[var(--bg)]/55 to-transparent"
-              />
+              {/* The page's one piece of purely decorative self-starting
+                  motion, on the page's one primary action. */}
+              <BorderBeam>
+                <Button asChild size="lg">
+                  <Link href="/#build">
+                    {t.hero.ctaWork}
+                    <ArrowDown />
+                  </Link>
+                </Button>
+              </BorderBeam>
+              <Button asChild variant="outline" size="lg">
+                <a href={profile.resume} download>
+                  {t.hero.ctaResume}
+                  <ArrowUpRight />
+                </a>
+              </Button>
             </div>
 
-            <SystemBoard />
-
             <div
-              style={{ animationDelay: "0.7s" }}
-              className="hero-lift mt-4 flex flex-wrap items-center justify-center gap-2.5 sm:mt-6 md:mt-7 md:gap-3"
+              className="lift-in mt-9 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] tracking-wide text-ink-600"
+              style={{ animationDelay: "700ms" }}
             >
-              <Magnetic strength={0.28}>
-                <a
-                  href="#projects"
-                  className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink-100 px-6 py-3 text-[15px] font-medium text-ink-950"
-                >
-                  <span className="relative z-10">{t.hero.ctaWork}</span>
-                  <ArrowDown className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-accent to-accent-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
-                </a>
-              </Magnetic>
-
-              {/* A recruiter's first click. The header hides its résumé button
-                  behind the menu on a phone, so this is the only one-tap route
-                  to the CV. */}
-              <Magnetic strength={0.28}>
-                <a
-                  href={profile.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full border border-line-strong bg-[var(--bg)]/50 px-6 py-3 text-[15px] font-medium text-ink-100 backdrop-blur-sm transition-colors duration-300 hover:border-line-hover hover:bg-tint"
-                >
-                  {t.nav.resume}
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-              </Magnetic>
-
-              {/* Below `sm` these three wrap to two rows and push the board
-                  off the screen. The two that survive are the two a recruiter
-                  actually clicks; contact stays one tap away in the header
-                  menu and is the whole of the last section. */}
-              <a
-                href="#contact"
-                className="group hidden items-center gap-1.5 px-2 text-[15px] font-medium text-ink-300 transition-colors duration-300 hover:text-ink-100 sm:inline-flex"
-              >
-                {t.hero.ctaContact}
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
+              <span className="text-signal">{t.hero.availability}</span>
+              <span className="text-ink-800">/</span>
+              <span>{t.hero.visa}</span>
+              <span className="text-ink-800">/</span>
+              <span>{t.hero.languages}</span>
             </div>
           </div>
-        </Container>
-      </motion.div>
 
-      {/* Dropped on a phone. The board above already carries three systems
-          with real numbers, About repeats both of these, and this row is the
-          only thing left whose removal buys back a screen's worth of height
-          without costing the reader a fact they cannot get elsewhere. */}
-      <motion.div
-        style={{ opacity: contentFade }}
-        className="relative hidden shrink-0 sm:block"
-      >
-        <Container>
           <div
-            style={{ animationDelay: "1.05s" }}
-            className="hero-lift mx-auto flex max-w-3xl flex-wrap items-end justify-between gap-x-8 gap-y-2 border-t border-line py-3"
+            className="lift-in hidden md:block"
+            style={{ animationDelay: "560ms" }}
           >
-            <dl className="flex flex-wrap items-baseline justify-center gap-x-8 gap-y-1.5">
-              {footnote.map((stat, i) => (
-                <div key={stat.label} className="flex items-baseline gap-2">
-                  <dt className="sr-only">{stat.label}</dt>
-                  <dd className="text-lg font-medium tracking-tight text-ink-100">
-                    <CountUp value={stat.value} delay={1.2 + i * 0.14} />
-                  </dd>
-                  <p className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-300">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </dl>
-
-            <a
-              href="#about"
-              aria-hidden
-              tabIndex={-1}
-              className="hidden items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-500 sm:flex"
-            >
-              {t.hero.scroll}
-              <motion.span
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ArrowDown className="h-3.5 w-3.5" />
-              </motion.span>
-            </a>
+            <div className="media-frame lift-card relative w-48 rounded-2xl border border-line lg:w-72">
+              <Image
+                src="/photos/portrait.webp"
+                alt={profile.name}
+                width={901}
+                height={1280}
+                sizes="(max-width: 1024px) 12rem, 18rem"
+                priority
+                className="h-auto w-full"
+              />
+            </div>
           </div>
-        </Container>
-      </motion.div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ *
- * The board.
- * ------------------------------------------------------------------ */
-
-function SystemBoard() {
-  const { t } = useLanguage();
-
-  return (
-    <section
-      aria-label={t.hero.systemsTitle}
-      style={{ animationDelay: "0.6s" }}
-      // Opaque, not `bg-surface`: the page's plotting grid runs straight
-      // through a 3.5%-alpha fill, and a status panel you can see the
-      // wallpaper through does not read as a panel.
-      className="hero-lift mt-4 overflow-hidden rounded-2xl border border-line bg-ink-900 text-left shadow-(--shadow-nav) sm:mt-5 md:mt-6"
-    >
-      <h2 className="border-b border-line bg-surface px-4 py-2 text-center font-mono text-[11.5px] font-medium uppercase tracking-[0.2em] text-ink-300">
-        <Scramble text={t.hero.systemsTitle} delay={0.9} dwell={22} />
-      </h2>
-
-      <div className="grid grid-cols-3 divide-x divide-line">
-        {heroSystems.map((system, i) => (
-          <SystemCell key={system.key} system={system} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function SystemCell({ system, index }: { system: HeroSystem; index: number }) {
-  const { t } = useLanguage();
-  const copy = t.hero.systems[system.key];
-  const live = system.state === "live";
-
-  return (
-    <a
-      href={system.href}
-      className="group relative flex min-w-0 flex-col items-center px-2.5 py-3 text-center transition-colors duration-500 hover:bg-tint sm:px-4"
-    >
-      <div className="flex max-w-full items-center gap-1.5">
-        {/* Filled and pulsing for something in production, a hollow ring for
-            something still piloting. The difference is the honest part. */}
-        <span
-          aria-hidden
-          className={cn(
-            "h-1.5 w-1.5 shrink-0 rounded-full",
-            live
-              ? "bg-accent animate-[blip_2.4s_ease-in-out_infinite]"
-              : "border border-accent/60",
-          )}
-        />
-        <span className="truncate font-mono text-[11.5px] font-medium uppercase tracking-[0.1em] text-ink-300 sm:text-xs">
-          {system.name}
-        </span>
-        <span className="sr-only">
-          {live ? t.hero.stateLive : t.hero.statePilot}
-        </span>
+        </div>
       </div>
 
-      <p className="mt-2.5 text-2xl font-medium tracking-tight text-ink-100 sm:text-3xl">
-        <CountUp value={copy.value} delay={1.15 + index * 0.12} />
-      </p>
-      <p className="mt-1 text-pretty font-mono text-[10.5px] uppercase leading-tight tracking-[0.08em] text-ink-500 sm:text-[11px]">
-        {copy.label}
-      </p>
-
-      {/* What the thing is actually made of — the only reason to put anything
-          in this space is that it is true. Dropped on a phone, where three
-          columns leave it about nine characters of room and it would be a
-          truncated ellipsis in every cell. */}
-      <span
-        aria-hidden
-        style={{ animationDelay: `${1.05 + index * 0.12}s` }}
-        className="draw-in mt-3 hidden h-px w-full bg-line sm:block"
-      />
-      <p className="mt-2 hidden truncate font-mono text-[11px] uppercase tracking-[0.08em] text-ink-500 sm:block">
-        {system.tech.join(" · ")}
-      </p>
-    </a>
+      {/* The ledger.
+          Four numbers, each with the system it came from written underneath.
+          A metric without a source is a claim; a metric with one is a fact
+          somebody can go and check, and every number here survives that. */}
+      <div className="shell mt-14 w-full md:mt-20">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 md:grid-cols-4 md:gap-x-10">
+          {metrics.map((m, i) => {
+            const copy = t.metrics[m.key as keyof typeof t.metrics];
+            return (
+              <div
+                key={m.key}
+                className="lift-in"
+                style={{ animationDelay: `${780 + i * 70}ms` }}
+              >
+                <Tooltip content={copy.source}>
+                  <div className="cursor-default">
+                    <p className="display-3 text-ink-100">
+                      <NumberTicker
+                        value={m.value}
+                        decimals={m.decimals}
+                        prefix={"prefix" in m ? m.prefix : ""}
+                        suffix={m.suffix}
+                      />
+                    </p>
+                    <p className="mt-2 text-[0.8125rem] text-ink-300">{copy.label}</p>
+                    <p className="mt-1 font-mono text-[0.6875rem] tracking-wide text-ink-700">
+                      {copy.source}
+                    </p>
+                  </div>
+                </Tooltip>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }

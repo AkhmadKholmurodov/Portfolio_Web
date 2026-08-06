@@ -39,11 +39,10 @@ export function useIsTouch() {
 
 
 /**
- * Which of the project journey's three design boxes fits.
- *
- * `compact` (tablet) drops each scene's secondary column; `narrow` (phone)
- * re-lays every scene at roughly its native size, because scaling a tablet
- * composition down to a phone makes its text unreadable.
+ * Which of the project journey's three design boxes fits. `compact` (tablet)
+ * drops each scene's secondary column; `narrow` (phone) re-lays every scene at
+ * roughly its native size, because scaling a tablet composition down to a
+ * phone makes its text unreadable.
  */
 export function useSceneSize(): "wide" | "compact" | "narrow" {
   const narrow = useMediaQuery("(max-width: 639px)");

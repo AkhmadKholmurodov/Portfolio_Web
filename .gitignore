@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# schematic preview output (scripts/preview-schematic.ts)
+.preview/
+schematic.svg
+schematic.json

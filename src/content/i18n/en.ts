@@ -1,390 +1,409 @@
+/**
+ * English — the source dictionary. `Dict` is inferred from this object, so
+ * `ko.ts` and `uz.ts` are checked against it structurally: add a key here and
+ * the other two stop compiling until they have it.
+ */
 export const en = {
   meta: {
     title: "Akhmad Kholmurodov — Full-Stack & WebOps Engineer",
     description:
-      "Full-Stack & WebOps Engineer in South Korea. I build and operate production web platforms with Next.js, React Native and Python — and I review my own code with an attacker's checklist.",
+      "I build production web platforms in South Korea, operate the servers they run on, and practise the attacks I would rather find in my own code. Next.js, React Native, Python, Docker. E-7 visa, open to roles in Seoul.",
+  },
+
+  ui: {
+    menu: "Menu",
+    close: "Close",
+    language: "Language",
+    scroll: "Scroll",
+    back: "Back",
+    backHome: "Back to home",
+    allWork: "All work",
+    next: "Next project",
+    external: "Opens in a new tab",
+    skip: "Skip to content",
+    notFound: "That page does not exist.",
   },
 
   nav: {
-    home: "Home",
+    build: "Build",
+    run: "Run",
+    break: "Break",
     about: "About",
-    stack: "Stack",
-    work: "Work",
-    projects: "Projects",
-    security: "Security",
     contact: "Contact",
     resume: "Résumé",
+    work: "Work",
   },
 
   hero: {
-    available: "Open to opportunities",
-    role: "Full-Stack & WebOps Engineer",
-    /** Country and right-to-work only — never a city. See `about.facts`. */
-    location: "South Korea · E-7 visa",
-    tagline:
-      "I build web products end to end — and then I keep them running.",
-    intro:
-      "Three years of production platforms in South Korea. Next.js on the front, Node and Python behind it, Linux and Docker underneath — and an attacker's checklist over all of it.",
+    label: "Full-stack & WebOps engineer · South Korea",
+    line1: "I build the product.",
+    line2: "I run the server.",
+    line3: "I break both first.",
+    lead: "Three years shipping production platforms in South Korea. Right now: a company's entire e-commerce stack, mine end to end.",
     ctaWork: "See the work",
-    ctaContact: "Get in touch",
-    scroll: "Scroll",
-    /** Header over the status panel. A label, not a claim. */
-    systemsTitle: "Systems in production",
-    stateLive: "Live",
-    statePilot: "Pilot",
-    systems: {
-      lowshop: { value: "99.9%", label: "Uptime · SAMBU's D2C storefront" },
-      eyaqin: { value: "Solo", label: "Full-stack build · marketplace" },
-      smartguard: { value: "100×", label: "Lower vision API cost · in a shop" },
-    },
-    stats: [
-      { value: "3+", label: "Years in production" },
-      { value: "99.9%", label: "Uptime on lowshop.net" },
-      { value: "100×", label: "Vision API cost cut" },
-      { value: "3", label: "Languages spoken" },
-    ],
+    ctaResume: "Download résumé",
+    availability: "Open to roles in Seoul",
+    visa: "E-7 visa · no sponsorship needed",
+    languages: "Korean · English · Uzbek",
   },
 
-  about: {
-    eyebrow: "01 · Introduction",
-    title: "About me",
-    lead: "I build and run web products end to end.",
-    body: [
-      "My path into development started in a university Cloud Computing Lab, where I rebuilt an autonomous-vehicle control prototype from Flutter to React + TypeScript — my first lesson in choosing the right architecture instead of the convenient one.",
-      "Today at SAMBU I own the company's e-commerce platform from the first component to server uptime, and I keep shipping my own products on the side. Alongside development I practise application security — OWASP Top 10, penetration testing and bug bounty — because I would rather find the hole in my own code first.",
-      "I work in Korean, English and Uzbek, and I like problems that sit between a clean interface and a system that has to stay up.",
-    ],
-    facts: [
-      { label: "Based in", value: "Daegu · Gyeongsan, South Korea" },
-      { label: "Experience", value: "3+ years, production web platforms" },
-      { label: "Focus", value: "Next.js · Node · TypeScript · WebOps" },
-      { label: "Also", value: "Application security & bug bounty" },
-      { label: "Education", value: "Daegu University — Software Engineering" },
-      { label: "Work status", value: "E-7 visa holder" },
-    ],
-    photoCaption: "Daegu, South Korea",
+  metrics: {
+    uptime: { label: "Uptime", source: "lowshop.net, since launch" },
+    loadTime: { label: "Page load", source: "lowshop.net, after rework" },
+    visionCost: { label: "Cheaper vision", source: "SmartGuard edge routing" },
+    live: { label: "Products live", source: "In front of real users" },
   },
 
-  stack: {
-    eyebrow: "02 · Capabilities",
-    title: "Tech stack",
-    lead: "The tools I reach for, grouped by where they sit in the system.",
-    groups: {
-      frontend: "Frontend",
-      backend: "Backend",
-      data: "Databases",
-      devops: "DevOps",
-      security: "Security",
-      practice: "Ways of working",
+  build: {
+    label: "01 — Build",
+    title: "I ship whole products, not tickets.",
+    lead: "Schema to deploy, all four are mine. Three are in front of real users right now.",
+  },
+
+  work: {
+    caseStudy: "Read the case study",
+    visit: "Visit site",
+    role: "Role",
+    year: "Year",
+    stack: "Stack",
+    status: { live: "Live", building: "In development" },
+    problem: "The problem",
+    decisions: "Decisions that mattered",
+    outcome: "Where it landed",
+    nextUp: "What I would do next",
+    stats: {
+      uptime: "Uptime",
+      channels: "Sales channels",
+      districts: "Districts in the schema",
+      states: "Listing states",
+      cost: "Cheaper than naïve",
+      deployment: "Shop in production",
+      platforms: "Platforms",
+      stage: "Stage",
     },
+  },
+
+  run: {
+    label: "02 — Run",
+    title: "Shipping is the easy half.",
+    lead: "A platform that is down is not a platform. I own the deploys, the uptime, the payment sync and the Linux boxes underneath.",
+    timeline: "Track record",
+    present: "Present",
   },
 
   experience: {
-    eyebrow: "03 · Track record",
-    title: "Experience",
-    lead: "Two places where I owned real systems that other people depended on.",
-    present: "Present",
-    roles: {
-      sambu: {
-        company: "SAMBU Co., Ltd.",
-        role: "Full-Stack & WebOps Engineer",
-        location: "Gyeongsan, South Korea",
-        context: "Manufacturing & retail company operating its own D2C channel",
-        bullets: [
-          "Designed, built and operate lowshop.net — the company's official e-commerce platform — owning the full lifecycle from frontend implementation through to server operations.",
-          "Launched and manage the storefront across Korea's major commerce channels — Coupang, Naver SmartStore and Toss — covering business profile setup, store build-out and sales system administration.",
-          "Maintained 99.9% uptime and cut page load time by 60%, with zero critical downtime across all sales channels.",
-          "Optimised the payment and data-synchronisation workflows so the online selling pipeline runs without manual intervention.",
-        ],
-      },
-      ccl: {
-        company: "Cloud Computing Lab, Daegu University",
-        role: "Frontend / Full-Stack Developer",
-        location: "Daegu, South Korea",
-        context: "University research laboratory",
-        bullets: [
-          "Developed a web/app prototype for remote control and telemetry monitoring of autonomous vehicles.",
-          "Proposed and led a full migration from a Flutter codebase to ReactJS + TypeScript, resolving the mobile rendering and compatibility issues that blocked the prototype.",
-          "Delivered the migration ahead of deadline alongside the Node.js backend developer; owned responsive UI and REST data synchronisation.",
-          "Handled version control and code review across GitLab and GitHub within the team workflow.",
-        ],
-      },
+    sambu: {
+      company: "SAMBU Co., Ltd.",
+      role: "Full-Stack & WebOps Engineer",
+      context: "Manufacturing and retail company running its own D2C channel",
+      bullets: [
+        "Designed, built and operate lowshop.net — frontend implementation through to server operations.",
+        "Launched and administer the company storefront on Coupang, Naver SmartStore and Toss.",
+        "Rebuilt the payment and stock synchronisation so the pipeline runs without anyone touching it.",
+        "99.9% uptime, 60% faster pages, no critical downtime on any channel.",
+      ],
+    },
+    ccl: {
+      company: "Cloud Computing Lab, Daegu University",
+      role: "Frontend / Full-Stack Developer",
+      context: "University research laboratory",
+      bullets: [
+        "Web and app prototype for remote control and telemetry of autonomous vehicles.",
+        "Proposed and led the migration from Flutter to React and TypeScript, fixing the rendering and compatibility problems that had blocked the prototype.",
+        "Delivered ahead of deadline — my first lesson in choosing the right architecture over the convenient one.",
+      ],
+    },
+    daegu: {
+      company: "Daegu University",
+      role: "B.Sc. Software Engineering",
+      context: "Daegu, South Korea",
+      bullets: [],
     },
   },
 
-  projects: {
-    eyebrow: "04 · Selected work",
-    title: "Projects",
-    lead: "Three builds I took from an empty repository to something people use.",
-    viewLive: "Visit live site",
-    privateRepo: "Private repository",
-    caseStudy: "Read the detail",
-    featuresTitle: "Main features",
-    shotsTitle: "The product running",
-    close: "Close",
-    /** Copy for the scroll-driven walkthrough. `beats` label what the stage
-     *  is showing at each phase, in the order the scene plays them. */
-    journey: {
-      hint: "Keep scrolling",
-      beats: {
-        eyaqin: [
-          "The neighbourhood feed",
-          "Radius search on the map",
-          "Buyer and seller talking",
-          "The listing changes state",
-        ],
-        smartguard: [
-          "A shop, after closing",
-          "The camera locks on",
-          "The day becomes a sheet of paper",
-          "A human signs it off",
-        ],
-        eyaqinMobile: [
-          "The same feed, in the hand",
-          "Pins, and a sheet you drag up",
-          "Chat that arrives as a push",
-          "Nine palettes, one you keep",
-        ],
-      },
-    },
+  break: {
+    label: "03 — Break",
+    title: "I would rather find it myself.",
+    lead: "I develop with an attacker's checklist open beside the editor. The categories I practise on are the categories I review my own code for.",
     items: {
-      eyaqin: {
-        name: "eYaqin",
-        subtitle: "Location-based C2C marketplace",
-        status: "Live",
-        summary:
-          "A neighbourhood-first second-hand marketplace. Instead of a nationwide feed, it ranks and filters listings by how close they actually are to you — by district and by radius — so a trade stays a short walk away.",
-        role: "Solo full-stack build: schema design, API surface, real-time chat, moderation tooling and deployment.",
-        highlights: [
-          { value: "Solo", label: "Full-stack build" },
-          { value: "5-state", label: "Listing lifecycle" },
-          { value: "Real-time", label: "Buyer–seller chat" },
-        ],
-        features: [
-          { title: "Location-aware discovery", body: "District and radius based search and filtering." },
-          { title: "Listing lifecycle", body: "Explicit states from active through to sold." },
-          { title: "Real-time chat", body: "Buyer–seller messaging with read status." },
-          { title: "Trust & safety", body: "Reporting and moderation workflow." },
-          { title: "Engagement", body: "Likes, saved items, nearby discovery feed." },
-          { title: "Auth & accounts", body: "Session handling and profile management." },
-        ],
-        deepDive: {
-          title: "Listing lifecycle design",
-          body: "Every listing moves through explicit states, so both sides always know where a trade stands — and moderation has a single place to intervene.",
-          states: {
-            active: "Listed and visible in local search",
-            reserved: "Buyer agreed, item held",
-            escrow_verification: "Payment held and checked",
-            sold: "Trade complete",
-            hidden: "Withdrawn or moderated",
-          },
-          whyTitle: "Why states, not booleans",
-          why: [
-            "A boolean is_sold cannot express a held item, a disputed payment or a removed listing.",
-            "Transitions are validated server-side, so the UI can never invent an impossible state.",
-          ],
-        },
-        architecture: [
-          {
-            title: "Frontend",
-            body: "Next.js App Router with React 19 and TypeScript. Zustand for client state, Tailwind for styling, server components for listing pages.",
-          },
-          {
-            title: "Backend & data",
-            body: "Route handlers over Prisma against PostgreSQL, migrated from Neon to Supabase under a capacity deadline. API grouped by concern: auth, listings, engagement, nearby discovery.",
-          },
-          {
-            title: "Delivery",
-            body: "Deployed on Vercel with preview builds per branch; environment-separated database branches for safe schema migration.",
-          },
-        ],
-        nextTitle: "What I would do next",
-        next: [
-          "Move image storage to object storage with signed URLs.",
-          "Add search indexing so radius queries stay fast at scale.",
-        ],
+      hackerone: {
+        title: "HackerOne — triaged report",
+        body: "A valid vulnerability report against a live production application. Validated and triaged by the vendor's security team; closed as a duplicate, validity confirmed.",
       },
-
-      smartguard: {
-        name: "SmartGuard",
-        subtitle: "AI-powered CCTV surveillance · SuniyKoz",
-        status: "Live pilot in a shop",
-        summary:
-          "Small retail stores lose inventory to theft and waste hours reviewing CCTV footage. SmartGuard links IP cameras to Claude Vision to auto-detect suspicious activity and send instant Telegram alerts with snapshots.",
-        role: "Engineered the entire platform end to end, including multi-threaded camera pipelines, AI routing logic and the web UI.",
-        highlights: [
-          { value: "100×", label: "Lower VLM API cost" },
-          { value: "Sub-second", label: "Alert generation" },
-          { value: "24/7", label: "Multi-threaded workers" },
-        ],
-        shots: [
-          {
-            alt: "SmartGuard's landing page: a 3D convenience store at night, seen through camera KAM-03, with a detection box tracking a person in the aisle",
-            caption: "The landing page puts you behind the camera — a real-time 3D shop you walk through as you scroll, with the detector locking on.",
-          },
-          {
-            alt: "SmartGuard's feature section on cold paper stock, with the day-strip marking two events across an 8:00 to 23:00 ruler",
-            caption: "Below it, the design system the whole product runs on: paper stock, one highlighter accent, and a day compressed into a single strip.",
-          },
-        ],
-        features: [
-          { title: "Hybrid edge/cloud pipeline", body: "Local OpenCV motion detection filters routine frames before the cloud." },
-          { title: "Selective VLM routing", body: "Only key frames reach Claude Vision — the source of the 100× cost cut." },
-          { title: "Instant Telegram alerts", body: "Owners get a snapshot and a description, not a timeline to scrub." },
-          { title: "Multi-camera workers", body: "Independent threads per camera feed, resilient to single-stream failure." },
-          { title: "Event history", body: "PostgreSQL-backed log of detections for later review." },
-          { title: "Containerised deploy", body: "Docker on-site, so a store runs it without a DevOps team." },
-        ],
-        deepDive: {
-          title: "Two-tier vision pipeline",
-          body: "The expensive part of an AI surveillance system is the model call. So the model only sees frames that already cleared a cheap local filter.",
-          steps: [
-            { label: "IP camera", body: "Continuous RTSP feed per store camera." },
-            { label: "OpenCV filter", body: "Local motion detection discards routine frames." },
-            { label: "Frame router", body: "Only candidate key frames are promoted." },
-            { label: "Claude Vision", body: "Describes the scene and classifies suspicion." },
-            { label: "Telegram alert", body: "Snapshot plus description to the owner's phone." },
-          ],
-          whyTitle: "Why it matters",
-          why: [
-            "Sending every frame to a VLM is financially impossible for a corner shop.",
-            "Filtering locally cut API cost by over 100× while keeping sub-second alerts.",
-          ],
-        },
-        architecture: [
-          {
-            title: "Edge",
-            body: "Python workers with OpenCV, one thread per camera, handling RTSP decoding and motion gating on the store's own hardware.",
-          },
-          {
-            title: "Cloud",
-            body: "FastAPI service that routes candidate frames to Claude Vision, persists detections to PostgreSQL and dispatches Telegram alerts.",
-          },
-          {
-            title: "Interface",
-            body: "React 18 dashboard for camera status, detection history and alert configuration. Whole stack shipped as Docker containers.",
-          },
-        ],
-        nextTitle: "What I would do next",
-        next: [
-          "On-device model for a first-pass classification before any network call.",
-          "Per-store tuning so sensitivity adapts to layout and footfall.",
-        ],
+      platforms: {
+        title: "Hack The Box · TryHackMe",
+        body: "Web application vulnerability analysis, infrastructure penetration testing, OWASP Top 10.",
       },
-
-      eyaqinMobile: {
-        name: "eYaqin Mobile",
-        subtitle: "Cross-platform native client · React Native",
-        status: "Active development",
-        summary:
-          "The native client for eYaqin. A second-hand trade happens on the phone and between strangers — so upload speed and trust both had to live there.",
-        role: "Built with React Native on Expo, sharing a unified REST/WebSocket backend and a single Prisma-managed schema with the web app.",
-        highlights: [
-          { value: "Expo 54", label: "SDK / Router v6" },
-          { value: "Shared", label: "Typed API layer" },
-          { value: "Native", label: "Camera, push, geo" },
-        ],
-        features: [
-          { title: "Camera & gallery upload", body: "List an item straight from the camera or the photo library." },
-          { title: "Listing sharing", body: "Send any listing to people outside the app." },
-          { title: "Real-time chat", body: "Buyer–seller messaging while the trade is being agreed." },
-          { title: "Neighbourhood community", body: "Residents post local requests and find work nearby." },
-          { title: "Manner temperature", body: "A reputation score that makes a trading history visible." },
-          { title: "Review-gated completion", body: "A sale is only confirmed once a review has been written." },
-        ],
-        deepDive: {
-          title: "Trust, made visible",
-          body: "Strangers trading in person need a reason to believe each other. Two mechanics carry that weight.",
-          steps: [
-            { label: "Manner temperature", body: "A running reputation score attached to every profile." },
-            { label: "Review gate", body: "A trade is not closed until the counterpart writes a review." },
-            { label: "Reporting", body: "Any listing or user can be escalated to moderation." },
-            { label: "Feedback channel", body: "Structured in-app feature requests — direct product research." },
-          ],
-          whyTitle: "Why gate the completion",
-          why: [
-            "If a review is optional, only angry users write one and the score stops meaning anything.",
-            "Gating completion on a review keeps the reputation signal dense and honest.",
-          ],
-        },
-        architecture: [
-          {
-            title: "App",
-            body: "React Native with Expo SDK 54 and Expo Router v6. Reanimated and Moti for fluid interaction, native modules for camera, notifications, location and sharing.",
-          },
-          {
-            title: "Data",
-            body: "TanStack Query over typed REST endpoints, Socket.io for live chat events, Supabase (PostgreSQL) with a centralised Prisma schema shared with the web client.",
-          },
-          {
-            title: "Delivery",
-            body: "Expo build pipeline with over-the-air updates, so fixes reach users without an app-store round trip.",
-          },
-        ],
-        nextTitle: "What I would do next",
-        next: [
-          "Offline-first listing drafts so a poor connection never loses an upload.",
-          "Background image compression before upload to cut mobile data use.",
-        ],
+      fortinet: {
+        title: "Secure Wireless LAN 7.6 Administrator",
+        body: "Fortinet Training Institute and ISC2. CISSP domain: Communication and Network Security.",
+      },
+      freecodecamp: {
+        title: "Front End Development Libraries",
+        body: "freeCodeCamp certification.",
       },
     },
   },
 
-  security: {
-    eyebrow: "05 · Beyond the stack",
-    title: "Security practice",
-    lead: "I develop with an attacker's checklist in mind — the same OWASP categories I practise against on training platforms are the ones I review my own code for.",
-    cards: [
-      {
-        tag: "HackerOne",
-        title: "Triaged vulnerability report",
-        body: "Submitted a valid vulnerability report against a live production web application. Technically validated and triaged by the vendor's security team — closed as a duplicate, but validity officially confirmed.",
-      },
-      {
-        tag: "HTB & TryHackMe",
-        title: "Ongoing practice",
-        body: "Regular work on web application vulnerability analysis, infrastructure penetration testing and OWASP Top 10 exercises.",
-      },
-      {
-        tag: "Certified",
-        title: "Network & wireless security",
-        body: "Secure Wireless LAN 7.6 Administrator — Fortinet Training Institute & ISC2 (2026), covering the CISSP domain Communication and Network Security.",
-      },
-    ],
-    certsTitle: "Certifications",
-    languagesTitle: "Languages",
-    languageNames: { ko: "Korean", en: "English", uz: "Uzbek" },
-    languageLevels: { ko: "KIIP Level 5", en: "Advanced", uz: "Native" },
-    awardsTitle: "Outside the terminal",
-    awards: [
-      "National Open Table Tennis Championship — 1st place (2026)",
-      "National Open Table Tennis Championship — 2nd place (2024)",
-      "Table Tennis Champions League — 1st place (2024)",
-    ],
+  stack: {
+    label: "Toolkit",
+    title: "What I reach for",
+    groups: {
+      languages: "Languages",
+      frontend: "Frontend",
+      backend: "Backend",
+      data: "Data",
+      ops: "Operations",
+      security: "Security",
+    },
   },
 
   contact: {
-    eyebrow: "06 · Contact",
-    title: "Let's talk",
-    lead: "I would be glad to talk about how I can contribute to your team.",
+    label: "04 — Contact",
+    title: "Let's talk.",
+    lead: "Full-stack or platform work in Seoul. I hold an E-7 visa, so there is no sponsorship to arrange. Korean, English or Uzbek.",
     emailCta: "Write to me",
-    copied: "Copied",
-    copy: "Copy email",
-    availability: "Currently open to full-stack, frontend and WebOps roles in South Korea and remote.",
+    resumeCta: "Download résumé (PDF)",
+    responseTime: "I answer email within a day.",
   },
 
   footer: {
-    built: "Built with Next.js, Tailwind and Motion.",
+    built: "Next.js, GSAP and a canvas. Type is Inter Tight and Geist Mono.",
     rights: "All rights reserved.",
-    backToTop: "Back to top",
   },
 
-  a11y: {
-    languageSwitcher: "Change language",
-    menu: "Menu",
-    closeMenu: "Close menu",
+  about: {
+    label: "About",
+    title:
+      "From Qashqadaryo to Gyeongbuk, by way of a Flutter codebase that would not render.",
+    intro: [
+      "I came to Korea for a software engineering degree and stayed because the work got interesting. It started in a university Cloud Computing Lab: an autonomous-vehicle prototype written in Flutter that would not render on mobile. After a few weeks of patching around it I argued we should rebuild the front end in React and TypeScript. I was allowed to lead that, and we shipped ahead of deadline.",
+      "That is still how I work. I would rather spend a week on the architecture that makes the next six months boring than a day on the workaround that makes this afternoon easier.",
+      "Today I own a company's e-commerce platform at SAMBU and keep building my own products alongside it. eYaqin started because buying something second-hand at home meant crossing a city for an item worth almost nothing. SmartGuard started because a shop owner told me he had stopped watching his own CCTV — there was too much of it. Alongside that I practise application security: same instinct as the architecture argument. I would rather find the hole in my own code first.",
+    ],
+    photos: {
+      graduation:
+        "Graduation, Daegu University — B.Sc. Software Engineering, February 2025.",
+      cafe: "A cafe in Daegu, winter.",
+      studio: "Studio portrait.",
+      portrait: "Portrait.",
+    },
+    languagesTitle: "Languages",
+    languagesNote:
+      "All three, daily — Korean at SAMBU, English for documentation and clients, Uzbek with the people eYaqin is actually built for.",
+    languageLevels: { ko: "Advanced", en: "Advanced", uz: "Native" },
+    awardsTitle: "Away from the keyboard",
+    awardsNote:
+      "I play competitive table tennis. It is the only thing I do that has a scoreboard somebody else keeps.",
+    awards: {
+      openChampionship1: "National Open Table Tennis Championship — 1st place",
+      championsLeague: "Table Tennis Champions League — 1st place",
+      openChampionship2: "National Open Table Tennis Championship — 2nd place",
+    },
+    place: "Based in South Korea · applying in Seoul",
+  },
+
+  shots: {
+    eyaqinHero:
+      "eYaqin's landing page. Location is the first thing the product says about itself.",
+    eyaqinFeed:
+      "The discovery feed, bounded by neighbourhood, by district, or by radius.",
+    eyaqinListing:
+      "A listing. The seller's manner temperature sits next to their name, not buried in a profile.",
+    eyaqinProfile:
+      "The seller's own view: every listing with its explicit state, and the buyer attached to it.",
+    eyaqinSchema:
+      "The schema in Prisma Studio. District and Region are seeded tables — 179 and 14 rows — not free text on a listing.",
+    sgHero: "SmartGuard's landing page. The scene is the shop, after closing.",
+    sgConsole:
+      "The operator console. Every alert carries the model's reasoning and exactly two buttons: real event, or false alarm.",
+    sgHow: "How it works, written for a shop owner rather than for an engineer.",
+    sgCta:
+      "The footer states the limit out loud: a system conclusion is not legal evidence.",
+    mbFeed: "The native feed. Location and category filters sit under the thumb.",
+    mbChat: "Buyer and seller agreeing a price — in this case, in Korean.",
+    mbReview:
+      "Review-gated completion. A sale only closes once the review is written, and the review moves the seller's temperature.",
+  },
+
+  projects: {
+    lowshop: {
+      name: "lowshop.net",
+      tagline: "A company's own storefront, and the four sales channels behind it.",
+      summary:
+        "SAMBU's official D2C e-commerce platform. I designed it, built it, and I am the person who gets told when it stops answering.",
+      role: "Full-stack & WebOps · solo",
+      problem: {
+        title: "The problem",
+        body: "SAMBU manufactures and sells, and in Korea selling means selling through Coupang, Naver SmartStore and Toss — three marketplaces with three admin consoles, three product schemas and three ideas of what a price is. The company also wanted its own storefront, which makes four places where a product's stock, price and description have to agree. Nobody was going to keep four places in agreement by hand.",
+      },
+      decisions: {
+        title: "Decisions that mattered",
+        items: [
+          {
+            title: "One person owns the whole lifecycle",
+            body: "I build the frontend and I operate the server. That is unusual and it is deliberate: the fastest way to make a slow page fast is to be allowed to change both the component and the machine serving it, without filing a ticket across a team boundary.",
+          },
+          {
+            title: "Synchronisation runs without a human in it",
+            body: "The payment and data-synchronisation workflows were reworked so the selling pipeline does not need anyone to press anything. A manual step in a sales pipeline is not a process — it is an outage waiting for a public holiday.",
+          },
+          {
+            title: "Monitoring before features",
+            body: "Uptime and system-stability monitoring went in early. You cannot claim 99.9% if the way you find out about downtime is a customer telling you.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Where it landed",
+        body: "99.9% uptime since launch, page load time down 60% after the rework, and no critical downtime on any of the four channels. The storefront and the three marketplaces have not disagreed about a price since the sync was rebuilt.",
+      },
+      next: {
+        title: "What I would do next",
+        items: [
+          "Move channel synchronisation onto a queue with dead-letter handling, so a marketplace API outage delays a sync instead of dropping it.",
+          "Add per-channel reconciliation reports, so a disagreement is caught by a scheduled job rather than by a customer.",
+        ],
+      },
+    },
+
+    eyaqin: {
+      name: "eYaqin",
+      tagline: "A second-hand marketplace where the whole point is that the seller is nearby.",
+      summary:
+        "A neighbourhood-first C2C marketplace. Solo build: schema, API surface, real-time chat, moderation tooling and deploy.",
+      role: "Full-stack · solo",
+      problem: {
+        title: "The problem",
+        body: "Buying something second-hand meant scrolling a nationwide feed and then driving across a city for an item worth almost nothing. The distance was not shown, it was not sortable, and it was the single fact that decided whether the trade was worth making at all. A marketplace that treats location as a filter you may apply is solving a different problem from one that treats it as the ranking.",
+      },
+      decisions: {
+        title: "Decisions that mattered",
+        items: [
+          {
+            title: "Location is a table, not a string",
+            body: "Regions and districts are seeded rows — 14 and 179 of them — with real relationships, rather than free text typed onto a listing. That one choice is what makes “my neighbourhood”, “my district” and “within N kilometres” three bounds on a single query instead of three separate features, and it is why the feed can be ranked by proximity rather than merely filtered by it.",
+          },
+          {
+            title: "Five listing states, not a boolean",
+            body: "A listing moves through active → reserved → escrow_verification → sold → hidden. An is_sold boolean cannot express an item being held for a buyer, a payment under dispute, or a listing pulled by moderation, so it forces the interface to invent an answer. Transitions are validated server-side, which means a client cannot put a listing into a state the business does not have.",
+          },
+          {
+            title: "Reputation is a number both sides can see",
+            body: "Every trader carries a manner temperature that moves with completed trades and reviews, and it sits next to their name on the listing rather than buried in a profile nobody opens. A sale is only confirmed once a review has been written, so the number cannot be farmed by trading constantly and never being rated.",
+          },
+          {
+            title: "Moderation has one place to intervene",
+            body: "Reports, moderation flags and rate-limit events are first-class tables rather than an administrator's inbox. Trust and safety on a C2C platform is not a feature you bolt on once there is abuse; it is a shape the schema either has or does not.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Where it landed",
+        body: "Deployed and running: location-aware discovery, the full listing lifecycle, real-time buyer–seller chat with read status, likes and saved items, reporting and moderation, and session and profile handling. Built solo on Next.js and Prisma against PostgreSQL, with preview builds per branch and environment-separated database branches, so a schema migration could not take production down with it.",
+      },
+      next: {
+        title: "What I would do next",
+        items: [
+          "Move image storage to object storage with signed URLs, instead of serving uploads through the application.",
+          "Add a search index, so radius queries stay fast once the listing count outgrows a sequential scan.",
+        ],
+      },
+    },
+
+    smartguard: {
+      name: "SmartGuard",
+      tagline: "CCTV that reads itself, for shops that stopped watching the footage.",
+      summary:
+        "An AI surveillance platform that watches retail cameras in real time and sends the owner a Telegram alert with a snapshot and an explanation. Live in a working shop.",
+      role: "Full-stack & vision pipeline · solo",
+      problem: {
+        title: "The problem",
+        body: "A small shop loses stock and has fourteen hours of footage to prove it. Nobody watches fourteen hours of footage. The cameras were already installed and already recording — the missing piece was never more video, it was somebody to look at it, and that job is unaffordable for a single shop.",
+      },
+      decisions: {
+        title: "Decisions that mattered",
+        items: [
+          {
+            title: "Do not send the video to the model",
+            body: "The obvious build streams frames to a vision model and produces a bill no corner shop will pay. Instead the pipeline has two tiers: OpenCV motion and person detection runs locally against every frame, and only candidate key frames are forwarded to Claude Vision. That is the whole ballgame — it cut inference cost by more than 100× and it is the difference between a demo and something a shop can actually run.",
+          },
+          {
+            title: "Rules a shop owner can check",
+            body: "The owner marks zones — till, shelf, exit — and detections are about the paths between them: reached the exit zone without passing the till, movement outside opening hours, someone standing in one place for two minutes. Each of those is a sentence the owner can read and disagree with, which matters far more here than a score on a benchmark nobody in the shop has heard of.",
+          },
+          {
+            title: "The output is a decision, not a feed",
+            body: "An alert arrives on Telegram with a snapshot and two to four sentences of reasoning in the owner's own language, and the console offers exactly two buttons: real event, or false alarm. That feedback is the only thing that makes the system get better at that particular shop.",
+          },
+          {
+            title: "State the limit inside the product",
+            body: "The footer says, in plain language, that a system conclusion is not legal evidence and that the final judgement is always a person's. A surveillance product that does not say that is making a promise it cannot keep.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Where it landed",
+        body: "Running in production in a retail store, processing continuous camera feeds across multi-threaded workers with sub-second alert generation. Any ONVIF or RTSP camera works, so the shop did not have to replace hardware. React 18 on the front, Python and FastAPI behind it, PostgreSQL for events, deployed with Docker.",
+      },
+      next: {
+        title: "What I would do next",
+        items: [
+          "Use the operator's real/false labels to tune per-shop thresholds automatically rather than by hand.",
+          "Move key-frame batching behind a queue, so a network drop delays alerts instead of losing them.",
+        ],
+      },
+    },
+
+    "eyaqin-mobile": {
+      name: "eYaqin Mobile",
+      tagline: "The same marketplace, where the trade actually happens.",
+      summary:
+        "The native client for eYaqin, in React Native. A second-hand trade happens on a phone, between strangers — so upload speed and trust both had to live there.",
+      role: "Mobile · solo",
+      problem: {
+        title: "The problem",
+        body: "The web app proved the idea, but the two moments that decide whether a marketplace works are both phone moments: photographing an item well enough to sell it, and deciding whether to meet a stranger. A responsive website does the first badly and cannot really do the second at all — no camera worth the name, no push, and no reason for anyone to open it twice.",
+      },
+      decisions: {
+        title: "Decisions that mattered",
+        items: [
+          {
+            title: "Native where native earns it",
+            body: "Camera and gallery upload, push notifications, geolocation and native sharing are the reason this is an app rather than a bookmark. Everything else — feed, filters, listing pages — is the same product as the web, sharing typed endpoints through TanStack Query so the two clients cannot drift apart.",
+          },
+          {
+            title: "Trust is built into the completion flow",
+            body: "A sale is not marked complete until a review has been written, and that review moves the seller's manner temperature. It puts the reputation system on the critical path instead of beside it, which is the only way a rating system in a C2C app gets used at all.",
+          },
+          {
+            title: "The neighbourhood is part of the product",
+            body: "Residents post local requests and find work nearby, in the same app as the listings. What makes a neighbourhood marketplace work is not inventory — it is that the people in it already have reasons to talk to each other.",
+          },
+          {
+            title: "A feedback channel is product research",
+            body: "Structured feature requests are built into the app. It is the cheapest research instrument available to a solo developer, and it is how the roadmap stopped being a guess.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Where it landed",
+        body: "In active development on Expo SDK 54 with Expo Router v6, over a shared REST and WebSocket backend with Supabase behind it, Socket.io for live chat events and Reanimated for the interaction work. Real-time chat, camera upload, community posts, manner temperature and review-gated completion are all in.",
+      },
+      next: {
+        title: "What I would do next",
+        items: [
+          "Offline-first listing drafts, so a photo taken with no signal is not a photo lost.",
+          "Group push notifications per conversation, before the notification tray becomes the reason people uninstall.",
+        ],
+      },
+    },
   },
 };
 
-/** Every other locale must satisfy exactly this shape. */
+/**
+ * Deliberately not `as const`. With literal types every string in `ko` and
+ * `uz` would have to be character-identical to the English one to satisfy
+ * this, which is the exact opposite of what a translation is.
+ */
 export type Dict = typeof en;

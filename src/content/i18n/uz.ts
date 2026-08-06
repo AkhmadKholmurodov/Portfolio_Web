@@ -1,384 +1,402 @@
 import type { Dict } from "./en";
 
+/**
+ * Uzbek — his own language, and the one eYaqin is actually built for. Kept as
+ * plain, direct Uzbek rather than a calque of the English: the technical nouns
+ * stay in English where that is what people actually say ("full-stack",
+ * "deploy", "backend"), and the sentences around them are written as they
+ * would be spoken.
+ */
 export const uz: Dict = {
   meta: {
     title: "Akhmad Kholmurodov — Full-Stack va WebOps muhandisi",
     description:
-      "Janubiy Koreyada faoliyat yurituvchi Full-Stack va WebOps muhandisi. Next.js, React Native va Python bilan ishlab chiqarishdagi veb-platformalarni quraman va ularni ishlab turishini ta'minlayman.",
+      "Janubiy Koreyada production darajasidagi veb-platformalar quraman, ular ishlaydigan serverlarni o'zim yurituraman va o'z kodimdagi teshikni boshqalardan oldin o'zim topaman. Next.js, React Native, Python, Docker. E-7 vizasi, Seulda ish qidirmoqdaman.",
+  },
+
+  ui: {
+    menu: "Menyu",
+    close: "Yopish",
+    language: "Til",
+    scroll: "Pastga",
+    back: "Orqaga",
+    backHome: "Bosh sahifaga",
+    allWork: "Barcha ishlar",
+    next: "Keyingi loyiha",
+    external: "Yangi oynada ochiladi",
+    skip: "Asosiy qismga o'tish",
+    notFound: "Bunday sahifa yo'q.",
   },
 
   nav: {
-    home: "Bosh sahifa",
+    build: "Qurish",
+    run: "Yuritish",
+    break: "Sindirish",
     about: "Men haqimda",
-    stack: "Texnologiyalar",
-    work: "Tajriba",
-    projects: "Loyihalar",
-    security: "Xavfsizlik",
-    contact: "Aloqa",
+    contact: "Bog'lanish",
     resume: "Rezyume",
+    work: "Ishlar",
   },
 
   hero: {
-    available: "Yangi imkoniyatlarga ochiqman",
-    role: "Full-Stack va WebOps muhandisi",
-    location: "Janubiy Koreya · E-7 vizasi",
-    tagline: "Veb-mahsulotlarni boshidan oxirigacha quraman — va ularni ishlab turishini ta'minlayman.",
-    intro:
-      "Janubiy Koreyada uch yillik ishlab chiqarish platformalari tajribasi. Oldinda Next.js, ortida Node va Python, tagida Linux va Docker — va bularning barchasi ustidan hujumchi nigohi.",
+    label: "Full-stack va WebOps muhandisi · Janubiy Koreya",
+    line1: "Men mahsulotni quraman.",
+    line2: "Serverni o'zim yurituraman.",
+    line3: "Ikkalasini birinchi o'zim sindiraman.",
+    lead: "Koreyada uch yildan beri production platformalar chiqaraman. Hozir bir kompaniyaning butun e-commerce'i mening zimmamda — boshidan oxirigacha.",
     ctaWork: "Ishlarni ko'rish",
-    ctaContact: "Bog'lanish",
-    scroll: "Pastga",
-    systemsTitle: "Ishlab turgan tizimlar",
-    stateLive: "Jonli",
-    statePilot: "Pilot",
-    systems: {
-      lowshop: { value: "99.9%", label: "Uptime · SAMBU D2C do'koni" },
-      eyaqin: { value: "Solo", label: "To'liq stack · marketplace" },
-      smartguard: { value: "100×", label: "Vision API xarajati · do'konda" },
-    },
-    stats: [
-      { value: "3+", label: "Yil ishlab chiqarishda" },
-      { value: "99.9%", label: "lowshop.net uptime" },
-      { value: "100×", label: "Vision API xarajati kamaydi" },
-      { value: "3", label: "Til" },
-    ],
+    ctaResume: "Rezyumeni yuklab olish",
+    availability: "Seulda ish qidirmoqdaman",
+    visa: "E-7 vizasi · homiylik shart emas",
+    languages: "Koreys · Ingliz · O'zbek",
   },
 
-  about: {
-    eyebrow: "01 · Tanishuv",
-    title: "Men haqimda",
-    lead: "Veb-mahsulotlarni boshidan oxirigacha quraman va yuritaman.",
-    body: [
-      "Dasturlashga yo'lim universitetning Cloud Computing laboratoriyasidan boshlangan. U yerda avtonom transport boshqaruvi prototipini Flutter'dan React + TypeScript'ga qayta qurdim — bu menga qulay emas, to'g'ri arxitekturani tanlashni o'rgatgan birinchi saboq bo'ldi.",
-      "Bugun SAMBU'da kompaniyaning e-commerce platformasini birinchi komponentdan server uptime'igacha o'zim boshqaraman, yon tomondan esa o'z mahsulotlarimni chiqaraman. Dasturlash bilan bir qatorda ilova xavfsizligi bilan shug'ullanaman — OWASP Top 10, penetration testing va bug bounty — chunki o'z kodimdagi teshikni birinchi bo'lib o'zim topganim ma'qul.",
-      "Koreys, ingliz va o'zbek tillarida ishlayman. Toza interfeys bilan uzluksiz ishlashi shart bo'lgan tizim orasidagi masalalarni yaxshi ko'raman.",
-    ],
-    facts: [
-      { label: "Manzil", value: "Daegu · Gyeongsan, Janubiy Koreya" },
-      { label: "Tajriba", value: "3+ yil, ishlab chiqarish veb-platformalari" },
-      { label: "Yo'nalish", value: "Next.js · Node · TypeScript · WebOps" },
-      { label: "Yana", value: "Ilova xavfsizligi va bug bounty" },
-      { label: "Ta'lim", value: "Daegu universiteti — Dasturiy injiniring" },
-      { label: "Maqom", value: "E-7 vizasi" },
-    ],
-    photoCaption: "Daegu, Janubiy Koreya",
+  metrics: {
+    uptime: { label: "Ishlash vaqti", source: "lowshop.net, ishga tushganidan beri" },
+    loadTime: { label: "Sahifa yuklanishi", source: "lowshop.net, qayta qurilgandan keyin" },
+    visionCost: { label: "Arzonroq vision", source: "SmartGuard edge marshrutlash" },
+    live: { label: "Ishlab turgan mahsulot", source: "Haqiqiy foydalanuvchilar oldida" },
   },
 
-  stack: {
-    eyebrow: "02 · Imkoniyatlar",
-    title: "Texnologiyalar",
-    lead: "Tizimning qaysi qatlamida turishiga qarab guruhlangan, men amalda ishlatadigan vositalar.",
-    groups: {
-      frontend: "Frontend",
-      backend: "Backend",
-      data: "Ma'lumotlar bazasi",
-      devops: "DevOps",
-      security: "Xavfsizlik",
-      practice: "Ish uslubi",
+  build: {
+    label: "01 — Qurish",
+    title: "Men ticket emas, butun mahsulot chiqaraman.",
+    lead: "Sxemadan deploygacha — to'rttasi ham meniki. Uchtasi hozir haqiqiy foydalanuvchilar oldida ishlayapti.",
+  },
+
+  work: {
+    caseStudy: "Case study'ni o'qish",
+    visit: "Saytga o'tish",
+    role: "Rol",
+    year: "Yil",
+    stack: "Texnologiyalar",
+    status: { live: "Ishlayapti", building: "Ishlanmoqda" },
+    problem: "Muammo",
+    decisions: "Ahamiyatli qarorlar",
+    outcome: "Natija",
+    nextUp: "Keyin nima qilardim",
+    stats: {
+      uptime: "Ishlash vaqti",
+      channels: "Savdo kanallari",
+      districts: "Sxemadagi tumanlar",
+      states: "E'lon holatlari",
+      cost: "Oddiy yechimga nisbatan",
+      deployment: "Ishlab turgan do'kon",
+      platforms: "Platformalar",
+      stage: "Bosqich",
     },
+  },
+
+  run: {
+    label: "02 — Yuritish",
+    title: "Chiqarish — oson qismi.",
+    lead: "Ishlamayotgan platforma — platforma emas. Deploy, ishlash vaqti, to'lov sinxronizatsiyasi va ostidagi Linux serverlar — hammasi menda.",
+    timeline: "Yo'l",
+    present: "Hozir",
   },
 
   experience: {
-    eyebrow: "03 · Yo'l",
-    title: "Ish tajribasi",
-    lead: "Boshqalar tayanadigan haqiqiy tizimlarni o'z zimmamga olgan ikki joy.",
-    present: "Hozirgacha",
-    roles: {
-      sambu: {
-        company: "SAMBU Co., Ltd.",
-        role: "Full-Stack va WebOps muhandisi",
-        location: "Gyeongsan, Janubiy Koreya",
-        context: "O'z D2C kanalini yurituvchi ishlab chiqarish va savdo kompaniyasi",
-        bullets: [
-          "Kompaniyaning rasmiy e-commerce platformasi lowshop.net'ni loyihalab, qurib, yuritaman — frontend implementatsiyasidan server operatsiyalarigacha to'liq siklni o'zim boshqaraman.",
-          "Koreyaning yirik savdo kanallarida — Coupang, Naver SmartStore va Toss — do'konni ishga tushirdim va yuritaman: biznes profilini sozlash, do'konni qurish va savdo tizimini boshqarish.",
-          "99.9% uptime'ni saqladim va sahifa yuklanish vaqtini 60% ga qisqartirdim; barcha savdo kanallarida jiddiy uzilish bo'lmadi.",
-          "To'lov va ma'lumot sinxronizatsiyasi jarayonlarini optimallashtirib, onlayn savdo quvurini qo'l aralashuvisiz ishlaydigan qildim.",
-        ],
-      },
-      ccl: {
-        company: "Cloud Computing Lab, Daegu universiteti",
-        role: "Frontend / Full-Stack dasturchi",
-        location: "Daegu, Janubiy Koreya",
-        context: "Universitet ilmiy laboratoriyasi",
-        bullets: [
-          "Avtonom transport vositalarini masofadan boshqarish va telemetriyani kuzatish uchun veb/mobil prototip ishlab chiqdim.",
-          "Mavjud Flutter kod bazasidan ReactJS + TypeScript'ga to'liq migratsiyani taklif qildim va boshqardim; prototipni to'sib turgan mobil rendering va moslik muammolarini hal qildim.",
-          "Node.js backend dasturchisi bilan birga migratsiyani muddatdan oldin yakunladim; responsive UI va REST ma'lumot sinxronizatsiyasi mening zimmamda edi.",
-          "Jamoa jarayonida GitLab va GitHub'da versiya nazorati va code review bilan shug'ullandim.",
-        ],
-      },
+    sambu: {
+      company: "SAMBU Co., Ltd.",
+      role: "Full-Stack va WebOps muhandisi",
+      context: "O'z D2C kanalini yurituvchi ishlab chiqarish va savdo kompaniyasi",
+      bullets: [
+        "lowshop.net'ni loyihaladim, qurdim va yurituraman — frontenddan server operatsiyalarigacha.",
+        "Coupang, Naver SmartStore va Tossda kompaniya do'konini ishga tushirdim va boshqaraman.",
+        "To'lov va qoldiq sinxronizatsiyasini qayta qurdim — savdo quvuri endi hech kimning qo'lisiz ishlaydi.",
+        "99.9% ishlash vaqti, sahifalar 60% tez, hech bir kanalda jiddiy uzilish yo'q.",
+      ],
+    },
+    ccl: {
+      company: "Bulutli hisoblash laboratoriyasi, Daegu universiteti",
+      role: "Frontend / Full-Stack dasturchi",
+      context: "Universitet ilmiy laboratoriyasi",
+      bullets: [
+        "Avtonom transportni masofadan boshqarish va telemetriya uchun veb va mobil prototip.",
+        "Flutter'dan React va TypeScript'ga to'liq o'tishni taklif qildim va boshqardim — prototipni to'xtatib turgan rendering va moslik muammolari shunda hal bo'ldi.",
+        "Muddatdan oldin topshirdik — qulay emas, to'g'ri arxitekturani tanlashni shu yerda o'rgandim.",
+      ],
+    },
+    daegu: {
+      company: "Daegu universiteti",
+      role: "Dasturiy injiniring bakalavri",
+      context: "Daegu, Janubiy Koreya",
+      bullets: [],
     },
   },
 
-  projects: {
-    eyebrow: "04 · Tanlangan ishlar",
-    title: "Loyihalar",
-    lead: "Bo'sh repozitoriydan boshlab odamlar foydalanadigan darajaga yetkazgan uchta ish.",
-    viewLive: "Saytga o'tish",
-    privateRepo: "Yopiq repozitoriy",
-    caseStudy: "Batafsil",
-    featuresTitle: "Asosiy imkoniyatlar",
-    shotsTitle: "Ishlab turgan mahsulot",
-    close: "Yopish",
-    journey: {
-      hint: "Pastga aylantiring",
-      beats: {
-        eyaqin: [
-          "Mahalla lentasi",
-          "Xaritada radius bo'yicha qidiruv",
-          "Sotuvchi bilan suhbat",
-          "E'lon holatini o'zgartiradi",
-        ],
-        smartguard: [
-          "Do'kon, yopilgandan keyin",
-          "Kamera nishonni ushlaydi",
-          "Kun bitta varaqqa aylanadi",
-          "Odam ko'rib chiqib tasdiqlaydi",
-        ],
-        eyaqinMobile: [
-          "O'sha lenta — endi qo'lda",
-          "Pinlar va tortib chiqadigan panel",
-          "Push bo'lib keladigan xabar",
-          "To'qqiz palitra, biri sizniki",
-        ],
-      },
-    },
+  break: {
+    label: "03 — Sindirish",
+    title: "O'zim topganim afzal.",
+    lead: "Muharrir yonida hujumchining ro'yxati ochiq turadi. Mashq qiladigan toifalarim — aynan o'z kodimni ko'zdan kechirganda qaraydigan toifalar.",
     items: {
-      eyaqin: {
-        name: "eYaqin",
-        subtitle: "Joylashuvga asoslangan C2C bozor",
-        status: "Ishlamoqda",
-        summary:
-          "Mahallani birinchi o'ringa qo'yadigan ikkilamchi bozor. Butun mamlakat bo'ylab lenta o'rniga e'lonlarni haqiqatda sizga qanchalik yaqinligiga qarab — tuman va radius bo'yicha — saralaydi va filtrlaydi, shunda savdo piyoda yetib boradigan masofada qoladi.",
-        role: "Yakka o'zim qilgan full-stack ish: sxema dizayni, API tuzilishi, real-time chat, moderatsiya vositalari va deploy.",
-        highlights: [
-          { value: "Yakka", label: "Full-stack ishlanma" },
-          { value: "5 holat", label: "E'lon hayot sikli" },
-          { value: "Real-time", label: "Xaridor–sotuvchi chati" },
-        ],
-        features: [
-          { title: "Joylashuvga asoslangan qidiruv", body: "Tuman va radius bo'yicha qidirish va filtrlash." },
-          { title: "E'lon hayot sikli", body: "Faoldan sotilganigacha aniq holatlar." },
-          { title: "Real-time chat", body: "O'qilgan belgisi bilan xaridor–sotuvchi yozishmasi." },
-          { title: "Ishonch va xavfsizlik", body: "Shikoyat va moderatsiya jarayoni." },
-          { title: "Faollik", body: "Yoqtirishlar, saqlangan e'lonlar, yaqin-atrof lentasi." },
-          { title: "Autentifikatsiya", body: "Sessiya boshqaruvi va profil sozlamalari." },
-        ],
-        deepDive: {
-          title: "E'lon hayot siklining dizayni",
-          body: "Har bir e'lon aniq holatlar orqali o'tadi — shu sababli ikkala tomon ham savdo qayerda turganini biladi, moderatsiya esa aralashish uchun yagona nuqtaga ega bo'ladi.",
-          states: {
-            active: "E'lon qilingan va mahalliy qidiruvda ko'rinadi",
-            reserved: "Xaridor rozi, mahsulot band qilingan",
-            escrow_verification: "To'lov ushlab turilgan va tekshirilmoqda",
-            sold: "Savdo yakunlandi",
-            hidden: "Qaytarib olingan yoki moderatsiya qilingan",
-          },
-          whyTitle: "Nega boolean emas, holatlar",
-          why: [
-            "is_sold degan boolean band qilingan mahsulotni, nizoli to'lovni yoki o'chirilgan e'lonni ifodalay olmaydi.",
-            "O'tishlar server tomonda tekshiriladi, shuning uchun UI mumkin bo'lmagan holatni o'ylab topa olmaydi.",
-          ],
-        },
-        architecture: [
-          {
-            title: "Frontend",
-            body: "React 19 va TypeScript bilan Next.js App Router. Klient holati uchun Zustand, uslub uchun Tailwind, e'lon sahifalari uchun server komponentlari.",
-          },
-          {
-            title: "Backend va ma'lumot",
-            body: "Prisma orqali PostgreSQL bilan ishlaydigan route handler'lar; baza sig'im muddati kelganda Neon'dan Supabase'ga ko'chirildi. API yo'nalishlar bo'yicha ajratilgan: auth, e'lonlar, faollik, yaqin-atrof qidiruvi.",
-          },
-          {
-            title: "Deploy",
-            body: "Har bir branch uchun preview build bilan Vercel'da. Sxema migratsiyasi xavfsiz bo'lishi uchun muhitlar bo'yicha ajratilgan DB branch'lari.",
-          },
-        ],
-        nextTitle: "Keyingi qadam",
-        next: [
-          "Rasm saqlashni imzolangan URL'li object storage'ga ko'chirish.",
-          "Radius so'rovlari kattalashganda ham tez qolishi uchun qidiruv indeksini qo'shish.",
-        ],
+      hackerone: {
+        title: "HackerOne — tasdiqlangan hisobot",
+        body: "Ishlab turgan veb-ilovaga qarshi haqiqiy zaiflik hisoboti. Kompaniya xavfsizlik jamoasi tekshirib triage qildi; dublikat sifatida yopildi, haqiqiyligi tasdiqlandi.",
       },
-
-      smartguard: {
-        name: "SmartGuard",
-        subtitle: "AI asosidagi CCTV nazorati · SuniyKoz",
-        status: "Do'konda sinovda ishlamoqda",
-        summary:
-          "Kichik do'konlar o'g'irlik tufayli mol yo'qotadi va CCTV yozuvlarini ko'rishga soatlab vaqt sarflaydi. SmartGuard IP kameralarni Claude Vision'ga ulab, shubhali harakatni avtomatik aniqlaydi va Telegram orqali suratli xabar yuboradi.",
-        role: "Platformani boshidan oxirigacha o'zim qurdim: ko'p oqimli kamera quvurlari, AI yo'naltirish mantiqi va veb-interfeys.",
-        highlights: [
-          { value: "100×", label: "VLM API xarajati kamaydi" },
-          { value: "1 soniyadan kam", label: "Xabar yaratish" },
-          { value: "24/7", label: "Ko'p oqimli ishchi jarayonlar" },
-        ],
-        shots: [
-          {
-            alt: "SmartGuard bosh sahifasi: kechasi 3D do'kon, KAM-03 kamerasi orqali, yo'lakdagi odamni kuzatayotgan aniqlash ramkasi bilan",
-            caption: "Bosh sahifa sizni kamera ortiga o'tkazadi — scroll qilgan sari kezib chiqiladigan real vaqtdagi 3D do'kon, detektor esa nishonni ushlaydi.",
-          },
-          {
-            alt: "SmartGuard imkoniyatlar bo'limi sovuq qog'oz yuzada, 8:00 dan 23:00 gacha bo'lgan chizg'ichda ikkita hodisa belgilangan",
-            caption: "Pastda — butun mahsulot tayanadigan dizayn tizimi: qog'oz yuza, bitta marker rangi va bitta chiziqqa siqilgan kun.",
-          },
-        ],
-        features: [
-          { title: "Edge/cloud gibrid quvur", body: "Mahalliy OpenCV harakat aniqlagichi oddiy kadrlarni bulutgacha filtrlaydi." },
-          { title: "Tanlab VLM'ga yuborish", body: "Claude Vision'ga faqat muhim kadrlar yetadi — 100× tejashning manbai." },
-          { title: "Zudlik bilan Telegram xabari", body: "Egasi ko'rib chiqiladigan yozuv emas, surat va tavsif oladi." },
-          { title: "Ko'p kamerali ishchilar", body: "Har bir kameraga alohida oqim; bitta oqim yiqilsa tizim ishlashda davom etadi." },
-          { title: "Hodisalar tarixi", body: "Keyin ko'rib chiqish uchun PostgreSQL'da saqlanadigan aniqlashlar jurnali." },
-          { title: "Konteynerli deploy", body: "Joyida Docker orqali — do'kon DevOps jamoasisiz ishlata oladi." },
-        ],
-        deepDive: {
-          title: "Ikki bosqichli vision quvuri",
-          body: "AI nazorat tizimidagi eng qimmat qism — model chaqiruvi. Shuning uchun model faqat arzon mahalliy filtrdan o'tgan kadrlarni ko'radi.",
-          steps: [
-            { label: "IP kamera", body: "Har bir do'kon kamerasidan uzluksiz RTSP oqimi." },
-            { label: "OpenCV filtri", body: "Mahalliy harakat aniqlash oddiy kadrlarni tashlab yuboradi." },
-            { label: "Kadr yo'naltiruvchi", body: "Faqat nomzod muhim kadrlar yuqoriga uzatiladi." },
-            { label: "Claude Vision", body: "Sahnani tavsiflaydi va shubhalilikni tasniflaydi." },
-            { label: "Telegram xabari", body: "Surat va tavsif egasining telefoniga." },
-          ],
-          whyTitle: "Nima uchun bu muhim",
-          why: [
-            "Har bir kadrni VLM'ga yuborish kichik do'kon uchun moliyaviy jihatdan imkonsiz.",
-            "Mahalliy filtrlash API xarajatini 100 barobardan ko'proq kamaytirdi, xabar esa 1 soniyadan kamda yetib boradi.",
-          ],
-        },
-        architecture: [
-          {
-            title: "Edge",
-            body: "OpenCV bilan Python ishchilari, har kameraga bitta oqim; RTSP dekodlash va harakat filtri do'konning o'z uskunasida bajariladi.",
-          },
-          {
-            title: "Bulut",
-            body: "FastAPI xizmati nomzod kadrlarni Claude Vision'ga yo'naltiradi, aniqlashlarni PostgreSQL'ga yozadi va Telegram xabarlarini jo'natadi.",
-          },
-          {
-            title: "Interfeys",
-            body: "Kamera holati, aniqlashlar tarixi va xabar sozlamalari uchun React 18 dashboard. Butun stek Docker konteynerlarida yetkaziladi.",
-          },
-        ],
-        nextTitle: "Keyingi qadam",
-        next: [
-          "Tarmoqqa chiqishdan oldin birlamchi tasnif qiladigan qurilma ichidagi model.",
-          "Do'kon tuzilishi va odam oqimiga moslashuvchi sezuvchanlik sozlamasi.",
-        ],
+      platforms: {
+        title: "Hack The Box · TryHackMe",
+        body: "Veb-ilovalar zaifligini tahlil qilish, infratuzilmaga sinov hujumlari, OWASP Top 10.",
       },
-
-      eyaqinMobile: {
-        name: "eYaqin Mobile",
-        subtitle: "Kross-platforma mobil ilova · React Native",
-        status: "Faol ishlanmoqda",
-        summary:
-          "eYaqin'ning mobil ilovasi. Ikkilamchi savdo telefonda va notanish odamlar o'rtasida sodir bo'ladi — shuning uchun yuklash tezligi ham, ishonch ham aynan shu yerda bo'lishi kerak edi.",
-        role: "Expo ustida React Native bilan qurilgan; veb bilan yagona REST/WebSocket backend va bitta Prisma sxemasini bo'lishadi.",
-        highlights: [
-          { value: "Expo 54", label: "SDK / Router v6" },
-          { value: "Umumiy", label: "Tiplangan API qatlami" },
-          { value: "Nativ", label: "Kamera, push, geolokatsiya" },
-        ],
-        features: [
-          { title: "Kamera va galereyadan yuklash", body: "Mahsulotni to'g'ridan-to'g'ri kamera yoki galereyadan e'lon qilish." },
-          { title: "E'lonni ulashish", body: "Har qanday e'lonni ilovadan tashqaridagi odamlarga yuborish." },
-          { title: "Real-time chat", body: "Savdo kelishilayotgan paytda xaridor–sotuvchi yozishmasi." },
-          { title: "Mahalla hamjamiyati", body: "Aholi mahalliy so'rovlar joylaydi va yaqin atrofdan ish topadi." },
-          { title: "Muomala harorati", body: "Savdo tarixini ko'rinadigan qiladigan reputatsiya bahosi." },
-          { title: "Sharh orqali yakunlash", body: "Savdo faqat sharh yozilgandan keyin tasdiqlanadi." },
-        ],
-        deepDive: {
-          title: "Ko'rinadigan qilingan ishonch",
-          body: "Yuzma-yuz savdo qiladigan notanish odamlarga bir-biriga ishonish uchun asos kerak. Bu yukni ikki mexanizm ko'taradi.",
-          steps: [
-            { label: "Muomala harorati", body: "Har bir profilga biriktirilgan, to'planib boradigan reputatsiya bahosi." },
-            { label: "Sharh to'sig'i", body: "Qarshi tomon sharh yozmaguncha savdo yopilmaydi." },
-            { label: "Shikoyat", body: "Istalgan e'lon yoki foydalanuvchini moderatsiyaga uzatish mumkin." },
-            { label: "Fikr kanali", body: "Ilova ichidagi tartibli takliflar — to'g'ridan-to'g'ri mahsulot tadqiqoti." },
-          ],
-          whyTitle: "Nega yakunlash sharhga bog'langan",
-          why: [
-            "Sharh ixtiyoriy bo'lsa, uni faqat jahli chiqqanlar yozadi va baho ma'nosini yo'qotadi.",
-            "Yakunlashni sharhga bog'lash reputatsiya signalini zich va halol saqlaydi.",
-          ],
-        },
-        architecture: [
-          {
-            title: "Ilova",
-            body: "Expo SDK 54 va Expo Router v6 bilan React Native. Silliq animatsiyalar uchun Reanimated va Moti, kamera, bildirishnoma, joylashuv va ulashish uchun nativ modullar.",
-          },
-          {
-            title: "Ma'lumot",
-            body: "Tiplangan REST endpoint'lar ustida TanStack Query, jonli chat hodisalari uchun Socket.io, veb bilan bo'lishiladigan markazlashgan Prisma sxemasi ostidagi Supabase (PostgreSQL).",
-          },
-          {
-            title: "Yetkazish",
-            body: "OTA yangilanishlari bilan Expo build quvuri — tuzatishlar app store navbatini kutmasdan foydalanuvchiga yetadi.",
-          },
-        ],
-        nextTitle: "Keyingi qadam",
-        next: [
-          "Aloqa yomon bo'lganda yuklash yo'qolmasligi uchun oflayn e'lon qoralamalari.",
-          "Mobil trafikni tejash uchun yuklashdan oldin fon rejimida rasm siqish.",
-        ],
+      fortinet: {
+        title: "Secure Wireless LAN 7.6 Administrator",
+        body: "Fortinet Training Institute va ISC2. CISSP sohasi: aloqa va tarmoq xavfsizligi.",
+      },
+      freecodecamp: {
+        title: "Front End Development Libraries",
+        body: "freeCodeCamp sertifikati.",
       },
     },
   },
 
-  security: {
-    eyebrow: "05 · Stekdan tashqarida",
-    title: "Xavfsizlik amaliyoti",
-    lead: "Men hujumchining ro'yxatini yodda tutib dasturlayman — mashq platformalarida ishlaydigan OWASP toifalarim aynan o'z kodimni tekshirish mezonim.",
-    cards: [
-      {
-        tag: "HackerOne",
-        title: "Tasdiqlangan zaiflik hisoboti",
-        body: "Ishlab turgan veb-ilovaga qarshi haqiqiy zaiflik hisobotini yubordim. Vendor xavfsizlik jamoasi texnik jihatdan tasdiqladi va triaj qildi — dublikat sifatida yopildi, biroq haqiqiyligi rasman tasdiqlandi.",
-      },
-      {
-        tag: "HTB va TryHackMe",
-        title: "Uzluksiz amaliyot",
-        body: "Veb-ilovalar zaifliklarini tahlil qilish, infratuzilma penetration testing va OWASP Top 10 mashqlari bilan muntazam shug'ullanaman.",
-      },
-      {
-        tag: "Sertifikat",
-        title: "Tarmoq va simsiz aloqa xavfsizligi",
-        body: "Secure Wireless LAN 7.6 Administrator — Fortinet Training Institute va ISC2 (2026), CISSP'ning Communication and Network Security yo'nalishi.",
-      },
-    ],
-    certsTitle: "Sertifikatlar",
-    languagesTitle: "Tillar",
-    languageNames: { ko: "Koreys", en: "Ingliz", uz: "O'zbek" },
-    languageLevels: { ko: "KIIP 5-daraja", en: "Yuqori", uz: "Ona tili" },
-    awardsTitle: "Terminaldan tashqarida",
-    awards: [
-      "Stol tennisi bo'yicha ochiq milliy chempionat — 1-o'rin (2026)",
-      "Stol tennisi bo'yicha ochiq milliy chempionat — 2-o'rin (2024)",
-      "Table Tennis Champions League — 1-o'rin (2024)",
-    ],
+  stack: {
+    label: "Asboblar",
+    title: "Nimalarga qo'l uraman",
+    groups: {
+      languages: "Tillar",
+      frontend: "Frontend",
+      backend: "Backend",
+      data: "Ma'lumot",
+      ops: "Operatsiyalar",
+      security: "Xavfsizlik",
+    },
   },
 
   contact: {
-    eyebrow: "06 · Aloqa",
-    title: "Keling, gaplashamiz",
-    lead: "Jamoangizga qanday hissa qo'sha olishim haqida suhbatlashishdan mamnun bo'laman.",
-    emailCta: "Xat yozish",
-    copied: "Nusxalandi",
-    copy: "Emailni nusxalash",
-    availability: "Hozirda Janubiy Koreyada va masofadan full-stack, frontend hamda WebOps yo'nalishlariga ochiqman.",
+    label: "04 — Bog'lanish",
+    title: "Gaplashaylik.",
+    lead: "Seulda full-stack yoki platforma muhandisi ishini qidiryapman. E-7 vizam bor — homiylik shart emas. Koreys, ingliz yoki o'zbek.",
+    emailCta: "Xat yozing",
+    resumeCta: "Rezyumeni yuklab olish (PDF)",
+    responseTime: "Xatlarga bir kun ichida javob beraman.",
   },
 
   footer: {
-    built: "Next.js, Tailwind va Motion yordamida qurilgan.",
+    built:
+      "Next.js, GSAP va canvas bilan qurilgan. Shriftlar — Inter Tight va Geist Mono.",
     rights: "Barcha huquqlar himoyalangan.",
-    backToTop: "Yuqoriga",
   },
 
-  a11y: {
-    languageSwitcher: "Tilni o'zgartirish",
-    menu: "Menyu",
-    closeMenu: "Menyuni yopish",
+  about: {
+    label: "Men haqimda",
+    title: "Qashqadaryodan Gyeongbukgacha — rendering bo'lmagan bitta Flutter kodbazasi orqali.",
+    intro: [
+      "Koreyaga dasturiy injiniring bo'yicha o'qishga keldim va ish qiziq bo'lib ketgani uchun qoldim. Boshlanish nuqtasi universitetning Bulutli hisoblash laboratoriyasi bo'lgan: Flutter'da yozilgan avtonom transport prototipi mobil qurilmada rendering bo'lmasdi. Bir necha hafta atrofidan yamoq qo'yganimdan keyin frontendni React va TypeScript'da qaytadan qurishni taklif qildim. Shu ishni menga ishonishdi va muddatdan oldin topshirdik.",
+      "Hozir ham shunday ishlayman. Bugungi tushdan keyinni yengillashtiradigan chetlab o'tish yo'liga bir kun sarflagandan ko'ra, keyingi olti oyni zerikarli qiladigan arxitekturaga bir hafta sarflaganim afzal.",
+      "Bugun SAMBU'da kompaniyaning e-commerce platformasi mening zimmamda, yonida o'z mahsulotlarimni ham quraman. eYaqin shundan boshlandi: uyda arzimagan buyum uchun butun shaharni kesib o'tish kerak edi. SmartGuard esa bir do'kon egasi kameralari yozuvi juda ko'payib ketgani uchun ularni endi umuman ko'rmasligini aytgani uchun. Dasturlash bilan birga ilova xavfsizligini mashq qilaman — bu o'sha arxitektura haqidagi bahs bilan bir xil turtki. O'z kodimdagi teshikni birinchi o'zim topganim afzal.",
+    ],
+    photos: {
+      graduation: "Bitiruv, Daegu universiteti — dasturiy injiniring bakalavri, 2025-yil fevral.",
+      cafe: "Daegudagi kafe, qish.",
+      studio: "Studiya surati.",
+      portrait: "Portret.",
+    },
+    languagesTitle: "Tillar",
+    languagesNote:
+      "Uchalasini ham har kuni ishlataman — SAMBU'da koreyscha, hujjatlar va mijozlar bilan inglizcha, eYaqin kimlar uchun qurilgan bo'lsa, ular bilan o'zbekcha.",
+    languageLevels: { ko: "Yuqori", en: "Yuqori", uz: "Ona tili" },
+    awardsTitle: "Klaviaturadan tashqarida",
+    awardsNote:
+      "Stol tennisini musobaqa darajasida o'ynayman. Qiladigan ishlarim ichida hisobni boshqa odam yuritadigan yagonasi shu.",
+    awards: {
+      openChampionship1: "Ochiq milliy stol tennisi chempionati — 1-o'rin",
+      championsLeague: "Stol tennisi Chempionlar ligasi — 1-o'rin",
+      openChampionship2: "Ochiq milliy stol tennisi chempionati — 2-o'rin",
+    },
+    place: "Janubiy Koreyada yashayman · Seulda ish qidiryapman",
+  },
+
+  shots: {
+    eyaqinHero: "eYaqin bosh sahifasi. Mahsulot o'zi haqida birinchi aytadigan narsa — joylashuv.",
+    eyaqinFeed: "Qidiruv lentasi: mahalla, tuman yoki radius bo'yicha chegaralanadi.",
+    eyaqinListing:
+      "E'lon sahifasi. Sotuvchining muomala harorati profil ichida emas, ismi yonida turadi.",
+    eyaqinProfile:
+      "Sotuvchining o'z ekrani: har bir e'lon aniq holati va biriktirilgan xaridori bilan.",
+    eyaqinSchema:
+      "Prisma Studio'dagi sxema. District va Region — e'longa yoziladigan erkin matn emas, 179 va 14 qatorli jadvallar.",
+    sgHero: "SmartGuard bosh sahifasi. Sahna — yopilgandan keyingi do'kon.",
+    sgConsole:
+      "Operator konsoli. Har bir ogohlantirish modelning izohi va aniq ikkita tugma bilan keladi: haqiqiy hodisa yoki yolg'on signal.",
+    sgHow: "Qanday ishlaydi — muhandis uchun emas, do'kon egasi uchun yozilgan.",
+    sgCta: "Futer chegarani ochiq aytadi: tizim xulosasi yuridik dalil emas.",
+    mbFeed: "Native lenta. Joylashuv va turkum filtrlari barmoq ostida.",
+    mbChat: "Xaridor va sotuvchi narxni kelishmoqda — bu holatda koreys tilida.",
+    mbReview:
+      "Sharh orqali yopiladigan savdo. Sharh yozilmaguncha sotuv tasdiqlanmaydi, sharh esa sotuvchining haroratini qimirlatadi.",
+  },
+
+  projects: {
+    lowshop: {
+      name: "lowshop.net",
+      tagline: "Kompaniyaning o'z do'koni va uning ortidagi to'rtta savdo kanali.",
+      summary:
+        "SAMBU'ning rasmiy D2C e-commerce platformasi. Men loyihaladim, men qurdim, va u javob bermay qolganda qo'ng'iroq keladigan odam ham men.",
+      role: "Full-stack va WebOps · yakka",
+      problem: {
+        title: "Muammo",
+        body: "SAMBU ishlab chiqaradi va sotadi. Koreyada sotish degani — Coupang, Naver SmartStore va Toss orqali sotish degani: uchta admin konsoli, uchta mahsulot sxemasi va narx nima ekani haqida uchta tasavvur. Kompaniya bunga qo'shimcha o'z do'konini ham xohladi, ya'ni bitta mahsulotning qoldig'i, narxi va tavsifi to'rt joyda bir xil turishi kerak. To'rt joyni qo'lda bir xil ushlab turadigan odam yo'q edi.",
+      },
+      decisions: {
+        title: "Ahamiyatli qarorlar",
+        items: [
+          {
+            title: "Butun hayotiy sikl bitta odamda",
+            body: "Frontendni ham men quraman, serverni ham men yurituraman. Bu odatiy emas va ataylab shunday: sekin sahifani tez qilishning eng qisqa yo'li — komponentni ham, uni uzatayotgan mashinani ham jamoa chegarasidan ticket o'tkazmasdan o'zgartira olish.",
+          },
+          {
+            title: "Sinxronizatsiyada odam yo'q",
+            body: "To'lov va ma'lumot sinxronizatsiyasi jarayonlari qayta qurildi — endi savdo quvuri hech kim hech narsa bosmasa ham ishlaydi. Savdo quvuridagi qo'lbola qadam — bu jarayon emas, bu bayram kunini kutib turgan uzilish.",
+          },
+          {
+            title: "Funksiyalardan oldin monitoring",
+            body: "Ishlash vaqti va tizim barqarorligi monitoringi erta qo'yildi. Uzilish haqida mijozdan eshitadigan bo'lsangiz, 99.9% deb ayta olmaysiz.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Natija",
+        body: "Ishga tushganidan beri 99.9% ishlash vaqti, qayta qurishdan keyin sahifa yuklanishi 60% tezlashdi, to'rtta kanalning hech birida jiddiy uzilish bo'lmadi. Sinxronizatsiya qayta qurilganidan buyon o'z do'kon bilan uchta marketplace narx borasida bir marta ham qarama-qarshi kelmadi.",
+      },
+      next: {
+        title: "Keyin nima qilardim",
+        items: [
+          "Kanal sinxronizatsiyasini dead-letter'li navbatga o'tkazardim — shunda marketplace API'sining uzilishi sinxronizatsiyani yo'qotmay, kechiktiradi.",
+          "Har bir kanal uchun solishtiruv hisobotini qo'shardim — nomuvofiqlikni mijoz emas, rejalashtirilgan vazifa topsin.",
+        ],
+      },
+    },
+
+    eyaqin: {
+      name: "eYaqin",
+      tagline: "Sotuvchining yaqinligi butun mohiyat bo'lgan ikkinchi qo'l bozori.",
+      summary:
+        "Mahalla birinchi o'rinda turadigan C2C bozor. Yakka qurildi: sxema, API, real vaqtli chat, moderatsiya vositalari va deploy.",
+      role: "Full-stack · yakka",
+      problem: {
+        title: "Muammo",
+        body: "Ikkinchi qo'l narsa olish degani — butun mamlakat bo'ylab lentani aylantirib, keyin deyarli hech narsa turmaydigan buyum uchun shaharni kesib o'tish degani edi. Masofa ko'rsatilmasdi, saralanmasdi, lekin savdo arziydimi-yo'qmi — buni hal qiladigan yagona fakt aynan shu edi. Joylashuvni «qo'llasa bo'ladigan filtr» deb qaraydigan bozor, uni «saralash tartibi» deb qaraydigan bozordan butunlay boshqa muammoni yechayotgan bo'ladi.",
+      },
+      decisions: {
+        title: "Ahamiyatli qarorlar",
+        items: [
+          {
+            title: "Joylashuv — matn emas, jadval",
+            body: "Viloyatlar va tumanlar — 14 va 179 ta seed qatori, o'zaro haqiqiy bog'lanishlari bilan. E'longa yoziladigan erkin matn emas. Aynan shu bitta tanlov «mening mahallam», «mening tumanim» va «N kilometr ichida» degan uchta narsani uchta alohida funksiya emas, bitta so'rovning uchta chegarasiga aylantiradi — va lentani shunchaki filtrlash o'rniga yaqinlik bo'yicha saralash mumkin bo'ladi.",
+          },
+          {
+            title: "Boolean emas, beshta holat",
+            body: "E'lon active → reserved → escrow_verification → sold → hidden bo'ylab harakatlanadi. is_sold booleani xaridor uchun ushlab turilgan buyumni ham, nizoli to'lovni ham, moderatsiya olib qo'ygan e'lonni ham ifodalay olmaydi — natijada interfeys javobni o'zi to'qib chiqarishga majbur bo'ladi. O'tishlar server tomonida tekshiriladi, ya'ni klient e'lonni biznesda mavjud bo'lmagan holatga qo'ya olmaydi.",
+          },
+          {
+            title: "Obro' — ikkala tomon ko'radigan raqam",
+            body: "Har bir savdogarning muomala harorati bor; u yakunlangan savdolar va sharhlar bilan qimirlaydi va hech kim ochmaydigan profil ichida emas, e'londa ism yonida turadi. Sotuv faqat sharh yozilgandan keyin tasdiqlanadi, ya'ni ko'p savdo qilib, hech qachon baholanmay raqamni shishirib bo'lmaydi.",
+          },
+          {
+            title: "Moderatsiya aralashadigan bitta joy",
+            body: "Shikoyatlar, moderatsiya belgilari va rate-limit hodisalari — administratorning pochtasi emas, to'laqonli jadvallar. C2C platformada ishonch va xavfsizlik — suiiste'mol paydo bo'lgandan keyin qo'shiladigan funksiya emas; bu sxemada yo bor, yo yo'q bo'lgan shakl.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Natija",
+        body: "Deploy qilingan va ishlayapti: joylashuvga bog'liq qidiruv, e'lonning to'liq hayotiy sikli, o'qilgan belgisi bilan real vaqtli xaridor–sotuvchi chati, yoqtirish va saqlash, shikoyat va moderatsiya, sessiya va profil boshqaruvi. Next.js va Prisma ustida PostgreSQL bilan yakka qurilgan; har bir branch uchun preview build va muhitlarga ajratilgan ma'lumotlar bazasi branchlari — shunda sxema migratsiyasi productionni o'zi bilan olib keta olmaydi.",
+      },
+      next: {
+        title: "Keyin nima qilardim",
+        items: [
+          "Rasmlarni ilova orqali uzatish o'rniga, imzolangan URL'lar bilan object storage'ga ko'chirardim.",
+          "Qidiruv indeksini qo'shardim — e'lonlar soni ketma-ket skanni o'sib o'tganda radius so'rovlari tez qolsin.",
+        ],
+      },
+    },
+
+    smartguard: {
+      name: "SmartGuard",
+      tagline: "Yozuvni ko'rishni tashlagan do'konlar uchun o'zini o'zi o'qiydigan CCTV.",
+      summary:
+        "Do'kon kameralarini real vaqtda kuzatib, egasiga Telegram orqali surat va izoh bilan ogohlantirish yuboradigan AI nazorat platformasi. Ishlab turgan do'konda jonli.",
+      role: "Full-stack va vision quvuri · yakka",
+      problem: {
+        title: "Muammo",
+        body: "Kichik do'kon mol yo'qotadi va buni isbotlash uchun o'n to'rt soatlik yozuvi qoladi. O'n to'rt soatni ko'radigan odam yo'q. Kameralar allaqachon o'rnatilgan va allaqachon yozayotgan edi — yetishmayotgani ko'proq video emas, uni ko'rib beradigan odam edi, va bitta do'kon bunday odamni yollay olmaydi.",
+      },
+      decisions: {
+        title: "Ahamiyatli qarorlar",
+        items: [
+          {
+            title: "Videoni modelga yubormaslik",
+            body: "Eng ko'rinib turgan yechim — kadrlarni vision modelga uzatish; natijada hech bir mahalla do'koni to'lay olmaydigan hisob keladi. Buning o'rniga quvur ikki qavatli: OpenCV harakat va odam aniqlash har bir kadrni joyida qayta ishlaydi va faqat nomzod kalit kadrlarnigina Claude Vision'ga uzatadi. Butun gap shunda — inference narxi 100 barobardan ko'proq tushdi, va demo bilan do'kon haqiqatan yurita oladigan narsa orasidagi farq aynan shu.",
+          },
+          {
+            title: "Do'kon egasi tekshira oladigan qoidalar",
+            body: "Ega zonalarni belgilaydi — kassa, javon, chiqish. Aniqlashlar esa ular orasidagi yo'llar haqida: kassadan o'tmasdan chiqish zonasiga yetdi, ish vaqtidan tashqari harakat, bir joyda ikki daqiqa turib qolish. Har biri — ega o'qib, e'tiroz bildira oladigan gap. Bu do'konda hech kim eshitmagan benchmarkdagi ko'rsatkichdan ancha muhimroq.",
+          },
+          {
+            title: "Chiqish — lenta emas, qaror",
+            body: "Ogohlantirish Telegram'ga surat va egasining o'z tilida ikki-to'rt gaplik izoh bilan keladi, konsol esa aniq ikkita tugma beradi: haqiqiy hodisa yoki yolg'on signal. Tizimni aynan o'sha do'konga moslab yaxshilaydigan yagona narsa — shu qaytar aloqa.",
+          },
+          {
+            title: "Chegarani mahsulotning o'zida aytish",
+            body: "Futer oddiy til bilan aytadi: tizim xulosasi yuridik dalil emas, yakuniy qaror doim insonda. Buni aytmaydigan nazorat mahsuloti — bajara olmaydigan va'da berayotgan bo'ladi.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Natija",
+        body: "Do'konda productionda ishlayapti: ko'p oqimli workerlar uzluksiz kamera oqimini qayta ishlaydi va ogohlantirish soniyadan kam vaqtda tayyorlanadi. Har qanday ONVIF yoki RTSP kamera ishlaydi, ya'ni do'kon jihozini almashtirishi shart bo'lmadi. Oldida React 18, ortida Python va FastAPI, hodisalar uchun PostgreSQL, deploy Docker bilan.",
+      },
+      next: {
+        title: "Keyin nima qilardim",
+        items: [
+          "Operatorning haqiqiy/yolg'on belgilaridan foydalanib, har bir do'kon uchun chegaralarni qo'lda emas, avtomatik sozlardim.",
+          "Kalit kadrlar to'plamini navbat ortiga o'tkazardim — tarmoq uzilganda ogohlantirish yo'qolmay, kechiksin.",
+        ],
+      },
+    },
+
+    "eyaqin-mobile": {
+      name: "eYaqin Mobile",
+      tagline: "O'sha bozor, lekin savdo haqiqatan sodir bo'ladigan joyda.",
+      summary:
+        "eYaqin'ning React Native'dagi native klienti. Ikkinchi qo'l savdo telefonda, notanish odamlar orasida bo'ladi — shuning uchun yuklash tezligi ham, ishonch ham o'sha yerda bo'lishi kerak edi.",
+      role: "Mobil · yakka",
+      problem: {
+        title: "Muammo",
+        body: "Veb ilova g'oyani isbotladi, lekin bozor ishlaydimi-yo'qmi degan savolni hal qiladigan ikkala lahza ham telefon lahzasi: buyumni sotiladigan darajada yaxshi suratga olish va notanish odam bilan uchrashishga qaror qilish. Responsive sayt birinchisini yomon bajaradi, ikkinchisini esa deyarli umuman bajara olmaydi — arziydigan kamera ham, push ham, uni ikkinchi marta ochish uchun sabab ham yo'q.",
+      },
+      decisions: {
+        title: "Ahamiyatli qarorlar",
+        items: [
+          {
+            title: "Native — faqat o'zini oqlagan joyda",
+            body: "Kamera va galereyadan yuklash, push bildirishnomalar, geolokatsiya va native ulashish — bu narsaning xatcho'p emas, ilova bo'lish sababi. Qolgani — lenta, filtrlar, e'lon sahifalari — veb bilan bir xil mahsulot; TanStack Query orqali tipli endpointlar birga ishlatiladi, shunda ikki klient bir-biridan uzoqlashib keta olmaydi.",
+          },
+          {
+            title: "Ishonch yakunlash oqimining ichida",
+            body: "Sharh yozilmaguncha savdo yakunlangan deb belgilanmaydi, va o'sha sharh sotuvchining muomala haroratini qimirlatadi. Bu obro' tizimini yon tomonga emas, kritik yo'lning ustiga qo'yadi — C2C ilovada baholash tizimi umuman ishlatilishining yagona yo'li shu.",
+          },
+          {
+            title: "Mahalla — mahsulotning bir qismi",
+            body: "Aholi mahalliy so'rovlar joylaydi va yaqin atrofdan ish topadi, e'lonlar bilan bitta ilovada. Mahalla bozorini ishlatadigan narsa mol miqdori emas — undagi odamlarning bir-biri bilan gaplashishga allaqachon sabablari borligi.",
+          },
+          {
+            title: "Qaytar aloqa kanali — bu mahsulot tadqiqoti",
+            body: "Tuzilgan takliflar kanali ilovaning ichiga qurilgan. Bu yakka dasturchi uchun eng arzon tadqiqot asbobi, va rejalar ro'yxati taxmin bo'lishdan shu tufayli to'xtadi.",
+          },
+        ],
+      },
+      outcome: {
+        title: "Natija",
+        body: "Expo SDK 54 va Expo Router v6 ustida faol ishlanmoqda; ortida Supabase turgan umumiy REST va WebSocket backend, jonli chat hodisalari uchun Socket.io, interaktsiyalar uchun Reanimated. Real vaqtli chat, kameradan yuklash, mahalla postlari, muomala harorati va sharh orqali yopiladigan savdo — hammasi ichida.",
+      },
+      next: {
+        title: "Keyin nima qilardim",
+        items: [
+          "Offline-first e'lon qoralamalari — aloqasiz joyda olingan surat yo'qolgan surat bo'lib qolmasin.",
+          "Push bildirishnomalarni suhbat bo'yicha guruhlash — bildirishnoma paneli ilovani o'chirish sababiga aylanmasidan oldin.",
+        ],
+      },
+    },
   },
 };
