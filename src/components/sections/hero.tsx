@@ -132,7 +132,7 @@ export function Hero() {
             return (
               <div
                 key={m.key}
-                className="lift-in"
+                className="lift-in "
                 style={{ animationDelay: `${780 + i * 70}ms` }}
               >
                 <Tooltip content={copy.source}>
