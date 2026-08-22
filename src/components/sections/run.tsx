@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/site/section";
 import { Reveal } from "@/components/magicui/reveal";
@@ -69,28 +68,6 @@ export function Run() {
                             </li>
                           ))}
                         </ul>
-                      )}
-
-                      {/* The degree entry has no bullet points — it does not
-                          need any. The photograph says the same thing and
-                          puts a face in the middle of the CV, which is where
-                          a reader has just started wondering who this is. */}
-                      {entry.key === "daegu" && (
-                        <figure className="mt-7 max-w-xl">
-                          <div className="media-frame lift-card rounded-xl border border-line">
-                            <Image
-                              src="/photos/graduation.webp"
-                              alt={t.about.photos.graduation}
-                              width={1280}
-                              height={960}
-                              sizes="(max-width: 768px) 100vw, 36rem"
-                              className="h-auto w-full"
-                            />
-                          </div>
-                          <figcaption className="mt-3 font-mono text-[0.625rem] leading-relaxed tracking-wide text-ink-700">
-                            {t.about.photos.graduation}
-                          </figcaption>
-                        </figure>
                       )}
 
                       {"href" in entry && entry.href && (

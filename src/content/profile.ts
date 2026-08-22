@@ -28,6 +28,26 @@ export const profile = {
   },
 } as const;
 
+/**
+ * The hero portrait — one value, deliberately.
+ *
+ * `null` drops the image and lets the type carry the first screen, which is
+ * where it stands today: the portraits on hand are formal studio shots against
+ * an ornate gilded interior, and a warm patterned background is the one thing
+ * a dark, minimal, technical page cannot absorb. Better no face than the wrong
+ * face.
+ *
+ * To put one back: drop a plain-background portrait in `public/photos/`, point
+ * `src` at it and give the real pixel dimensions. Nothing else changes — the
+ * hero reserves the column when this is non-null and closes it up when it is
+ * not, at every breakpoint.
+ */
+export const heroPortrait: {
+  src: string;
+  width: number;
+  height: number;
+} | null = null;
+
 export const socials = [
   { key: "github", label: "GitHub", handle: "AkhmadKholmurodov", href: profile.links.github },
   { key: "linkedin", label: "LinkedIn", handle: "akhmadkholmurodov", href: profile.links.linkedin },

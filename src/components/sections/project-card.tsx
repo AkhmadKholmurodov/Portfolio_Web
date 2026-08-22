@@ -28,7 +28,12 @@ export function ProjectCard({
   const isPhone = project.cover ? project.cover.width < project.cover.height : false;
 
   return (
-    <SpotlightCard className="lift-card bg-surface/45">
+    // Opaque enough that the schematic stops crossing the reading area. The
+    // traces are the page's atmosphere, not its texture, and a hairline
+    // running through a paragraph is noise exactly where the eye is working.
+    // Still short of solid, so the card reads as a panel over the field
+    // rather than a slab cut out of it.
+    <SpotlightCard className="lift-card bg-surface/80">
       <Link
         href={`/work/${project.slug}`}
         // The image column is the wider of the two. A screenshot is the fastest

@@ -35,9 +35,13 @@ export function BreakSection() {
       </Reveal>
 
       <RevealGroup className="mt-14 grid gap-4 md:mt-16 md:grid-cols-2" stagger={0.08}>
-        {securityWork.map((item) => {
+        {securityWork.map((item, i) => {
           const copy = t.break.items[item.key as keyof typeof t.break.items];
           const href = "href" in item ? item.href : undefined;
+          // An odd card count leaves a ragged half-row. The last one takes the
+          // full width instead — it is the shortest of the three and it reads
+          // as the section's closing line rather than a stub.
+          const wide = i === securityWork.length - 1 && securityWork.length % 2 === 1;
 
           const inner = (
             <>
@@ -63,7 +67,7 @@ export function BreakSection() {
           );
 
           return (
-            <RevealItem key={item.key}>
+            <RevealItem key={item.key} className={wide ? "md:col-span-2" : undefined}>
               <SpotlightCard className="lift-card h-full bg-surface/45">
                 {href ? (
                   <a

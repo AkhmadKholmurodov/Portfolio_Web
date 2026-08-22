@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { useLanguage } from "@/components/providers/language-provider";
-import { metrics, profile } from "@/content/profile";
+import { heroPortrait, metrics, profile } from "@/content/profile";
 import { Tooltip } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 /**
  * The first screen. Three sentences that are the whole argument of the site,
@@ -48,21 +49,27 @@ export function Hero() {
           ))}
         </h1>
 
-        {/* The portrait sits beside the lead rather than beside the headline:
-            at full size the headline needs the whole measure, and squeezing it
-            to make room for a photograph would cost the one thing the first
-            screen is actually for.
+        {/* The portrait column, when there is a portrait — see `heroPortrait`
+            in `content/profile.ts`, which is the only place that decides.
 
-            It is also where the schematic's origin node is — the traces
-            behind it radiate out from roughly this point, so on a wide screen
-            the network appears to come out from behind him. That is the
-            section's whole claim, drawn.
+            It sits beside the lead rather than beside the headline: at full
+            size the headline needs the whole measure, and squeezing it to make
+            room for a photograph would cost the one thing the first screen is
+            actually for. It is also roughly where the schematic's origin node
+            is, so on a wide screen the network appears to radiate from behind
+            him.
 
-            Below `md` it is dropped: on a phone the hero is already four
-            screens of type, and a thumbnail-sized portrait squeezing the lead
-            paragraph into a ten-line column helps nobody. The face arrives
-            further down instead, at full width. */}
-        <div className="mt-9 grid gap-9 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-12 lg:gap-16">
+            Below `md` it is dropped either way: on a phone the hero is already
+            four screens of type, and a thumbnail-sized portrait squeezing the
+            lead paragraph into a ten-line column helps nobody. With no
+            portrait the lead simply takes the full measure and the stats come
+            up to meet it. */}
+        <div
+          className={cn(
+            "mt-8 grid gap-9 md:items-start md:gap-12 lg:gap-16",
+            heroPortrait && "md:grid-cols-[minmax(0,1fr)_auto]",
+          )}
+        >
           <div>
             <p
               className="lift-in max-w-xl text-[0.9375rem] leading-relaxed text-ink-300 md:text-base"
@@ -94,7 +101,7 @@ export function Hero() {
             </div>
 
             <div
-              className="lift-in mt-9 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] tracking-wide text-ink-600"
+              className="lift-in mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] tracking-wide text-ink-600"
               style={{ animationDelay: "700ms" }}
             >
               <span className="text-signal">{t.hero.availability}</span>
@@ -105,28 +112,29 @@ export function Hero() {
             </div>
           </div>
 
-          <div
-            className="lift-in hidden md:block"
-            style={{ animationDelay: "560ms" }}
-          >
-            <div className="media-frame lift-card relative w-48 rounded-2xl border border-line lg:w-72">
-              <Image
-                src="/photos/portrait.webp"
-                alt={profile.name}
-                width={901}
-                height={1280}
-                sizes="(max-width: 1024px) 12rem, 18rem"
-                priority
-                className="h-auto w-full"
-              />
+          {heroPortrait && (
+            <div
+              className="lift-in hidden md:block"
+              style={{ animationDelay: "560ms" }}
+            >
+              <div className="media-frame lift-card relative w-48 rounded-2xl border border-line lg:w-72">
+                <Image
+                  src={heroPortrait.src}
+                  alt={profile.name}
+                  width={heroPortrait.width}
+                  height={heroPortrait.height}
+                  sizes="(max-width: 1024px) 12rem, 18rem"
+                  priority
+                  className="h-auto w-full"
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
-     
-      <div className="shell mt-14 w-full md:mt-20">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 md:grid-cols-4 md:gap-x-10">
+      <div className="shell mt-10 w-full md:mt-12">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 md:grid-cols-4 md:gap-x-10">
           {metrics.map((m, i) => {
             const copy = t.metrics[m.key as keyof typeof t.metrics];
             return (
