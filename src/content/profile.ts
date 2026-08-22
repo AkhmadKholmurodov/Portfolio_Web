@@ -20,6 +20,11 @@ export const profile = {
     linkedin: "https://linkedin.com/in/akhmadkholmurodov",
     eyaqin: "https://eyaqin-app.vercel.app",
     lowshop: "https://lowshop.net",
+    medium: "https://medium.com/@seehyuk2000",
+    // TODO(cve-repo): replace with the CVE-2025-55182 proof-of-concept
+    // repository once Akhmad supplies the URL. Points at the profile for now
+    // so the card never ships a dead link.
+    cve: "https://github.com/AkhmadKholmurodov",
   },
 } as const;
 
@@ -107,7 +112,7 @@ export const projects: Project[] = [
     year: "2025 — now",
     status: "live",
     href: profile.links.lowshop,
-    tech: ["Next.js", "Node.js", "PostgreSQL", "Docker", "Linux", "WebOps"],
+    tech: ["Next.js", "NestJS", "PostgreSQL", "Redis", "Docker", "Linux"],
     diagram: "channels",
     shots: [],
     stats: [
@@ -126,7 +131,7 @@ export const projects: Project[] = [
       "React 19",
       "TypeScript",
       "Prisma",
-      "PostgreSQL (Neon)",
+      "PostgreSQL (Supabase)",
       "Zustand",
       "Tailwind",
       "Vercel",
@@ -195,7 +200,7 @@ export const projects: Project[] = [
     ],
     stats: [
       { key: "platforms", value: "2" },
-      { key: "stage", value: "beta" },
+      { key: "testers", value: "15" },
     ],
   },
 ];
@@ -223,35 +228,56 @@ export const experience = [
   { key: "daegu", period: "2021.03 — 2025.02" },
 ] as const;
 
+/**
+ * Twenty-two, down from thirty-five. The old list read as padding — it named
+ * things that appear in no project on this site and things nobody would ask a
+ * follow-up question about. The rule for staying in: he has shipped something
+ * with it, and he would be happy to be asked how it works.
+ */
 export const stackGroups = [
   {
     key: "languages",
-    items: ["TypeScript", "JavaScript", "Python", "SQL"],
+    items: ["TypeScript", "Python", "SQL"],
   },
   {
     key: "frontend",
-    items: ["React 19", "Next.js 16", "React Native", "Expo", "Tailwind CSS", "shadcn/ui", "Zustand", "TanStack Query"],
+    items: ["Next.js", "React", "React Native", "Tailwind CSS"],
   },
   {
     key: "backend",
-    items: ["Node.js", "FastAPI", "Prisma", "REST", "Socket.io"],
+    items: ["NestJS", "Node.js", "FastAPI", "BullMQ", "pytest"],
   },
   {
     key: "data",
-    items: ["PostgreSQL", "Neon", "Supabase", "MySQL", "MariaDB", "Schema design"],
+    items: ["PostgreSQL", "Redis", "MongoDB", "Supabase", "pandas"],
   },
   {
     key: "ops",
-    items: ["Docker", "GitHub Actions", "GitLab CI", "Vercel", "Linux (Ubuntu)", "Sentry"],
+    items: ["Docker", "Linux", "Cafe24", "Sentry"],
   },
   {
     key: "security",
-    items: ["OWASP Top 10", "Penetration testing", "Burp Suite", "Kali Linux", "Network & WLAN security"],
+    items: ["OWASP Top 10", "Burp Suite", "Kali Linux"],
   },
 ] as const;
 
-export const security = [
+/**
+ * The three that are work — things he did, with something to read at the end
+ * of each. These get cards.
+ */
+export const securityWork = [
+  { key: "cve", year: "2025", href: profile.links.cve },
+  { key: "writing", year: "", href: profile.links.medium },
   { key: "platforms", year: "" },
+] as const;
+
+/**
+ * Certifications. Deliberately a list rather than three more cards: a
+ * freeCodeCamp certificate should not sit at the same visual weight as
+ * reproducing an RCE.
+ */
+export const certifications = [
+  { key: "google", year: "2026" },
   { key: "fortinet", year: "2026" },
   // Year deliberately blank: it is inconsistent across his own materials and
   // an unverified year is worse than no year.
@@ -264,12 +290,18 @@ export const languages = [
   { key: "uz", code: "UZ", level: 100 },
 ] as const;
 
+/** Recognition for the work itself. */
+export const recognition = [
+  { key: "presidentTech", year: "2026" },
+] as const;
+
 /**
  * Kept because it is true and because it is the only thing on the page that
  * is not about software — which is exactly why an interviewer remembers it.
  */
 export const awards = [
-  { key: "openChampionship1", year: "2026", place: 1 },
+  { key: "samsunghyeonTeam", year: "2026", place: 1 },
+  { key: "samsunghyeonSingles", year: "2026", place: 2 },
   { key: "championsLeague", year: "2024", place: 1 },
   { key: "openChampionship2", year: "2024", place: 2 },
 ] as const;
@@ -288,6 +320,10 @@ export const sections = [
   { id: "build", phase: 1 },
   { id: "run", phase: 2 },
   { id: "break", phase: 3 },
+  // Reuses the probe formation rather than adding a sixth topology: reviewing
+  // a model's output is the same posture as reviewing anyone else's, and the
+  // field should not announce a change of subject that has not happened.
+  { id: "ai", phase: 3 },
   { id: "contact", phase: 4 },
 ] as const;
 
@@ -301,4 +337,5 @@ export const navItems = [
   { id: "build", href: "/#build" },
   { id: "run", href: "/#run" },
   { id: "break", href: "/#break" },
+  { id: "ai", href: "/#ai" },
 ] as const;

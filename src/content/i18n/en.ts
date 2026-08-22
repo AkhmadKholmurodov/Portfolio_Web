@@ -7,7 +7,7 @@ export const en = {
   meta: {
     title: "Akhmad Kholmurodov — Full-Stack & WebOps Engineer",
     description:
-      "I build production web platforms in South Korea, operate the servers they run on, and practise the attacks I would rather find in my own code. Next.js, React Native, Python, Docker. E-7 visa, open to roles in Seoul.",
+      "I build production web platforms in South Korea, operate the servers they run on, and practise the attacks I would rather find in my own code. Next.js, React Native, Python, Docker. E-7 visa, open to roles in Seoul and across Korea.",
   },
 
   ui: {
@@ -28,6 +28,7 @@ export const en = {
     build: "Build",
     run: "Run",
     break: "Break",
+    ai: "AI",
     about: "About",
     contact: "Contact",
     resume: "Résumé",
@@ -42,7 +43,7 @@ export const en = {
     lead: "Three years shipping production platforms in South Korea. Right now: a company's e-commerce stack, built and run by two of us.",
     ctaWork: "See the work",
     ctaResume: "Download résumé",
-    availability: "Open to roles in Seoul",
+    availability: "Open to roles in Seoul, or anywhere in Korea",
     visa: "E-7 visa · no sponsorship needed",
     languages: "Korean · English · Uzbek",
   },
@@ -81,7 +82,7 @@ export const en = {
       cameras: "Cameras live",
       sites: "Sites in production",
       platforms: "Platforms",
-      stage: "Stage",
+      testers: "Closed-test users",
     },
   },
 
@@ -96,12 +97,17 @@ export const en = {
   experience: {
     sambu: {
       company: "SAMBU Co., Ltd.",
-      role: "Full-Stack & WebOps Engineer",
-      context: "Manufacturing and retail company running its own D2C channel",
+      role: "Full-Stack Engineer (Web Operations)",
+      context:
+        "D2C e-commerce platform selling through its own storefront, Coupang and Naver SmartStore · two-engineer team",
       bullets: [
-        "Designed, built and operate lowshop.net — frontend implementation through to server operations.",
-        "Launched and run the storefronts on Coupang and Naver SmartStore.",
-        "Rebuilt the payment and stock synchronisation so the pipeline runs without anyone touching it.",
+        "Build and operate the platform end to end as one of two engineers — Next.js storefront, NestJS API, payments, deployment and server operations on Cafe24.",
+        "Designed the order and inventory pipeline as an asynchronous NestJS + BullMQ/Redis service: storefront orders enqueue on write, a five-minute cron poller pulls orders from the Coupang and Naver SmartStore APIs, and workers deduct stock under SELECT FOR UPDATE before fanning the new quantity out to every channel.",
+        "Stopped overselling during a holiday gift-set promotion within 30 minutes of live traffic — diagnosed the race condition, made stock deduction atomic at the queue and database level with Redis Redlock and pessimistic row locks, then wrote parallel integration tests so the regression cannot return.",
+        "Made payment state recoverable: every request carries an idempotency key and a PENDING record, and a background job reconciles against the PG provider every 10–15 minutes, auto-cancelling or restoring orders left inconsistent by a dropped callback.",
+        "Built the daily settlement reconciliation pipeline in Python/pandas — pulls the provider's settlement file, diffs it against the payments table, logs discrepancies to an audit table and alerts the team in Slack.",
+        "Integrated the Korean payment rails end to end — card PG (Toss Payments, KG Inicis), Toss Pay, Naver Pay, Kakao Pay — with full and partial refunds made safe by idempotency keys and row-level locking.",
+        "Monitor production with Sentry, Cafe24 server logs and Slack alerts.",
       ],
     },
     ccl: {
@@ -126,10 +132,24 @@ export const en = {
     label: "03 — Break",
     title: "I would rather find it myself.",
     lead: "I develop with an attacker's checklist open beside the editor. The categories I practise on are the categories I review my own code for.",
+    certsTitle: "Certifications",
+    read: "Read it",
     items: {
+      cve: {
+        title: "CVE-2025-55182 — React2Shell",
+        body: "Reproduced the unsafe-deserialisation RCE in the React Server Components Flight protocol to working code execution in an isolated lab, and published the proof-of-concept — at a time when most public PoCs did not trigger the underlying flaw. Audited and patched every Next.js application under my control inside the disclosure window. Testing was confined to lab targets throughout.",
+      },
+      writing: {
+        title: "Technical writing",
+        body: "I publish exploitation walkthroughs of Hack The Box and TryHackMe machines — Kobold, Smol, Chill Hack, Basic Pentesting — covering enumeration, web exploitation and privilege escalation. In Uzbek, a language with almost no security material.",
+      },
       platforms: {
         title: "Hack The Box · TryHackMe",
         body: "Web application vulnerability analysis, infrastructure penetration testing, OWASP Top 10.",
+      },
+      google: {
+        title: "Google Cybersecurity Certificate",
+        body: "Google, 2026.",
       },
       fortinet: {
         title: "Secure Wireless LAN 7.6 Administrator",
@@ -140,6 +160,15 @@ export const en = {
         body: "freeCodeCamp certification.",
       },
     },
+  },
+
+  ai: {
+    label: "04 — AI",
+    title: "I review model output the way I review a pull request.",
+    // TODO(model-name): Akhmad is supplying the exact name of the self-hosted
+    // open-weight model. It is deliberately unnamed until he does.
+    lead: "I work with Claude alongside a self-hosted open-weight model I have tuned to my own workflow.",
+    body: "What matters is not generating the code. It is reviewing it — structure, quality, security and maintainability — before it reaches a branch. Model output arrives as a proposal, and a proposal gets read the same way any pull request does: I have to be able to explain every line of it before it merges, and the lines I cannot explain do not merge.",
   },
 
   stack: {
@@ -156,9 +185,9 @@ export const en = {
   },
 
   contact: {
-    label: "04 — Contact",
+    label: "05 — Contact",
     title: "Let's talk.",
-    lead: "Full-stack or platform work in Seoul. I hold an E-7 visa, so there is no sponsorship to arrange. Korean, English or Uzbek.",
+    lead: "Full-stack or platform work — Seoul, or anywhere in Korea. I hold an E-7 visa, so there is no sponsorship to arrange. Korean, English or Uzbek.",
     emailCta: "Write to me",
     resumeCta: "Download résumé (PDF)",
     responseTime: "I answer email within a day.",
@@ -189,15 +218,25 @@ export const en = {
     languagesNote:
       "All three, daily — Korean at SAMBU, English for documentation and clients, Uzbek with the people eYaqin is actually built for.",
     languageLevels: { ko: "Advanced", en: "Advanced", uz: "Native" },
+    recognitionTitle: "Recognition",
+    recognitionNote:
+      "The one time the work was judged by people who had no reason to be kind about it.",
+    recognition: {
+      presidentTech:
+        "President Tech Award, Uzbekistan — team lead, with eYaqin",
+    },
     awardsTitle: "Away from the keyboard",
     awardsNote:
       "I play competitive table tennis. It is the only thing I do that has a scoreboard somebody else keeps.",
     awards: {
-      openChampionship1: "National Open Table Tennis Championship — 1st place",
+      samsunghyeonTeam:
+        "Samsunghyeon National Open Table Tennis, South Korea — 1st place, team",
+      samsunghyeonSingles:
+        "Samsunghyeon National Open Table Tennis, South Korea — 2nd place, singles",
       championsLeague: "Table Tennis Champions League — 1st place",
       openChampionship2: "National Open Table Tennis Championship — 2nd place",
     },
-    place: "Based in South Korea · applying in Seoul",
+    place: "Based in South Korea · Seoul or anywhere in Korea",
   },
 
   shots: {
@@ -232,36 +271,35 @@ export const en = {
         "SAMBU's official D2C e-commerce platform. I build and operate it as one of two engineers, and I am one of the two people who gets told when it stops answering.",
       role: "Full-Stack Engineer (Web Operations) · two-engineer team",
       problem: {
-        title: "The problem",
-        body: "SAMBU manufactures and sells, and in Korea selling means selling through Coupang and Naver SmartStore — two marketplaces with two admin consoles, two product schemas and two ideas of what a price is. The company also wanted its own storefront, which makes three places where a product's stock, price and description have to agree. Nobody was going to keep three places in agreement by hand.",
+        title: "The system",
+        body: "Three sales channels — the company's own storefront, Coupang and Naver SmartStore — and behind all three, one stock table. Around 2,500 orders a day pass through it, rising to 5,000–6,000 on a 설날 or 추석 gift-set day. Storefront orders enqueue on write; a five-minute cron poller pulls orders from the Coupang and Naver SmartStore APIs. Every one of them ends at the same rows, and every one of them has to leave those rows telling the truth.",
       },
       decisions: {
-        title: "Decisions that mattered",
+        title: "The overselling incident",
         items: [
           {
-            title: "Two engineers own the whole lifecycle",
-            body: "There are two of us, and between us we hold the frontend, the API and the server. That is deliberate: the fastest way to make a slow page fast is to be allowed to change both the component and the machine serving it, without filing a ticket across a team boundary.",
+            title: "What broke",
+            body: "During a gift-set promotion, concurrent order writes from all three channels raced on the same stock rows, and the platform oversold. This is the failure mode a stock table has: each write reads a quantity, decides it is sufficient, and writes back a decrement — and between the read and the write, another channel has done the same thing against the same row. Under normal traffic the window is too narrow to hit. A promotion is precisely the condition that widens it.",
           },
           {
-            title: "Synchronisation runs without a human in it",
-            body: "The payment and data-synchronisation workflows were reworked so the selling pipeline does not need anyone to press anything. A manual step in a sales pipeline is not a process — it is an outage waiting for a public holiday.",
+            title: "The fix, in 30 minutes",
+            body: "Atomicity at both levels, because either one alone still leaves a gap. Redis Redlock at the queue level, so two workers cannot hold the same stock item at the same time; SELECT FOR UPDATE at the database level, so even if they somehow did, the second one waits for the first to commit rather than reading a quantity that is already spent. Thirty minutes from the first oversold order to deduction being atomic under live promotion traffic.",
           },
           {
-            title: "Monitoring before features",
-            body: "Sentry, Cafe24 server logs and Slack alerts went in early. If the way you find out that a sales channel has stopped answering is a customer telling you, you do not have a platform — you have a website and a phone number.",
+            title: "Why it cannot come back",
+            body: "A unit test cannot catch a race condition. It calls the function once, gets the right answer, and passes — which is exactly what the code did before the promotion. So the regression test is a parallel integration test: it fires simultaneous orders at the same stock rows and asserts on what the table holds afterwards. If the locking is ever removed or weakened, that test fails in CI rather than during 설날.",
           },
         ],
       },
       outcome: {
-        title: "Where it landed",
-        body: "Around 2,500 orders a day flow through the pipeline across the three channels, rising to 5,000–6,000 on a 설날 or 추석 gift-set day. The storefront and the two marketplaces have not disagreed about a price since the sync was rebuilt.",
+        title: "What else the pipeline does now",
+        body: "Payment state is recoverable rather than merely logged: every request carries an idempotency key and a PENDING record, and a background job reconciles against the PG provider every 10–15 minutes, auto-cancelling or restoring orders left inconsistent by a dropped callback. A daily settlement reconciliation pipeline in Python and pandas pulls the provider's settlement file, diffs it against the payments table, writes discrepancies to an audit table and alerts the team in Slack. The Korean payment rails are integrated end to end — card PG through Toss Payments and KG Inicis, plus Toss Pay, Naver Pay and Kakao Pay — with full and partial refunds made safe by the same idempotency keys and row-level locks. Production is watched with Sentry, Cafe24 server logs and Slack alerts.",
       },
       next: {
         title: "What I would do next",
-        items: [
-          "Move channel synchronisation onto a queue with dead-letter handling, so a marketplace API outage delays a sync instead of dropping it.",
-          "Add per-channel reconciliation reports, so a disagreement is caught by a scheduled job rather than by a customer.",
-        ],
+        // Emptied deliberately: both previous items describe work that has
+        // since been done. TODO — Akhmad to supply two forward-looking items.
+        items: [] as string[],
       },
     },
 
@@ -269,7 +307,7 @@ export const en = {
       name: "eYaqin",
       tagline: "A second-hand marketplace where the whole point is that the seller is nearby.",
       summary:
-        "A neighbourhood-first C2C marketplace. Solo build: schema, API surface, real-time chat, moderation tooling and deploy.",
+        "A neighbourhood-first C2C marketplace, built solo in three months for web, iOS and Android: schema, API surface, real-time chat, moderation tooling and deploy.",
       role: "Full-stack · solo",
       problem: {
         title: "The problem",
@@ -298,7 +336,7 @@ export const en = {
       },
       outcome: {
         title: "Where it landed",
-        body: "Deployed and running: location-aware discovery, the full listing lifecycle, real-time buyer–seller chat with read status, likes and saved items, reporting and moderation, and session and profile handling. Built solo on Next.js and Prisma against PostgreSQL, with preview builds per branch and environment-separated database branches, so a schema migration could not take production down with it.",
+        body: "Deployed and running: location-aware discovery, the full listing lifecycle, real-time buyer–seller chat with read status, likes and saved items, reporting and moderation, and session and profile handling. Built solo in three months across web, iOS and Android, on Next.js and Prisma against PostgreSQL, with preview builds per branch and environment-separated database branches, so a schema migration could not take production down with it. The production database was later migrated from Neon to Supabase under a capacity deadline, with zero records lost.",
       },
       next: {
         title: "What I would do next",
@@ -313,7 +351,7 @@ export const en = {
       name: "SmartGuard",
       tagline: "CCTV that reads itself, for shops that stopped watching the footage.",
       summary:
-        "An AI surveillance platform that watches retail cameras in real time and sends the owner a Telegram alert with a snapshot and an explanation. Live in a working shop.",
+        "An AI surveillance platform that watches cameras in real time and sends the owner a Telegram alert with a snapshot and an explanation. Eight cameras live across two working sites.",
       role: "Full-stack & vision pipeline · solo",
       problem: {
         title: "The problem",
@@ -342,7 +380,7 @@ export const en = {
       },
       outcome: {
         title: "Where it landed",
-        body: "Running in production in a retail store, processing continuous camera feeds across multi-threaded workers with sub-second alert generation. Any ONVIF or RTSP camera works, so the shop did not have to replace hardware. React 18 on the front, Python and FastAPI behind it, PostgreSQL for events, deployed with Docker.",
+        body: "Eight cameras across two sites — a retail shop and a vehicle-service centre — running unattended for six weeks and surfacing six real incidents to the owners by Telegram. Continuous feeds are processed across multi-threaded workers with sub-second alert generation, and any ONVIF or RTSP camera works, so neither site had to replace hardware. React 18 on the front, Python and FastAPI behind it, PostgreSQL for events, deployed with Docker.",
       },
       next: {
         title: "What I would do next",
@@ -386,7 +424,7 @@ export const en = {
       },
       outcome: {
         title: "Where it landed",
-        body: "In active development on Expo SDK 54 with Expo Router v6, over a shared REST and WebSocket backend with Supabase behind it, Socket.io for live chat events and Reanimated for the interaction work. Real-time chat, camera upload, community posts, manner temperature and review-gated completion are all in.",
+        body: "In closed testing with 15 users, on Expo SDK 54 with Expo Router v6, over a shared REST and WebSocket backend with Supabase behind it, Socket.io for live chat events and Reanimated for the interaction work. Real-time chat, camera upload, community posts, manner temperature and review-gated completion are all in.",
       },
       next: {
         title: "What I would do next",

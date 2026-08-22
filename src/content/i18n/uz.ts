@@ -11,7 +11,7 @@ export const uz: Dict = {
   meta: {
     title: "Akhmad Kholmurodov — Full-Stack va WebOps muhandisi",
     description:
-      "Janubiy Koreyada production darajasidagi veb-platformalar quraman, ular ishlaydigan serverlarni o'zim yurituraman va o'z kodimdagi teshikni boshqalardan oldin o'zim topaman. Next.js, React Native, Python, Docker. E-7 vizasi, Seulda ish qidirmoqdaman.",
+      "Janubiy Koreyada production darajasidagi veb-platformalar quraman, ular ishlaydigan serverlarni o'zim yurituraman va o'z kodimdagi teshikni boshqalardan oldin o'zim topaman. Next.js, React Native, Python, Docker. E-7 vizasi, Seul va Koreyaning istalgan joyida ishlashga tayyorman.",
   },
 
   ui: {
@@ -32,6 +32,7 @@ export const uz: Dict = {
     build: "Qurish",
     run: "Yuritish",
     break: "Sindirish",
+    ai: "AI",
     about: "Men haqimda",
     contact: "Bog'lanish",
     resume: "Rezyume",
@@ -46,7 +47,7 @@ export const uz: Dict = {
     lead: "Koreyada uch yildan beri production platformalar chiqaraman. Hozir ikkovlon bir kompaniyaning e-commerce stack'ini quramiz va yuritamiz.",
     ctaWork: "Ishlarni ko'rish",
     ctaResume: "Rezyumeni yuklab olish",
-    availability: "Seulda ish qidirmoqdaman",
+    availability: "Seul, yoki Koreyaning istalgan joyi",
     visa: "E-7 vizasi · homiylik shart emas",
     languages: "Koreys · Ingliz · O'zbek",
   },
@@ -85,7 +86,7 @@ export const uz: Dict = {
       cameras: "Ishlab turgan kamera",
       sites: "Ishlab turgan obyekt",
       platforms: "Platformalar",
-      stage: "Bosqich",
+      testers: "Yopiq test foydalanuvchilari",
     },
   },
 
@@ -100,12 +101,17 @@ export const uz: Dict = {
   experience: {
     sambu: {
       company: "SAMBU Co., Ltd.",
-      role: "Full-Stack va WebOps muhandisi",
-      context: "O'z D2C kanalini yurituvchi ishlab chiqarish va savdo kompaniyasi",
+      role: "Full-Stack muhandis (veb operatsiyalari)",
+      context:
+        "O'z do'koni, Coupang va Naver SmartStore orqali sotadigan D2C e-commerce platformasi · ikki kishilik muhandislar jamoasi",
       bullets: [
-        "lowshop.net'ni loyihaladim, qurdim va yurituraman — frontenddan server operatsiyalarigacha.",
-        "Coupang va Naver SmartStore'da kompaniya do'konlarini ishga tushirdim va yurituraman.",
-        "To'lov va qoldiq sinxronizatsiyasini qayta qurdim — savdo quvuri endi hech kimning qo'lisiz ishlaydi.",
+        "Ikki muhandisdan biri sifatida platformani boshdan oxir quraman va yurituraman — Next.js do'koni, NestJS API, to'lovlar, deploy va Cafe24 ustidagi server operatsiyalari.",
+        "Buyurtma va qoldiq quvurini asinxron NestJS + BullMQ/Redis xizmati sifatida loyihaladim: o'z do'kon buyurtmalari yozilishi bilan navbatga tushadi, besh daqiqalik cron poller Coupang va Naver SmartStore API'laridan buyurtmalarni tortadi, workerlar esa SELECT FOR UPDATE ostida qoldiqni ayirib, yangi miqdorni barcha kanallarga tarqatadi.",
+        "Bayram sovg'a-to'plami aksiyasi paytidagi ortiqcha sotuvni jonli trafikning 30 daqiqasi ichida to'xtatdim — race condition'ni aniqladim, Redis Redlock va pessimistik qator qulflari bilan qoldiq ayirishni navbat va ma'lumotlar bazasi darajasida atomar qildim, so'ng bu regressiya qaytmasligi uchun parallel integratsion testlar yozdim.",
+        "To'lov holatini tiklanadigan qildim: har bir so'rov idempotentlik kaliti va PENDING yozuvi bilan keladi, fon vazifasi esa har 10–15 daqiqada PG provayder bilan solishtiradi va uzilib qolgan callback tufayli nomuvofiq qolgan buyurtmalarni avtomatik bekor qiladi yoki tiklaydi.",
+        "Kunlik hisob-kitob solishtirish quvurini Python/pandas'da qurdim — provayderning hisob-kitob faylini oladi, to'lovlar jadvali bilan taqqoslaydi, tafovutlarni audit jadvaliga yozadi va jamoani Slack'da ogohlantiradi.",
+        "Koreys to'lov relslarini boshdan oxir uladim — karta PG (Toss Payments, KG Inicis), Toss Pay, Naver Pay, Kakao Pay — to'liq va qisman qaytarishlar idempotentlik kalitlari va qator darajasidagi qulflar bilan xavfsiz.",
+        "Productionni Sentry, Cafe24 server loglari va Slack ogohlantirishlari bilan kuzataman.",
       ],
     },
     ccl: {
@@ -130,7 +136,21 @@ export const uz: Dict = {
     label: "03 — Sindirish",
     title: "O'zim topganim afzal.",
     lead: "Muharrir yonida hujumchining ro'yxati ochiq turadi. Mashq qiladigan toifalarim — aynan o'z kodimni ko'zdan kechirganda qaraydigan toifalar.",
+    certsTitle: "Sertifikatlar",
+    read: "O'qish",
     items: {
+      cve: {
+        title: "CVE-2025-55182 — React2Shell",
+        body: "React Server Components'ning Flight protokolidagi xavfli deserializatsiya RCE'sini izolyatsiyalangan labda haqiqiy kod bajarilishigacha qayta tikladim va proof-of-concept'ni e'lon qildim — ommaviy PoC'larning aksariyati asosiy kamchilikni umuman ishga tushira olmayotgan paytda. Oshkora qilish oynasi ichida nazoratimdagi har bir Next.js ilovasini tekshirdim va yamadim. Sinov boshdan oxir faqat lab nishonlari bilan cheklandi.",
+      },
+      writing: {
+        title: "Texnik maqolalar",
+        body: "Hack The Box va TryHackMe mashinalari — Kobold, Smol, Chill Hack, Basic Pentesting — bo'yicha ekspluatatsiya yo'riqnomalarini yozaman: enumeratsiya, veb-ekspluatatsiya va imtiyozlarni oshirish. O'zbek tilida — xavfsizlik bo'yicha material deyarli yo'q tilda.",
+      },
+      google: {
+        title: "Google Cybersecurity Certificate",
+        body: "Google, 2026.",
+      },
       platforms: {
         title: "Hack The Box · TryHackMe",
         body: "Veb-ilovalar zaifligini tahlil qilish, infratuzilmaga sinov hujumlari, OWASP Top 10.",
@@ -144,6 +164,14 @@ export const uz: Dict = {
         body: "freeCodeCamp sertifikati.",
       },
     },
+  },
+
+  ai: {
+    label: "04 — AI",
+    title: "Model chiqargan kodni ham pull request kabi ko'zdan kechiraman.",
+    // TODO(model-name): aniq model nomini Akhmad bergach qo'yiladi.
+    lead: "Claude bilan birga, o'z ish jarayonimga moslab sozlagan self-hosted open-weight modeldan foydalanaman.",
+    body: "Muhimi kod yozdirish emas — uni ko'zdan kechirish: tuzilishi, sifati, xavfsizligi va keyin qo'llab-quvvatlanishi, branchga tegishidan oldin. Model chiqargan narsa taklif bo'lib keladi, taklif esa istalgan pull request kabi o'qiladi: merge qilishdan oldin har bir qatorini tushuntira olishim kerak, tushuntira olmagan qatorlarim merge bo'lmaydi.",
   },
 
   stack: {
@@ -160,9 +188,9 @@ export const uz: Dict = {
   },
 
   contact: {
-    label: "04 — Bog'lanish",
+    label: "05 — Bog'lanish",
     title: "Gaplashaylik.",
-    lead: "Seulda full-stack yoki platforma muhandisi ishini qidiryapman. E-7 vizam bor — homiylik shart emas. Koreys, ingliz yoki o'zbek.",
+    lead: "Full-stack yoki platforma muhandisi ishini qidiryapman — Seul, yoki Koreyaning istalgan joyi. E-7 vizam bor — homiylik shart emas. Koreys, ingliz yoki o'zbek.",
     emailCta: "Xat yozing",
     resumeCta: "Rezyumeni yuklab olish (PDF)",
     responseTime: "Xatlarga bir kun ichida javob beraman.",
@@ -192,15 +220,24 @@ export const uz: Dict = {
     languagesNote:
       "Uchalasini ham har kuni ishlataman — SAMBU'da koreyscha, hujjatlar va mijozlar bilan inglizcha, eYaqin kimlar uchun qurilgan bo'lsa, ular bilan o'zbekcha.",
     languageLevels: { ko: "Yuqori", en: "Yuqori", uz: "Ona tili" },
+    recognitionTitle: "E'tirof",
+    recognitionNote:
+      "Ishni menga xushomad qilishga hech qanday sababi yo'q odamlar baholagan yagona holat.",
+    recognition: {
+      presidentTech: "O'zbekiston Prezidenti Tech mukofoti — eYaqin, jamoa rahbari",
+    },
     awardsTitle: "Klaviaturadan tashqarida",
     awardsNote:
       "Stol tennisini musobaqa darajasida o'ynayman. Qiladigan ishlarim ichida hisobni boshqa odam yuritadigan yagonasi shu.",
     awards: {
-      openChampionship1: "Ochiq milliy stol tennisi chempionati — 1-o'rin",
+      samsunghyeonTeam:
+        "Samsunghyeon ochiq milliy stol tennisi turniri, Janubiy Koreya — jamoaviy 1-o'rin",
+      samsunghyeonSingles:
+        "Samsunghyeon ochiq milliy stol tennisi turniri, Janubiy Koreya — yakka 2-o'rin",
       championsLeague: "Stol tennisi Chempionlar ligasi — 1-o'rin",
       openChampionship2: "Ochiq milliy stol tennisi chempionati — 2-o'rin",
     },
-    place: "Janubiy Koreyada yashayman · Seulda ish qidiryapman",
+    place: "Janubiy Koreyada yashayman · Seul yoki Koreyaning istalgan joyi",
   },
 
   shots: {
@@ -231,36 +268,35 @@ export const uz: Dict = {
         "SAMBU'ning rasmiy D2C e-commerce platformasi. Ikki muhandisdan biri sifatida quraman va yurituraman; u javob bermay qolganda qo'ng'iroq keladigan ikki odamdan biri — men.",
       role: "Full-Stack muhandis (veb operatsiyalari) · ikki kishilik jamoa",
       problem: {
-        title: "Muammo",
-        body: "SAMBU ishlab chiqaradi va sotadi. Koreyada sotish degani — Coupang va Naver SmartStore orqali sotish degani: ikkita admin konsoli, ikkita mahsulot sxemasi va narx nima ekani haqida ikkita tasavvur. Kompaniya bunga qo'shimcha o'z do'konini ham xohladi, ya'ni bitta mahsulotning qoldig'i, narxi va tavsifi uch joyda bir xil turishi kerak. Uch joyni qo'lda bir xil ushlab turadigan odam yo'q edi.",
+        title: "Tizim",
+        body: "Uchta savdo kanali — kompaniyaning o'z do'koni, Coupang va Naver SmartStore — va uchalasining ortida bitta qoldiq jadvali. Kuniga taxminan 2,500 buyurtma shu jadvaldan o'tadi, 설날 va 추석 sovg'a-to'plam kunlarida esa 5,000–6,000 tagacha ko'tariladi. O'z do'kon buyurtmalari yozilishi bilan navbatga tushadi; besh daqiqalik cron poller Coupang va Naver SmartStore API'laridan buyurtmalarni tortadi. Ularning har biri o'sha bir qatorlarda tugaydi va har biri o'sha qatorlarni rost holda qoldirib ketishi shart.",
       },
       decisions: {
-        title: "Ahamiyatli qarorlar",
+        title: "Ortiqcha sotuv hodisasi",
         items: [
           {
-            title: "Butun hayotiy sikl ikki odamda",
-            body: "Ikkovlon frontendni ham, API'ni ham, serverni ham o'zimiz ushlab turamiz. Ataylab shunday: sekin sahifani tez qilishning eng qisqa yo'li — komponentni ham, uni uzatayotgan mashinani ham jamoa chegarasidan ticket o'tkazmasdan o'zgartira olish.",
+            title: "Nima buzildi",
+            body: "Sovg'a-to'plam aksiyasi paytida uchala kanaldan bir vaqtda kelgan buyurtma yozuvlari bir xil qoldiq qatorlarida to'qnashdi va platforma ortiqcha sotdi. Qoldiq jadvalining klassik nosozlik shakli shu: har bir yozuv miqdorni o'qiydi, yetarli deb hisoblaydi va ayirilgan qiymatni qaytarib yozadi — o'sha o'qish bilan yozish orasida esa boshqa kanal aynan shu qatorda aynan shuni qilib ulguradi. Oddiy trafikda bu oyna juda tor. Aksiya esa aynan uni kengaytiradigan shart.",
           },
           {
-            title: "Sinxronizatsiyada odam yo'q",
-            body: "To'lov va ma'lumot sinxronizatsiyasi jarayonlari qayta qurildi — endi savdo quvuri hech kim hech narsa bosmasa ham ishlaydi. Savdo quvuridagi qo'lbola qadam — bu jarayon emas, bu bayram kunini kutib turgan uzilish.",
+            title: "30 daqiqadagi yechim",
+            body: "Atomarlik ikkala qatlamda ham, chunki bittasining o'zi baribir tirqish qoldiradi. Navbat qatlamida Redis Redlock — ikki worker bir xil qoldiq elementini bir vaqtda ushlab tura olmasin. Ma'lumotlar bazasi qatlamida SELECT FOR UPDATE — agar negadir shunday bo'lib qolsa ham, ikkinchisi allaqachon sarflangan miqdorni o'qish o'rniga birinchisining commit'ini kutsin. Birinchi ortiqcha buyurtmadan to jonli aksiya trafigi ostida ayirish atomar bo'lgunga qadar o'ttiz daqiqa.",
           },
           {
-            title: "Funksiyalardan oldin monitoring",
-            body: "Sentry, Cafe24 server loglari va Slack ogohlantirishlari erta qo'yildi. Savdo kanali javob bermay qolganini mijozdan eshitadigan bo'lsangiz, sizda platforma emas — sayt va telefon raqami bor, xolos.",
+            title: "Nega u qaytib kela olmaydi",
+            body: "Unit test race condition'ni ushlay olmaydi. Funksiyani bir marta chaqiradi, to'g'ri javob oladi va o'tadi — aksiyadan oldingi kod aynan shunday qilgan edi. Shu sababli regressiya testi — parallel integratsion test: bir xil qoldiq qatorlariga bir vaqtda buyurtmalar otadi va keyin jadval nima ushlab turganini tekshiradi. Qulflash olib tashlansa yoki bo'shashtirilsa, test 설날 kuni emas, CI'da yiqiladi.",
           },
         ],
       },
       outcome: {
-        title: "Natija",
-        body: "Uch kanal bo'ylab kuniga taxminan 2,500 buyurtma quvurdan o'tadi, 설날 va 추석 sovg'a-to'plam kunlarida esa 5,000–6,000 tagacha ko'tariladi. Sinxronizatsiya qayta qurilganidan buyon o'z do'kon bilan ikki marketplace narx borasida bir marta ham qarama-qarshi kelmadi.",
+        title: "Quvur yana nima qiladi",
+        body: "To'lov holati shunchaki logga yozilmaydi — u tiklanadi: har bir so'rov idempotentlik kaliti va PENDING yozuvi bilan keladi, fon vazifasi esa har 10–15 daqiqada PG provayder bilan solishtiradi va uzilib qolgan callback tufayli nomuvofiq qolgan buyurtmalarni avtomatik bekor qiladi yoki tiklaydi. Python va pandas'dagi kunlik hisob-kitob solishtirish quvuri provayderning hisob-kitob faylini oladi, to'lovlar jadvali bilan taqqoslaydi, tafovutlarni audit jadvaliga yozadi va jamoani Slack'da ogohlantiradi. Koreys to'lov relslari boshdan oxir ulangan — Toss Payments va KG Inicis orqali karta PG, hamda Toss Pay, Naver Pay va Kakao Pay — to'liq va qisman qaytarishlar o'sha idempotentlik kalitlari va qator darajasidagi qulflar bilan xavfsiz. Production Sentry, Cafe24 server loglari va Slack ogohlantirishlari bilan kuzatiladi.",
       },
       next: {
         title: "Keyin nima qilardim",
-        items: [
-          "Kanal sinxronizatsiyasini dead-letter'li navbatga o'tkazardim — shunda marketplace API'sining uzilishi sinxronizatsiyani yo'qotmay, kechiktiradi.",
-          "Har bir kanal uchun solishtiruv hisobotini qo'shardim — nomuvofiqlikni mijoz emas, rejalashtirilgan vazifa topsin.",
-        ],
+        // Emptied deliberately: both previous items describe work that has
+        // since been done. TODO — Akhmad to supply two forward-looking items.
+        items: [] as string[],
       },
     },
 
@@ -268,7 +304,7 @@ export const uz: Dict = {
       name: "eYaqin",
       tagline: "Sotuvchining yaqinligi butun mohiyat bo'lgan ikkinchi qo'l bozori.",
       summary:
-        "Mahalla birinchi o'rinda turadigan C2C bozor. Yakka qurildi: sxema, API, real vaqtli chat, moderatsiya vositalari va deploy.",
+        "Mahalla birinchi o'rinda turadigan C2C bozor. Veb, iOS va Android uchun uch oyda yakka qurildi: sxema, API, real vaqtli chat, moderatsiya vositalari va deploy.",
       role: "Full-stack · yakka",
       problem: {
         title: "Muammo",
@@ -297,7 +333,7 @@ export const uz: Dict = {
       },
       outcome: {
         title: "Natija",
-        body: "Deploy qilingan va ishlayapti: joylashuvga bog'liq qidiruv, e'lonning to'liq hayotiy sikli, o'qilgan belgisi bilan real vaqtli xaridor–sotuvchi chati, yoqtirish va saqlash, shikoyat va moderatsiya, sessiya va profil boshqaruvi. Next.js va Prisma ustida PostgreSQL bilan yakka qurilgan; har bir branch uchun preview build va muhitlarga ajratilgan ma'lumotlar bazasi branchlari — shunda sxema migratsiyasi productionni o'zi bilan olib keta olmaydi.",
+        body: "Deploy qilingan va ishlayapti: joylashuvga bog'liq qidiruv, e'lonning to'liq hayotiy sikli, o'qilgan belgisi bilan real vaqtli xaridor–sotuvchi chati, yoqtirish va saqlash, shikoyat va moderatsiya, sessiya va profil boshqaruvi. Veb, iOS va Android uchun uch oyda yakka, Next.js va Prisma ustida PostgreSQL bilan qurilgan; har bir branch uchun preview build va muhitlarga ajratilgan ma'lumotlar bazasi branchlari — shunda sxema migratsiyasi productionni o'zi bilan olib keta olmaydi. Keyinchalik production ma'lumotlar bazasi sig'im muddati ostida Neon'dan Supabase'ga ko'chirildi — bironta ham yozuv yo'qolmadi.",
       },
       next: {
         title: "Keyin nima qilardim",
@@ -312,7 +348,7 @@ export const uz: Dict = {
       name: "SmartGuard",
       tagline: "Yozuvni ko'rishni tashlagan do'konlar uchun o'zini o'zi o'qiydigan CCTV.",
       summary:
-        "Do'kon kameralarini real vaqtda kuzatib, egasiga Telegram orqali surat va izoh bilan ogohlantirish yuboradigan AI nazorat platformasi. Ishlab turgan do'konda jonli.",
+        "Kameralarni real vaqtda kuzatib, egasiga Telegram orqali surat va izoh bilan ogohlantirish yuboradigan AI nazorat platformasi. Ishlab turgan ikki obyektda sakkizta kamera jonli.",
       role: "Full-stack va vision quvuri · yakka",
       problem: {
         title: "Muammo",
@@ -341,7 +377,7 @@ export const uz: Dict = {
       },
       outcome: {
         title: "Natija",
-        body: "Do'konda productionda ishlayapti: ko'p oqimli workerlar uzluksiz kamera oqimini qayta ishlaydi va ogohlantirish soniyadan kam vaqtda tayyorlanadi. Har qanday ONVIF yoki RTSP kamera ishlaydi, ya'ni do'kon jihozini almashtirishi shart bo'lmadi. Oldida React 18, ortida Python va FastAPI, hodisalar uchun PostgreSQL, deploy Docker bilan.",
+        body: "Ikki obyektda — bitta do'kon va bitta avtoservis markazida — sakkizta kamera olti hafta davomida qarovsiz ishladi va egalariga Telegram orqali oltita haqiqiy hodisani yetkazdi. Ko'p oqimli workerlar uzluksiz oqimni qayta ishlaydi va ogohlantirish soniyadan kam vaqtda tayyorlanadi; har qanday ONVIF yoki RTSP kamera ishlaydi, ya'ni ikkala obyekt ham jihozini almashtirishi shart bo'lmadi. Oldida React 18, ortida Python va FastAPI, hodisalar uchun PostgreSQL, deploy Docker bilan.",
       },
       next: {
         title: "Keyin nima qilardim",
@@ -385,7 +421,7 @@ export const uz: Dict = {
       },
       outcome: {
         title: "Natija",
-        body: "Expo SDK 54 va Expo Router v6 ustida faol ishlanmoqda; ortida Supabase turgan umumiy REST va WebSocket backend, jonli chat hodisalari uchun Socket.io, interaktsiyalar uchun Reanimated. Real vaqtli chat, kameradan yuklash, mahalla postlari, muomala harorati va sharh orqali yopiladigan savdo — hammasi ichida.",
+        body: "15 foydalanuvchi bilan yopiq testda; Expo SDK 54 va Expo Router v6 ustida, ortida Supabase turgan umumiy REST va WebSocket backend, jonli chat hodisalari uchun Socket.io, interaktsiyalar uchun Reanimated. Real vaqtli chat, kameradan yuklash, mahalla postlari, muomala harorati va sharh orqali yopiladigan savdo — hammasi ichida.",
       },
       next: {
         title: "Keyin nima qilardim",

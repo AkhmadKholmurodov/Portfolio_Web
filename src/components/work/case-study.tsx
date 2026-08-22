@@ -9,6 +9,7 @@ import { Reveal } from "@/components/magicui/reveal";
 import { useLanguage } from "@/components/providers/language-provider";
 import { projects, type ProjectSlug } from "@/content/profile";
 import { ChannelsDiagram } from "@/components/sections/channels-diagram";
+import { cn } from "@/lib/utils";
 
 /**
  * One case study. The shape is fixed across all four — problem, the decisions
@@ -202,27 +203,37 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
       )}
 
       {/* ---- outcome + next ---- */}
-      <section className="shell mt-24 grid gap-14 md:mt-36 lg:grid-cols-2 lg:gap-20">
+      {/* `next` is allowed to be empty. A "what I would do next" list that has
+          been overtaken by what was actually built is worse than no list, so
+          the column disappears rather than being padded out. */}
+      <section
+        className={cn(
+          "shell mt-24 grid gap-14 md:mt-36 lg:gap-20",
+          copy.next.items.length > 0 && "lg:grid-cols-2",
+        )}
+      >
         <Reveal>
           <p className="label">{copy.outcome.title}</p>
-          <p className="mt-6 text-[0.9375rem] leading-relaxed text-ink-300 md:text-base">
+          <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-300 md:text-base">
             {copy.outcome.body}
           </p>
         </Reveal>
 
-        <Reveal>
-          <p className="label">{copy.next.title}</p>
-          <ul className="mt-6 flex flex-col gap-4">
-            {copy.next.items.map((item, i) => (
-              <li
-                key={i}
-                className="relative border-l border-line pl-5 text-[0.9375rem] leading-relaxed text-ink-300"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        {copy.next.items.length > 0 && (
+          <Reveal>
+            <p className="label">{copy.next.title}</p>
+            <ul className="mt-6 flex flex-col gap-4">
+              {copy.next.items.map((item, i) => (
+                <li
+                  key={i}
+                  className="relative border-l border-line pl-5 text-[0.9375rem] leading-relaxed text-ink-300"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
       </section>
 
       {/* ---- next project ---- */}

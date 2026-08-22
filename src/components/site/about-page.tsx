@@ -6,7 +6,7 @@ import { ArrowLeft, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/magicui/reveal";
 import { useLanguage } from "@/components/providers/language-provider";
-import { awards, languages, profile } from "@/content/profile";
+import { awards, languages, profile, recognition } from "@/content/profile";
 
 const PHOTOS = [
   { src: "/photos/graduation.webp", width: 1280, height: 960, key: "graduation", wide: true },
@@ -138,6 +138,31 @@ export function AboutPage() {
                     className="h-px bg-ink-500"
                     style={{ width: `${lang.level}%` }}
                   />
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </section>
+
+        {/* ---- recognition ---- */}
+        <section className="mt-24 grid gap-14 md:mt-36 lg:grid-cols-2 lg:gap-20">
+          <Reveal>
+            <p className="label">{t.about.recognitionTitle}</p>
+            <p className="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-ink-300">
+              {t.about.recognitionNote}
+            </p>
+          </Reveal>
+
+          <RevealGroup className="flex flex-col border-t border-line" stagger={0.07}>
+            {recognition.map((item) => (
+              <RevealItem key={item.key}>
+                <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                  <span className="text-[0.9375rem] text-ink-200">
+                    {t.about.recognition[item.key as keyof typeof t.about.recognition]}
+                  </span>
+                  <span className="font-mono text-[0.6875rem] tracking-wide text-ink-600">
+                    {item.year}
+                  </span>
                 </div>
               </RevealItem>
             ))}
