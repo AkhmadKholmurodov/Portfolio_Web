@@ -29,7 +29,7 @@ export function Tooltip({
           sideOffset={8}
           className={cn(
             "anim-pop z-50 max-w-64 rounded-lg border border-line bg-surface/95 px-3 py-2",
-            "font-mono text-[0.6875rem] leading-relaxed tracking-wide text-ink-300",
+            "font-mono text-label tracking-label text-ink-300",
           )}
         >
           {content}

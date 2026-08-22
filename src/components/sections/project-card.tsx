@@ -43,7 +43,7 @@ export function ProjectCard({
       >
         <div className={cn("flex flex-col", flipped && "lg:order-2")}>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-700">
+            <span className="font-mono text-label tracking-[0.16em] text-ink-400">
               {project.index}
             </span>
             <span className="h-px flex-1 bg-line" />
@@ -51,13 +51,13 @@ export function ProjectCard({
               <StatusDot live={project.status === "live"} />
               {t.work.status[project.status]}
             </Badge>
-            <span className="font-mono text-[0.6875rem] tracking-wide text-ink-700">
+            <span className="font-mono text-label tracking-label text-ink-400">
               {project.year}
             </span>
           </div>
 
           <h3 className="display-3 mt-6 text-ink-100">{copy.name}</h3>
-          <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-300">
+          <p className="mt-3 text-body text-ink-300">
             {copy.tagline}
           </p>
 
@@ -66,7 +66,13 @@ export function ProjectCard({
               "mt-7 grid gap-6 border-t border-line pt-6",
               // Three stats would wrap to a lonely orphan in a two-column
               // grid, so the column count follows the data.
-              project.stats.length > 2 ? "grid-cols-3 gap-4" : "grid-cols-2",
+              "tabular-nums",
+              // Three stats at 13px labels will not sit in three columns on a
+              // 375px screen — "Sites in production" needs three lines to do
+              // it. Two columns below `sm`, three above.
+              project.stats.length > 2
+                ? "grid-cols-2 gap-4 sm:grid-cols-3"
+                : "grid-cols-2",
             )}
           >
             {project.stats.map((s) => (
@@ -74,7 +80,7 @@ export function ProjectCard({
                 <dd className="font-mono text-xl text-ink-100 tabular-nums">
                   {s.value}
                 </dd>
-                <dt className="mt-1.5 font-mono text-[0.625rem] tracking-[0.1em] text-ink-600 uppercase">
+                <dt className="mt-1.5 font-mono text-label tracking-label text-ink-400 uppercase">
                   {t.work.stats[s.key as keyof typeof t.work.stats]}
                 </dt>
               </div>
@@ -85,7 +91,7 @@ export function ProjectCard({
             {project.tech.slice(0, 5).map((tech) => (
               <li
                 key={tech}
-                className="rounded-full border border-line px-2.5 py-1 font-mono text-[0.625rem] tracking-wide text-ink-600"
+                className="rounded-full border border-line px-2.5 py-1 font-mono text-label tracking-label text-ink-400"
               >
                 {tech}
               </li>

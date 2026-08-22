@@ -48,12 +48,12 @@ export function BreakSection() {
               <div className="flex items-start justify-between gap-4">
                 <h3 className="text-lg font-medium text-ink-100">{copy.title}</h3>
                 {item.year && (
-                  <span className="mt-1 shrink-0 font-mono text-[0.6875rem] tracking-wide text-ink-700">
+                  <span className="mt-1 shrink-0 font-mono text-label tracking-label text-ink-400">
                     {item.year}
                   </span>
                 )}
               </div>
-              <p className="mt-4 text-[0.9375rem] leading-relaxed text-ink-300">
+              <p className="measure mt-4 text-body text-ink-300">
                 {copy.body}
               </p>
               {href && (
@@ -98,8 +98,8 @@ export function BreakSection() {
                 key={cert.key}
                 className="flex flex-col gap-1 border-b border-line py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
               >
-                <span className="text-[0.9375rem] text-ink-200">{copy.title}</span>
-                <span className="font-mono text-[0.6875rem] tracking-wide text-ink-600">
+                <span className="text-body text-ink-200">{copy.title}</span>
+                <span className="font-mono text-label tracking-label text-ink-400">
                   {copy.body}
                 </span>
               </li>

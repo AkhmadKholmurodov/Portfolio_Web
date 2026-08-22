@@ -28,7 +28,7 @@ export function ChannelsDiagram() {
 
       <div className="relative flex flex-col gap-1">
         <span className="label">SAMBU</span>
-        <span className="font-mono text-[0.8125rem] text-ink-200">catalogue</span>
+        <span className="font-mono text-body text-ink-200">catalogue</span>
       </div>
 
       {/* The sync job. Amber because it is the live piece — the thing that is
@@ -36,7 +36,7 @@ export function ChannelsDiagram() {
           boxes below disagree. */}
       <div className="relative flex items-center gap-3">
         <span className="h-px flex-1 bg-linear-to-r from-signal/60 to-signal/10" />
-        <span className="rounded-full border border-signal-line px-2.5 py-1 font-mono text-[0.625rem] tracking-[0.12em] text-signal uppercase">
+        <span className="rounded-full border border-signal-line px-2.5 py-1 font-mono text-label tracking-label text-signal uppercase">
           sync
         </span>
         <span className="h-px flex-1 bg-linear-to-l from-signal/60 to-signal/10" />
@@ -48,14 +48,14 @@ export function ChannelsDiagram() {
             key={name}
             className="rounded-lg border border-line bg-surface/60 px-3 py-2.5"
           >
-            <span className="font-mono text-[0.6875rem] tracking-wide text-ink-300">
+            <span className="font-mono text-label tracking-label text-ink-300">
               {name}
             </span>
           </div>
         ))}
       </div>
 
-      <p className="relative font-mono text-[0.625rem] leading-relaxed tracking-wide text-ink-600">
+      <p className="relative font-mono text-label tracking-label text-ink-400">
         {t.work.stats.channels} · 3
       </p>
 
@@ -68,7 +68,7 @@ export function ChannelsDiagram() {
           {PAYMENTS.map((name) => (
             <li
               key={name}
-              className="rounded-full border border-line px-2.5 py-1 font-mono text-[0.625rem] tracking-wide text-ink-500"
+              className="rounded-full border border-line px-2.5 py-1 font-mono text-label tracking-label text-ink-400"
             >
               {name}
             </li>

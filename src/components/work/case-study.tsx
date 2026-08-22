@@ -29,7 +29,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
       <div className="shell">
         <Link
           href="/#build"
-          className="group inline-flex items-center gap-2 font-mono text-[0.6875rem] tracking-[0.12em] text-ink-600 uppercase transition-colors duration-300 hover:text-ink-200"
+          className="group inline-flex items-center gap-2 font-mono text-label tracking-label text-ink-400 uppercase transition-colors duration-300 hover:text-ink-200"
         >
           <ArrowLeft className="size-3.5 transition-transform duration-400 ease-(--ease-out-expo) group-hover:-translate-x-0.5" />
           {t.ui.allWork}
@@ -37,23 +37,23 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
 
         <header className="mt-10 max-w-4xl">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-700">
+            <span className="font-mono text-label tracking-[0.16em] text-ink-400">
               {project.index}
             </span>
             <Badge variant={project.status === "live" ? "live" : "outline"}>
               <StatusDot live={project.status === "live"} />
               {t.work.status[project.status]}
             </Badge>
-            <span className="font-mono text-[0.6875rem] tracking-wide text-ink-700">
+            <span className="font-mono text-label tracking-label text-ink-400">
               {project.year}
             </span>
           </div>
 
           <h1 className="display-1 mt-7 text-ink-100">{copy.name}</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200 md:text-xl">
+          <p className="lede measure mt-6">
             {copy.tagline}
           </p>
-          <p className="mt-5 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-300">
+          <p className="text-body measure mt-5 text-ink-300">
             {copy.summary}
           </p>
 
@@ -73,18 +73,18 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
         <dl className="mt-14 grid gap-x-10 gap-y-8 border-y border-line py-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <dt className="label">{t.work.role}</dt>
-            <dd className="mt-3 text-[0.9375rem] text-ink-200">{copy.role}</dd>
+            <dd className="mt-3 text-body text-ink-200">{copy.role}</dd>
           </div>
           <div>
             <dt className="label">{t.work.year}</dt>
-            <dd className="mt-3 text-[0.9375rem] text-ink-200">{project.year}</dd>
+            <dd className="mt-3 text-body text-ink-200">{project.year}</dd>
           </div>
           {project.stats.map((s) => (
             <div key={s.key}>
               <dt className="label">
                 {t.work.stats[s.key as keyof typeof t.work.stats]}
               </dt>
-              <dd className="mt-3 font-mono text-[0.9375rem] text-ink-200 tabular-nums">
+              <dd className="mt-3 font-mono text-body text-ink-200 tabular-nums">
                 {s.value}
               </dd>
             </div>
@@ -97,7 +97,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
             {project.tech.map((tech) => (
               <li
                 key={tech}
-                className="rounded-full border border-line px-3 py-1.5 font-mono text-[0.6875rem] tracking-wide text-ink-500"
+                className="rounded-full border border-line px-3 py-1.5 font-mono text-label tracking-label text-ink-400"
               >
                 {tech}
               </li>
@@ -122,7 +122,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
                   className="h-auto w-full"
                 />
               </div>
-              <figcaption className="mt-4 max-w-2xl font-mono text-[0.6875rem] leading-relaxed tracking-wide text-ink-600">
+              <figcaption className="mt-4 max-w-2xl caption font-mono tracking-label">
                 {t.shots[project.cover.caption as keyof typeof t.shots]}
               </figcaption>
             </figure>
@@ -138,7 +138,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
       <section className="shell mt-24 md:mt-36">
         <Reveal>
           <p className="label">{copy.problem.title}</p>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200 md:text-xl">
+          <p className="lede measure mt-6">
             {copy.problem.body}
           </p>
         </Reveal>
@@ -155,12 +155,12 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
             <li key={i}>
               <Reveal>
                 <div className="grid gap-5 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-0">
-                  <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-signal">
+                  <span className="font-mono text-label tracking-[0.16em] text-signal">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="max-w-2xl">
+                  <div className="measure text-body">
                     <h2 className="display-3 text-ink-100">{item.title}</h2>
-                    <p className="mt-5 text-[0.9375rem] leading-relaxed text-ink-300 md:text-base">
+                    <p className="measure mt-5 text-body text-ink-300">
                       {item.body}
                     </p>
                   </div>
@@ -191,7 +191,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
                         className="h-auto w-full"
                       />
                     </div>
-                    <figcaption className="mt-4 max-w-2xl font-mono text-[0.6875rem] leading-relaxed tracking-wide text-ink-600">
+                    <figcaption className="mt-4 max-w-2xl caption font-mono tracking-label">
                       {caption}
                     </figcaption>
                   </figure>
@@ -214,7 +214,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
       >
         <Reveal>
           <p className="label">{copy.outcome.title}</p>
-          <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-300 md:text-base">
+          <p className="measure mt-6 text-body text-ink-300">
             {copy.outcome.body}
           </p>
         </Reveal>
@@ -222,11 +222,11 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
         {copy.next.items.length > 0 && (
           <Reveal>
             <p className="label">{copy.next.title}</p>
-            <ul className="mt-6 flex flex-col gap-4">
+            <ul className="measure mt-6 flex flex-col gap-4 text-body">
               {copy.next.items.map((item, i) => (
                 <li
                   key={i}
-                  className="relative border-l border-line pl-5 text-[0.9375rem] leading-relaxed text-ink-300"
+                  className="measure relative border-l border-line pl-5 text-body text-ink-300"
                 >
                   {item}
                 </li>
@@ -248,7 +248,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
               {t.projects[next.slug].name}
             </p>
           </div>
-          <ArrowRight className="size-6 shrink-0 text-ink-600 transition-all duration-500 ease-(--ease-out-expo) group-hover:translate-x-1 group-hover:text-signal" />
+          <ArrowRight className="size-6 shrink-0 text-ink-400 transition-all duration-500 ease-(--ease-out-expo) group-hover:translate-x-1 group-hover:text-signal" />
         </Link>
       </nav>
     </article>

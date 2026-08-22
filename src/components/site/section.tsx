@@ -44,7 +44,7 @@ export function SectionHeader({
     <header className={cn("max-w-3xl", className)}>
       <p className="label">{label}</p>
       <h2 className="display-2 mt-5">{title}</h2>
-      {lead && <p className="mt-6 text-base leading-relaxed text-ink-300 md:text-lg">{lead}</p>}
+      {lead && <p className="lede mt-6">{lead}</p>}
       {children}
     </header>
   );

@@ -66,7 +66,7 @@ export function Nav() {
             className="group flex items-center gap-3"
             aria-label={profile.name}
           >
-            <span className="flex size-8 items-center justify-center rounded-md border border-line font-mono text-[0.6875rem] tracking-widest text-ink-200 transition-colors duration-400 ease-(--ease-out-expo) group-hover:border-line-hover">
+            <span className="flex size-8 items-center justify-center rounded-md border border-line font-mono text-label tracking-widest text-ink-200 transition-colors duration-400 ease-(--ease-out-expo) group-hover:border-line-hover">
               {profile.initials}
             </span>
             <span className="hidden text-sm font-medium text-ink-200 sm:block">

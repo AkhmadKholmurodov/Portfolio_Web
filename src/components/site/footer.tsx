@@ -21,7 +21,7 @@ export function Footer() {
           <Link href="/" className="text-sm font-medium text-ink-200">
             {profile.name}
           </Link>
-          <p className="mt-3 text-[0.8125rem] leading-relaxed text-ink-600">
+          <p className="mt-3 text-caption text-ink-400">
             {t.footer.built}
           </p>
         </div>
@@ -55,7 +55,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="shell flex flex-col gap-2 border-t border-line py-6 font-mono text-[0.6875rem] tracking-wide text-ink-700 sm:flex-row sm:items-center sm:justify-between">
+      <div className="shell flex flex-col gap-2 border-t border-line py-6 font-mono text-label tracking-label text-ink-400 sm:flex-row sm:items-center sm:justify-between">
         <span>
           © {year} {profile.name}. {t.footer.rights}
         </span>

@@ -72,7 +72,7 @@ export function Hero() {
         >
           <div>
             <p
-              className="lift-in max-w-xl text-[0.9375rem] leading-relaxed text-ink-300 md:text-base"
+              className="lift-in max-w-xl text-body text-ink-300"
               style={{ animationDelay: "520ms" }}
             >
               {t.hero.lead}
@@ -101,7 +101,7 @@ export function Hero() {
             </div>
 
             <div
-              className="lift-in mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] tracking-wide text-ink-600"
+              className="lift-in mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-label tracking-label text-ink-400"
               style={{ animationDelay: "700ms" }}
             >
               <span className="text-signal">{t.hero.availability}</span>
@@ -134,7 +134,7 @@ export function Hero() {
       </div>
 
       <div className="shell mt-10 w-full md:mt-12">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 md:grid-cols-4 md:gap-x-10">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 tabular-nums md:grid-cols-4 md:gap-x-10">
           {metrics.map((m, i) => {
             const copy = t.metrics[m.key as keyof typeof t.metrics];
             return (
@@ -158,8 +158,8 @@ export function Hero() {
                         />
                       )}
                     </p>
-                    <p className="mt-2 text-[0.8125rem] text-ink-300">{copy.label}</p>
-                    <p className="mt-1 font-mono text-[0.6875rem] tracking-wide text-ink-700">
+                    <p className="mt-2 text-caption text-ink-300">{copy.label}</p>
+                    <p className="mt-1 caption font-mono tracking-label">
                       {copy.source}
                     </p>
                   </div>

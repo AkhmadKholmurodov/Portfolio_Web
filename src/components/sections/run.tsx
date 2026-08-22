@@ -26,7 +26,7 @@ export function Run() {
 
       <TextReveal
         text={t.run.lead}
-        className="mt-7 max-w-3xl text-base leading-relaxed md:text-lg"
+        className="lede measure mt-7"
       />
 
       <div className="relative mt-20 md:mt-28">
@@ -44,26 +44,26 @@ export function Run() {
                 <Reveal>
                   <div className="grid gap-6 md:grid-cols-[9.5rem_minmax(0,1fr)] md:gap-0">
                     <div className="md:pr-10 md:text-right">
-                      <span className="font-mono text-[0.6875rem] tracking-[0.12em] whitespace-nowrap text-ink-600">
+                      <span className="font-mono text-label tracking-label whitespace-nowrap text-ink-400">
                         {entry.period.replace("Present", t.run.present)}
                       </span>
                     </div>
 
                     <div className="md:pl-10">
                       <h3 className="display-3 text-ink-100">{copy.company}</h3>
-                      <p className="mt-2 text-[0.9375rem] text-ink-300">{copy.role}</p>
-                      <p className="mt-1 font-mono text-[0.6875rem] tracking-wide text-ink-700">
+                      <p className="mt-2 text-body text-ink-300">{copy.role}</p>
+                      <p className="measure mt-1 font-mono text-label tracking-label text-ink-400">
                         {copy.context}
                       </p>
 
                       {copy.bullets.length > 0 && (
-                        <ul className="mt-6 flex flex-col gap-3.5">
+                        <ul className="measure mt-6 flex flex-col gap-3.5 text-body">
                           {copy.bullets.map((bullet, i) => (
                             <li
                               key={i}
-                              className="relative pl-5 text-[0.9375rem] leading-relaxed text-ink-300"
+                              className="relative pl-5 text-ink-300"
                             >
-                              <span className="absolute top-[0.6em] left-0 size-1 rounded-full bg-ink-700" />
+                              <span className="absolute top-[0.6em] left-0 size-1 rounded-full bg-ink-500" />
                               {bullet}
                             </li>
                           ))}

@@ -32,10 +32,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             aria-label={localeLabels[code].full}
             onClick={() => setLocale(code)}
             className={cn(
-              "rounded-full px-2.5 py-1 font-mono text-[0.6875rem] tracking-[0.1em] transition-colors duration-300 ease-(--ease-out-expo)",
+              "rounded-full px-2.5 py-1 font-mono text-label tracking-label transition-colors duration-300 ease-(--ease-out-expo)",
               selected
                 ? "bg-signal-soft text-signal"
-                : "text-ink-600 hover:text-ink-200",
+                : "text-ink-400 hover:text-ink-200",
             )}
           >
             {localeLabels[code].short}

@@ -31,6 +31,11 @@
   --color-ink-100: oklch(0.972 0.003 265); /* 18.3:1 */
   --color-ink-200: oklch(0.905 0.004 265); /* 14.9:1 */
   --color-ink-300: oklch(0.8 0.006 265); /* 10.6:1 */
+  /* Added this pass. Every mono label on the page used to sit at ink-600 or
+     ink-700 — 5.2:1 and 3.0:1 against the ground, the second of which is not
+     readable text by any standard. This is the step they move to: #A2A5AA,
+     8.3:1, loud enough to read and quiet enough to stay a label. */
+  --color-ink-400: oklch(0.72 0.008 265); /*  8.3:1 */
   --color-ink-500: oklch(0.66 0.008 265); /*  6.4:1 */
   --color-ink-600: oklch(0.6 0.009 265); /*  5.0:1 */
   --color-ink-700: oklch(0.47 0.009 265); /*  2.9:1 */
@@ -49,6 +54,32 @@
     "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Noto Sans KR",
     sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  /* --- Type scale ---
+   *
+   * The complaint was that the body text is small. It is not, particularly —
+   * the real fault is that nothing sat between a 120px display heading and a
+   * 15px paragraph, so the eye read the jump as the paragraph being tiny.
+   * `lede` is the step that was missing; everything else moved up one notch
+   * around it.
+   *
+   * Sizes are rem so a visitor's own browser setting still scales the page.
+   * Line height rides on the token rather than on a `leading-*` class at each
+   * call site, because a size and its leading are one decision. */
+  --text-lede: 1.3125rem; /* 21 — the paragraph under a section heading */
+  --text-lede--line-height: 1.5;
+  --text-body: 1.0625rem; /* 17 — prose, list items, card copy */
+  --text-body--line-height: 1.65;
+  --text-body-lg: 1.125rem; /* 18 — prose that carries a whole section */
+  --text-body-lg--line-height: 1.6;
+  --text-caption: 0.875rem; /* 14 — figure captions, sub-labels under stats */
+  --text-caption--line-height: 1.5;
+  --text-label: 0.8125rem; /* 13 — mono labels, chips, periods */
+  --text-label--line-height: 1.4;
+
+  /* One tracking for every mono label. `tracking-wide` at 0.025em was doing
+     this job in most places and is too tight to space uppercase mono. */
+  --tracking-label: 0.08em;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -233,12 +264,47 @@
 
 @utility label {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  line-height: 1;
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--color-ink-600);
+  color: var(--color-ink-400);
+}
+
+/**
+ * The paragraph under a section heading. The one step the scale was missing,
+ * and the reason the body looked small: with nothing between the display and
+ * the prose, the reader's eye had no landing between them.
+ */
+@utility lede {
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-ink-200);
+  text-wrap: pretty;
+}
+
+/**
+ * Prose measure.
+ *
+ * The Run bullets ran to about 110 characters on a 1440px screen. Past roughly
+ * 75 the eye stops finding the start of the next line reliably and the reader
+ * loses their place — the effect people describe as "dense" without being able
+ * to say why. 68ch is comfortably inside that, and it is in `ch` rather than
+ * `rem` so it tracks the font size instead of contradicting it.
+ *
+ * Headings and stat rows deliberately do not get this: a heading is scanned,
+ * not read line by line, and a stat row is a table.
+ */
+@utility measure {
+  max-width: 68ch;
+}
+
+/** Figure captions and the sub-labels under a stat. */
+@utility caption {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  color: var(--color-ink-400);
 }
 
 /* The lower bound is measured. "I build the product." sets to ~8.4em at this

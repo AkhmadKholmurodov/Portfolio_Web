@@ -32,7 +32,7 @@ export function Stack() {
             {all.map((item) => (
               <span
                 key={item}
-                className="px-5 font-mono text-[0.8125rem] tracking-wide whitespace-nowrap text-ink-500"
+                className="px-5 font-mono text-label tracking-label whitespace-nowrap text-ink-400"
               >
                 {item}
               </span>
@@ -52,7 +52,7 @@ export function Stack() {
             </h3>
             <ul className="flex flex-col gap-2 border-t border-line pt-4">
               {group.items.map((item) => (
-                <li key={item} className="text-[0.9375rem] text-ink-300">
+                <li key={item} className="text-body text-ink-300">
                   {item}
                 </li>
               ))}

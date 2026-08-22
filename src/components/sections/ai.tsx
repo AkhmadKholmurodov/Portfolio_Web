@@ -26,13 +26,13 @@ export function AiSection() {
 
       <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
         <Reveal>
-          <p className="text-base leading-relaxed text-ink-200 md:text-lg">
+          <p className="lede measure">
             {t.ai.lead}
           </p>
         </Reveal>
 
         <Reveal y={18}>
-          <p className="border-l border-line pl-6 text-[0.9375rem] leading-relaxed text-ink-300 md:text-base">
+          <p className="measure border-l border-line pl-6 text-body text-ink-300">
             {t.ai.body}
           </p>
         </Reveal>

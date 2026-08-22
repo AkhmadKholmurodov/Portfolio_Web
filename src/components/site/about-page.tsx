@@ -26,7 +26,7 @@ export function AboutPage() {
       <div className="shell">
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 font-mono text-[0.6875rem] tracking-[0.12em] text-ink-600 uppercase transition-colors duration-300 hover:text-ink-200"
+          className="group inline-flex items-center gap-2 font-mono text-label tracking-label text-ink-400 uppercase transition-colors duration-300 hover:text-ink-200"
         >
           <ArrowLeft className="size-3.5 transition-transform duration-400 ease-(--ease-out-expo) group-hover:-translate-x-0.5" />
           {t.ui.backHome}
@@ -38,15 +38,15 @@ export function AboutPage() {
         </Reveal>
 
         <div className="mt-16 grid gap-14 md:mt-24 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-20">
-          <Reveal className="max-w-2xl">
+          <Reveal className="measure text-body">
             <div className="flex flex-col gap-6">
               {t.about.intro.map((paragraph, i) => (
                 <p
                   key={i}
                   className={
                     i === 0
-                      ? "text-lg leading-relaxed text-ink-200 md:text-xl"
-                      : "text-[0.9375rem] leading-relaxed text-ink-300 md:text-base"
+                      ? "lede"
+                      : "text-body text-ink-300"
                   }
                 >
                   {paragraph}
@@ -68,7 +68,7 @@ export function AboutPage() {
                   className="h-auto w-full"
                 />
               </div>
-              <figcaption className="mt-4 font-mono text-[0.6875rem] tracking-wide text-ink-700">
+              <figcaption className="mt-4 caption font-mono tracking-label">
                 {t.about.photos.studio}
               </figcaption>
             </figure>
@@ -95,7 +95,7 @@ export function AboutPage() {
                     className="h-auto w-full"
                   />
                 </div>
-                <figcaption className="mt-4 font-mono text-[0.6875rem] leading-relaxed tracking-wide text-ink-700">
+                <figcaption className="mt-4 caption font-mono tracking-label">
                   {t.about.photos[photo.key as keyof typeof t.about.photos]}
                 </figcaption>
               </figure>
@@ -107,7 +107,7 @@ export function AboutPage() {
         <section className="mt-24 grid gap-14 md:mt-36 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="label">{t.about.languagesTitle}</p>
-            <p className="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-md text-body text-ink-300">
               {t.about.languagesNote}
             </p>
           </Reveal>
@@ -116,10 +116,10 @@ export function AboutPage() {
             {languages.map((lang) => (
               <RevealItem key={lang.key}>
                 <div className="flex items-baseline justify-between gap-4">
-                  <span className="font-mono text-sm tracking-[0.12em] text-ink-200">
+                  <span className="font-mono text-body tracking-label text-ink-200">
                     {lang.code}
                   </span>
-                  <span className="text-[0.8125rem] text-ink-500">
+                  <span className="text-caption text-ink-400">
                     {t.about.languageLevels[lang.key as keyof typeof t.about.languageLevels]}
                   </span>
                 </div>
@@ -148,7 +148,7 @@ export function AboutPage() {
         <section className="mt-24 grid gap-14 md:mt-36 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="label">{t.about.recognitionTitle}</p>
-            <p className="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-md text-body text-ink-300">
               {t.about.recognitionNote}
             </p>
           </Reveal>
@@ -157,10 +157,10 @@ export function AboutPage() {
             {recognition.map((item) => (
               <RevealItem key={item.key}>
                 <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                  <span className="text-[0.9375rem] text-ink-200">
+                  <span className="text-body text-ink-200">
                     {t.about.recognition[item.key as keyof typeof t.about.recognition]}
                   </span>
-                  <span className="font-mono text-[0.6875rem] tracking-wide text-ink-600">
+                  <span className="font-mono text-label tracking-label text-ink-400">
                     {item.year}
                   </span>
                 </div>
@@ -173,7 +173,7 @@ export function AboutPage() {
         <section className="mt-24 grid gap-14 md:mt-36 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="label">{t.about.awardsTitle}</p>
-            <p className="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-md text-body text-ink-300">
               {t.about.awardsNote}
             </p>
           </Reveal>
@@ -182,10 +182,10 @@ export function AboutPage() {
             {awards.map((award) => (
               <RevealItem key={`${award.key}-${award.year}`}>
                 <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                  <span className="text-[0.9375rem] text-ink-200">
+                  <span className="text-body text-ink-200">
                     {t.about.awards[award.key as keyof typeof t.about.awards]}
                   </span>
-                  <span className="font-mono text-[0.6875rem] tracking-wide text-ink-600">
+                  <span className="font-mono text-label tracking-label text-ink-400">
                     {award.year}
                   </span>
                 </div>

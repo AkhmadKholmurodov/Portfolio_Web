@@ -27,7 +27,7 @@ export function Contact() {
           <Reveal>
             <p className="label">{t.contact.label}</p>
             <h2 className="display-1 mt-6 text-ink-100">{t.contact.title}</h2>
-            <p className="mt-8 max-w-2xl text-base leading-relaxed text-ink-300 md:text-lg">
+            <p className="lede measure mt-8">
               {t.contact.lead}
             </p>
           </Reveal>
@@ -47,7 +47,7 @@ export function Contact() {
             </Button>
           </Reveal>
 
-          <p className="mt-5 font-mono text-[0.6875rem] tracking-wide text-ink-600">
+          <p className="mt-5 font-mono text-label tracking-label text-ink-400">
             {t.contact.responseTime}
           </p>
         </div>
@@ -69,7 +69,7 @@ export function Contact() {
                 className="h-auto w-full"
               />
             </div>
-            <figcaption className="mt-3 font-mono text-[0.625rem] tracking-wide text-ink-700">
+            <figcaption className="mt-3 caption font-mono tracking-label">
               {t.about.photos.cafe}
             </figcaption>
           </figure>
@@ -87,12 +87,12 @@ export function Contact() {
                 rel="noreferrer noopener"
                 className="group flex items-center gap-5 border-b border-line py-5 transition-colors duration-400 ease-(--ease-out-expo) hover:border-line-hover"
               >
-                <Icon className="size-4 shrink-0 text-ink-700 transition-colors duration-400 group-hover:text-ink-300" />
+                <Icon className="size-4 shrink-0 text-ink-500 transition-colors duration-400 group-hover:text-ink-300" />
                 <span className="label w-24 shrink-0">{social.label}</span>
-                <span className="min-w-0 flex-1 truncate text-[0.9375rem] text-ink-200">
+                <span className="min-w-0 flex-1 truncate text-body text-ink-200">
                   {social.handle}
                 </span>
-                <ArrowUpRight className="size-4 shrink-0 text-ink-700 transition-all duration-400 ease-(--ease-out-expo) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink-300" />
+                <ArrowUpRight className="size-4 shrink-0 text-ink-500 transition-all duration-400 ease-(--ease-out-expo) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink-300" />
               </a>
             </RevealItem>
           );
