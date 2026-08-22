@@ -39,7 +39,7 @@ export const en = {
     line1: "I build the product.",
     line2: "I run the server.",
     line3: "I break both first.",
-    lead: "Three years shipping production platforms in South Korea. Right now: a company's entire e-commerce stack, mine end to end.",
+    lead: "Three years shipping production platforms in South Korea. Right now: a company's e-commerce stack, built and run by two of us.",
     ctaWork: "See the work",
     ctaResume: "Download résumé",
     availability: "Open to roles in Seoul",
@@ -48,8 +48,8 @@ export const en = {
   },
 
   metrics: {
-    uptime: { label: "Uptime", source: "lowshop.net, since launch" },
-    loadTime: { label: "Page load", source: "lowshop.net, after rework" },
+    orders: { label: "Orders / day", source: "across three sales channels" },
+    peakDay: { label: "Peak day", source: "설날 and 추석 gift-set season" },
     visionCost: { label: "Cheaper vision", source: "SmartGuard edge routing" },
     live: { label: "Products live", source: "In front of real users" },
   },
@@ -57,7 +57,7 @@ export const en = {
   build: {
     label: "01 — Build",
     title: "I ship whole products, not tickets.",
-    lead: "Schema to deploy, all four are mine. Three are in front of real users right now.",
+    lead: "Schema to deploy. Three are in front of real users right now.",
   },
 
   work: {
@@ -66,18 +66,20 @@ export const en = {
     role: "Role",
     year: "Year",
     stack: "Stack",
+    payments: "Payments",
     status: { live: "Live", building: "In development" },
     problem: "The problem",
     decisions: "Decisions that mattered",
     outcome: "Where it landed",
     nextUp: "What I would do next",
     stats: {
-      uptime: "Uptime",
+      orders: "Orders / day",
       channels: "Sales channels",
       districts: "Districts in the schema",
       states: "Listing states",
       cost: "Cheaper than naïve",
-      deployment: "Shop in production",
+      cameras: "Cameras live",
+      sites: "Sites in production",
       platforms: "Platforms",
       stage: "Stage",
     },
@@ -86,7 +88,7 @@ export const en = {
   run: {
     label: "02 — Run",
     title: "Shipping is the easy half.",
-    lead: "A platform that is down is not a platform. I own the deploys, the uptime, the payment sync and the Linux boxes underneath.",
+    lead: "A platform that is down is not a platform. I am on the hook for the deploys, the payment sync and the Linux boxes underneath.",
     timeline: "Track record",
     present: "Present",
   },
@@ -98,9 +100,8 @@ export const en = {
       context: "Manufacturing and retail company running its own D2C channel",
       bullets: [
         "Designed, built and operate lowshop.net — frontend implementation through to server operations.",
-        "Launched and administer the company storefront on Coupang, Naver SmartStore and Toss.",
+        "Launched and run the storefronts on Coupang and Naver SmartStore.",
         "Rebuilt the payment and stock synchronisation so the pipeline runs without anyone touching it.",
-        "99.9% uptime, 60% faster pages, no critical downtime on any channel.",
       ],
     },
     ccl: {
@@ -126,17 +127,13 @@ export const en = {
     title: "I would rather find it myself.",
     lead: "I develop with an attacker's checklist open beside the editor. The categories I practise on are the categories I review my own code for.",
     items: {
-      hackerone: {
-        title: "HackerOne — triaged report",
-        body: "A valid vulnerability report against a live production application. Validated and triaged by the vendor's security team; closed as a duplicate, validity confirmed.",
-      },
       platforms: {
         title: "Hack The Box · TryHackMe",
         body: "Web application vulnerability analysis, infrastructure penetration testing, OWASP Top 10.",
       },
       fortinet: {
         title: "Secure Wireless LAN 7.6 Administrator",
-        body: "Fortinet Training Institute and ISC2. CISSP domain: Communication and Network Security.",
+        body: "Fortinet Training Institute, 2026. Wireless LAN security administration.",
       },
       freecodecamp: {
         title: "Front End Development Libraries",
@@ -179,7 +176,7 @@ export const en = {
     intro: [
       "I came to Korea for a software engineering degree and stayed because the work got interesting. It started in a university Cloud Computing Lab: an autonomous-vehicle prototype written in Flutter that would not render on mobile. After a few weeks of patching around it I argued we should rebuild the front end in React and TypeScript. I was allowed to lead that, and we shipped ahead of deadline.",
       "That is still how I work. I would rather spend a week on the architecture that makes the next six months boring than a day on the workaround that makes this afternoon easier.",
-      "Today I own a company's e-commerce platform at SAMBU and keep building my own products alongside it. eYaqin started because buying something second-hand at home meant crossing a city for an item worth almost nothing. SmartGuard started because a shop owner told me he had stopped watching his own CCTV — there was too much of it. Alongside that I practise application security: same instinct as the architecture argument. I would rather find the hole in my own code first.",
+      "Today I build and run a company's e-commerce platform at SAMBU as one of two engineers, and keep building my own products alongside it. eYaqin started because buying something second-hand at home meant crossing a city for an item worth almost nothing. SmartGuard started because a shop owner told me he had stopped watching his own CCTV — there was too much of it. Alongside that I practise application security: same instinct as the architecture argument. I would rather find the hole in my own code first.",
     ],
     photos: {
       graduation:
@@ -229,20 +226,21 @@ export const en = {
   projects: {
     lowshop: {
       name: "lowshop.net",
-      tagline: "A company's own storefront, and the four sales channels behind it.",
+      tagline:
+        "A company's own storefront, the two marketplaces beside it, and the pipeline that keeps stock honest across all three.",
       summary:
-        "SAMBU's official D2C e-commerce platform. I designed it, built it, and I am the person who gets told when it stops answering.",
-      role: "Full-stack & WebOps · solo",
+        "SAMBU's official D2C e-commerce platform. I build and operate it as one of two engineers, and I am one of the two people who gets told when it stops answering.",
+      role: "Full-Stack Engineer (Web Operations) · two-engineer team",
       problem: {
         title: "The problem",
-        body: "SAMBU manufactures and sells, and in Korea selling means selling through Coupang, Naver SmartStore and Toss — three marketplaces with three admin consoles, three product schemas and three ideas of what a price is. The company also wanted its own storefront, which makes four places where a product's stock, price and description have to agree. Nobody was going to keep four places in agreement by hand.",
+        body: "SAMBU manufactures and sells, and in Korea selling means selling through Coupang and Naver SmartStore — two marketplaces with two admin consoles, two product schemas and two ideas of what a price is. The company also wanted its own storefront, which makes three places where a product's stock, price and description have to agree. Nobody was going to keep three places in agreement by hand.",
       },
       decisions: {
         title: "Decisions that mattered",
         items: [
           {
-            title: "One person owns the whole lifecycle",
-            body: "I build the frontend and I operate the server. That is unusual and it is deliberate: the fastest way to make a slow page fast is to be allowed to change both the component and the machine serving it, without filing a ticket across a team boundary.",
+            title: "Two engineers own the whole lifecycle",
+            body: "There are two of us, and between us we hold the frontend, the API and the server. That is deliberate: the fastest way to make a slow page fast is to be allowed to change both the component and the machine serving it, without filing a ticket across a team boundary.",
           },
           {
             title: "Synchronisation runs without a human in it",
@@ -250,13 +248,13 @@ export const en = {
           },
           {
             title: "Monitoring before features",
-            body: "Uptime and system-stability monitoring went in early. You cannot claim 99.9% if the way you find out about downtime is a customer telling you.",
+            body: "Sentry, Cafe24 server logs and Slack alerts went in early. If the way you find out that a sales channel has stopped answering is a customer telling you, you do not have a platform — you have a website and a phone number.",
           },
         ],
       },
       outcome: {
         title: "Where it landed",
-        body: "99.9% uptime since launch, page load time down 60% after the rework, and no critical downtime on any of the four channels. The storefront and the three marketplaces have not disagreed about a price since the sync was rebuilt.",
+        body: "Around 2,500 orders a day flow through the pipeline across the three channels, rising to 5,000–6,000 on a 설날 or 추석 gift-set day. The storefront and the two marketplaces have not disagreed about a price since the sync was rebuilt.",
       },
       next: {
         title: "What I would do next",

@@ -56,7 +56,14 @@ export function ProjectCard({
             {copy.tagline}
           </p>
 
-          <dl className="mt-7 grid grid-cols-2 gap-6 border-t border-line pt-6">
+          <dl
+            className={cn(
+              "mt-7 grid gap-6 border-t border-line pt-6",
+              // Three stats would wrap to a lonely orphan in a two-column
+              // grid, so the column count follows the data.
+              project.stats.length > 2 ? "grid-cols-3 gap-4" : "grid-cols-2",
+            )}
+          >
             {project.stats.map((s) => (
               <div key={s.key}>
                 <dd className="font-mono text-xl text-ink-100 tabular-nums">

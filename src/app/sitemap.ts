@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/profile";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://akhmad.dev";
+import { siteUrl } from "@/lib/site";
 
 /**
  * Six URLs, generated from the same project list the pages are. Adding a fifth

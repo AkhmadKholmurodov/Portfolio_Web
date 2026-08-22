@@ -138,12 +138,17 @@ export function Hero() {
                 <Tooltip content={copy.source}>
                   <div className="cursor-default">
                     <p className="display-3 text-ink-100">
-                      <NumberTicker
-                        value={m.value}
-                        decimals={m.decimals}
-                        prefix={"prefix" in m ? m.prefix : ""}
-                        suffix={m.suffix}
-                      />
+                      {m.display ? (
+                        <span className="tabular-nums">{m.display}</span>
+                      ) : (
+                        <NumberTicker
+                          value={m.value ?? 0}
+                          decimals={m.decimals}
+                          prefix={m.prefix}
+                          suffix={m.suffix}
+                          grouped={m.grouped}
+                        />
+                      )}
                     </p>
                     <p className="mt-2 text-[0.8125rem] text-ink-300">{copy.label}</p>
                     <p className="mt-1 font-mono text-[0.6875rem] tracking-wide text-ink-700">

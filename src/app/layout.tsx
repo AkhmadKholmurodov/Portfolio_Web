@@ -9,6 +9,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { en } from "@/content/i18n/en";
 import { profile } from "@/content/profile";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -22,8 +23,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
 });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://akhmad.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -96,7 +95,6 @@ const personJsonLd = {
     "Python",
     "PostgreSQL",
     "Docker",
-    "Kubernetes",
     "Application Security",
     "OWASP",
   ],

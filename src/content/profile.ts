@@ -30,19 +30,31 @@ export const socials = [
   { key: "phone", label: "Phone", handle: profile.phone, href: `tel:${profile.phoneHref}` },
 ] as const;
 
+export type Metric = {
+  key: string;
+  /** Counts up when the number is a single figure. */
+  value?: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+  /** Thousands separators, so 2500 reads as 2,500. */
+  grouped?: boolean;
+  /** Rendered verbatim instead of counting. A range cannot count up to itself. */
+  display?: string;
+  source: string;
+};
+
 /**
  * The four numbers on the first screen. All four are his own and all four are
  * checkable: three come off systems he operates, the fourth is a count of
  * things that are running.
  */
-export const metrics = [
-  { key: "uptime", value: 99.9, decimals: 1, suffix: "%", source: "lowshop" },
-  { key: "loadTime", value: 60, decimals: 0, prefix: "−", suffix: "%", source: "lowshop" },
+export const metrics: Metric[] = [
+  { key: "orders", value: 2500, decimals: 0, prefix: "~", grouped: true, source: "lowshop" },
+  { key: "peakDay", display: "5,000–6,000", source: "lowshop" },
   { key: "visionCost", value: 100, decimals: 0, suffix: "×", source: "smartguard" },
   { key: "live", value: 3, decimals: 0, suffix: "", source: "all" },
-] as const;
-
-export type Metric = (typeof metrics)[number];
+];
 
 /**
  * The site's spine. Build, run, break is not a tagline — it is the literal
@@ -99,8 +111,8 @@ export const projects: Project[] = [
     diagram: "channels",
     shots: [],
     stats: [
-      { key: "uptime", value: "99.9%" },
-      { key: "channels", value: "4" },
+      { key: "orders", value: "~2,500" },
+      { key: "channels", value: "3" },
     ],
   },
   {
@@ -158,7 +170,8 @@ export const projects: Project[] = [
     ],
     stats: [
       { key: "cost", value: "100×" },
-      { key: "deployment", value: "1" },
+      { key: "cameras", value: "8" },
+      { key: "sites", value: "2" },
     ],
   },
   {
@@ -221,7 +234,7 @@ export const stackGroups = [
   },
   {
     key: "backend",
-    items: ["Node.js", "FastAPI", "Prisma", "REST", "GraphQL", "Socket.io", "Clerk", "Stripe"],
+    items: ["Node.js", "FastAPI", "Prisma", "REST", "Socket.io"],
   },
   {
     key: "data",
@@ -229,7 +242,7 @@ export const stackGroups = [
   },
   {
     key: "ops",
-    items: ["Docker", "Kubernetes (k8s/k3s)", "GitHub Actions", "GitLab CI", "Vercel", "Linux (Ubuntu)", "Uptime monitoring"],
+    items: ["Docker", "GitHub Actions", "GitLab CI", "Vercel", "Linux (Ubuntu)", "Sentry"],
   },
   {
     key: "security",
@@ -238,10 +251,11 @@ export const stackGroups = [
 ] as const;
 
 export const security = [
-  { key: "hackerone", year: "", href: "https://hackerone.com" },
   { key: "platforms", year: "" },
   { key: "fortinet", year: "2026" },
-  { key: "freecodecamp", year: "2023" },
+  // Year deliberately blank: it is inconsistent across his own materials and
+  // an unverified year is worse than no year.
+  { key: "freecodecamp", year: "" },
 ] as const;
 
 export const languages = [

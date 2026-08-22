@@ -22,17 +22,23 @@ export function Stack() {
         <h2 className="display-2 mt-5 max-w-2xl">{t.stack.title}</h2>
       </Reveal>
 
+      {/* Decorative. It renders the same strings as the grouped list below, so
+          leaving it in the accessibility tree means a screen reader hears the
+          whole toolkit twice and a crawler indexes it twice. The list
+          underneath is the real content. */}
       <Reveal className="mt-14" y={14}>
-        <Marquee className="border-y border-line py-5">
-          {all.map((item) => (
-            <span
-              key={item}
-              className="px-5 font-mono text-[0.8125rem] tracking-wide whitespace-nowrap text-ink-600"
-            >
-              {item}
-            </span>
-          ))}
-        </Marquee>
+        <div aria-hidden>
+          <Marquee className="border-y border-line py-5">
+            {all.map((item) => (
+              <span
+                key={item}
+                className="px-5 font-mono text-[0.8125rem] tracking-wide whitespace-nowrap text-ink-500"
+              >
+                {item}
+              </span>
+            ))}
+          </Marquee>
+        </div>
       </Reveal>
 
       <RevealGroup

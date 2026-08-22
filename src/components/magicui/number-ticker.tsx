@@ -13,6 +13,7 @@ export function NumberTicker({
   decimals = 0,
   prefix = "",
   suffix = "",
+  grouped = false,
   duration = 1600,
   className,
 }: {
@@ -20,9 +21,22 @@ export function NumberTicker({
   decimals?: number;
   prefix?: string;
   suffix?: string;
+  /** Thousands separators. 2500 unseparated reads as a year, not a count. */
+  grouped?: boolean;
   duration?: number;
   className?: string;
 }) {
+  // Pinned to en-US rather than the visitor's locale: the number is typeset
+  // beside a fixed-width mono label and a locale that groups differently
+  // would change the glyph count mid-count-up.
+  const fmt = (n: number) =>
+    grouped
+      ? n.toLocaleString("en-US", {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        })
+      : n.toFixed(decimals);
+
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
   const [display, setDisplay] = useState(0);
@@ -60,12 +74,12 @@ export function NumberTicker({
           screen reader should never be read a number mid-count. */}
       <span aria-hidden>
         {prefix}
-        {display.toFixed(decimals)}
+        {fmt(display)}
         {suffix}
       </span>
       <span className="sr-only">
         {prefix}
-        {value.toFixed(decimals)}
+        {fmt(value)}
         {suffix}
       </span>
     </span>

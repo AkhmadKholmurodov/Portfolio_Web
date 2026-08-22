@@ -43,7 +43,7 @@ export const uz: Dict = {
     line1: "Men mahsulotni quraman.",
     line2: "Serverni o'zim yurituraman.",
     line3: "Ikkalasini birinchi o'zim sindiraman.",
-    lead: "Koreyada uch yildan beri production platformalar chiqaraman. Hozir bir kompaniyaning butun e-commerce'i mening zimmamda — boshidan oxirigacha.",
+    lead: "Koreyada uch yildan beri production platformalar chiqaraman. Hozir ikkovlon bir kompaniyaning e-commerce stack'ini quramiz va yuritamiz.",
     ctaWork: "Ishlarni ko'rish",
     ctaResume: "Rezyumeni yuklab olish",
     availability: "Seulda ish qidirmoqdaman",
@@ -52,8 +52,8 @@ export const uz: Dict = {
   },
 
   metrics: {
-    uptime: { label: "Ishlash vaqti", source: "lowshop.net, ishga tushganidan beri" },
-    loadTime: { label: "Sahifa yuklanishi", source: "lowshop.net, qayta qurilgandan keyin" },
+    orders: { label: "Kunlik buyurtma", source: "uchta savdo kanali bo'ylab" },
+    peakDay: { label: "Eng yuqori kun", source: "설날 va 추석 sovg'a-to'plam mavsumi" },
     visionCost: { label: "Arzonroq vision", source: "SmartGuard edge marshrutlash" },
     live: { label: "Ishlab turgan mahsulot", source: "Haqiqiy foydalanuvchilar oldida" },
   },
@@ -61,7 +61,7 @@ export const uz: Dict = {
   build: {
     label: "01 — Qurish",
     title: "Men ticket emas, butun mahsulot chiqaraman.",
-    lead: "Sxemadan deploygacha — to'rttasi ham meniki. Uchtasi hozir haqiqiy foydalanuvchilar oldida ishlayapti.",
+    lead: "Sxemadan deploygacha. Uchtasi hozir haqiqiy foydalanuvchilar oldida ishlayapti.",
   },
 
   work: {
@@ -70,18 +70,20 @@ export const uz: Dict = {
     role: "Rol",
     year: "Yil",
     stack: "Texnologiyalar",
+    payments: "To'lov usullari",
     status: { live: "Ishlayapti", building: "Ishlanmoqda" },
     problem: "Muammo",
     decisions: "Ahamiyatli qarorlar",
     outcome: "Natija",
     nextUp: "Keyin nima qilardim",
     stats: {
-      uptime: "Ishlash vaqti",
+      orders: "Kunlik buyurtma",
       channels: "Savdo kanallari",
       districts: "Sxemadagi tumanlar",
       states: "E'lon holatlari",
       cost: "Oddiy yechimga nisbatan",
-      deployment: "Ishlab turgan do'kon",
+      cameras: "Ishlab turgan kamera",
+      sites: "Ishlab turgan obyekt",
       platforms: "Platformalar",
       stage: "Bosqich",
     },
@@ -90,7 +92,7 @@ export const uz: Dict = {
   run: {
     label: "02 — Yuritish",
     title: "Chiqarish — oson qismi.",
-    lead: "Ishlamayotgan platforma — platforma emas. Deploy, ishlash vaqti, to'lov sinxronizatsiyasi va ostidagi Linux serverlar — hammasi menda.",
+    lead: "Ishlamayotgan platforma — platforma emas. Deploy, to'lov sinxronizatsiyasi va ostidagi Linux serverlar — javobgarligi menda.",
     timeline: "Yo'l",
     present: "Hozir",
   },
@@ -102,9 +104,8 @@ export const uz: Dict = {
       context: "O'z D2C kanalini yurituvchi ishlab chiqarish va savdo kompaniyasi",
       bullets: [
         "lowshop.net'ni loyihaladim, qurdim va yurituraman — frontenddan server operatsiyalarigacha.",
-        "Coupang, Naver SmartStore va Tossda kompaniya do'konini ishga tushirdim va boshqaraman.",
+        "Coupang va Naver SmartStore'da kompaniya do'konlarini ishga tushirdim va yurituraman.",
         "To'lov va qoldiq sinxronizatsiyasini qayta qurdim — savdo quvuri endi hech kimning qo'lisiz ishlaydi.",
-        "99.9% ishlash vaqti, sahifalar 60% tez, hech bir kanalda jiddiy uzilish yo'q.",
       ],
     },
     ccl: {
@@ -130,17 +131,13 @@ export const uz: Dict = {
     title: "O'zim topganim afzal.",
     lead: "Muharrir yonida hujumchining ro'yxati ochiq turadi. Mashq qiladigan toifalarim — aynan o'z kodimni ko'zdan kechirganda qaraydigan toifalar.",
     items: {
-      hackerone: {
-        title: "HackerOne — tasdiqlangan hisobot",
-        body: "Ishlab turgan veb-ilovaga qarshi haqiqiy zaiflik hisoboti. Kompaniya xavfsizlik jamoasi tekshirib triage qildi; dublikat sifatida yopildi, haqiqiyligi tasdiqlandi.",
-      },
       platforms: {
         title: "Hack The Box · TryHackMe",
         body: "Veb-ilovalar zaifligini tahlil qilish, infratuzilmaga sinov hujumlari, OWASP Top 10.",
       },
       fortinet: {
         title: "Secure Wireless LAN 7.6 Administrator",
-        body: "Fortinet Training Institute va ISC2. CISSP sohasi: aloqa va tarmoq xavfsizligi.",
+        body: "Fortinet Training Institute, 2026. Simsiz LAN xavfsizligini boshqarish.",
       },
       freecodecamp: {
         title: "Front End Development Libraries",
@@ -183,7 +180,7 @@ export const uz: Dict = {
     intro: [
       "Koreyaga dasturiy injiniring bo'yicha o'qishga keldim va ish qiziq bo'lib ketgani uchun qoldim. Boshlanish nuqtasi universitetning Bulutli hisoblash laboratoriyasi bo'lgan: Flutter'da yozilgan avtonom transport prototipi mobil qurilmada rendering bo'lmasdi. Bir necha hafta atrofidan yamoq qo'yganimdan keyin frontendni React va TypeScript'da qaytadan qurishni taklif qildim. Shu ishni menga ishonishdi va muddatdan oldin topshirdik.",
       "Hozir ham shunday ishlayman. Bugungi tushdan keyinni yengillashtiradigan chetlab o'tish yo'liga bir kun sarflagandan ko'ra, keyingi olti oyni zerikarli qiladigan arxitekturaga bir hafta sarflaganim afzal.",
-      "Bugun SAMBU'da kompaniyaning e-commerce platformasi mening zimmamda, yonida o'z mahsulotlarimni ham quraman. eYaqin shundan boshlandi: uyda arzimagan buyum uchun butun shaharni kesib o'tish kerak edi. SmartGuard esa bir do'kon egasi kameralari yozuvi juda ko'payib ketgani uchun ularni endi umuman ko'rmasligini aytgani uchun. Dasturlash bilan birga ilova xavfsizligini mashq qilaman — bu o'sha arxitektura haqidagi bahs bilan bir xil turtki. O'z kodimdagi teshikni birinchi o'zim topganim afzal.",
+      "Bugun SAMBU'da ikki muhandisdan biri sifatida kompaniyaning e-commerce platformasini quraman va yurituraman, yonida o'z mahsulotlarimni ham quraman. eYaqin shundan boshlandi: uyda arzimagan buyum uchun butun shaharni kesib o'tish kerak edi. SmartGuard esa bir do'kon egasi kameralari yozuvi juda ko'payib ketgani uchun ularni endi umuman ko'rmasligini aytgani uchun. Dasturlash bilan birga ilova xavfsizligini mashq qilaman — bu o'sha arxitektura haqidagi bahs bilan bir xil turtki. O'z kodimdagi teshikni birinchi o'zim topganim afzal.",
     ],
     photos: {
       graduation: "Bitiruv, Daegu universiteti — dasturiy injiniring bakalavri, 2025-yil fevral.",
@@ -229,20 +226,20 @@ export const uz: Dict = {
   projects: {
     lowshop: {
       name: "lowshop.net",
-      tagline: "Kompaniyaning o'z do'koni va uning ortidagi to'rtta savdo kanali.",
+      tagline: "Kompaniyaning o'z do'koni, yonidagi ikki marketplace va uchalasida qoldiqni rost saqlab turadigan quvur.",
       summary:
-        "SAMBU'ning rasmiy D2C e-commerce platformasi. Men loyihaladim, men qurdim, va u javob bermay qolganda qo'ng'iroq keladigan odam ham men.",
-      role: "Full-stack va WebOps · yakka",
+        "SAMBU'ning rasmiy D2C e-commerce platformasi. Ikki muhandisdan biri sifatida quraman va yurituraman; u javob bermay qolganda qo'ng'iroq keladigan ikki odamdan biri — men.",
+      role: "Full-Stack muhandis (veb operatsiyalari) · ikki kishilik jamoa",
       problem: {
         title: "Muammo",
-        body: "SAMBU ishlab chiqaradi va sotadi. Koreyada sotish degani — Coupang, Naver SmartStore va Toss orqali sotish degani: uchta admin konsoli, uchta mahsulot sxemasi va narx nima ekani haqida uchta tasavvur. Kompaniya bunga qo'shimcha o'z do'konini ham xohladi, ya'ni bitta mahsulotning qoldig'i, narxi va tavsifi to'rt joyda bir xil turishi kerak. To'rt joyni qo'lda bir xil ushlab turadigan odam yo'q edi.",
+        body: "SAMBU ishlab chiqaradi va sotadi. Koreyada sotish degani — Coupang va Naver SmartStore orqali sotish degani: ikkita admin konsoli, ikkita mahsulot sxemasi va narx nima ekani haqida ikkita tasavvur. Kompaniya bunga qo'shimcha o'z do'konini ham xohladi, ya'ni bitta mahsulotning qoldig'i, narxi va tavsifi uch joyda bir xil turishi kerak. Uch joyni qo'lda bir xil ushlab turadigan odam yo'q edi.",
       },
       decisions: {
         title: "Ahamiyatli qarorlar",
         items: [
           {
-            title: "Butun hayotiy sikl bitta odamda",
-            body: "Frontendni ham men quraman, serverni ham men yurituraman. Bu odatiy emas va ataylab shunday: sekin sahifani tez qilishning eng qisqa yo'li — komponentni ham, uni uzatayotgan mashinani ham jamoa chegarasidan ticket o'tkazmasdan o'zgartira olish.",
+            title: "Butun hayotiy sikl ikki odamda",
+            body: "Ikkovlon frontendni ham, API'ni ham, serverni ham o'zimiz ushlab turamiz. Ataylab shunday: sekin sahifani tez qilishning eng qisqa yo'li — komponentni ham, uni uzatayotgan mashinani ham jamoa chegarasidan ticket o'tkazmasdan o'zgartira olish.",
           },
           {
             title: "Sinxronizatsiyada odam yo'q",
@@ -250,13 +247,13 @@ export const uz: Dict = {
           },
           {
             title: "Funksiyalardan oldin monitoring",
-            body: "Ishlash vaqti va tizim barqarorligi monitoringi erta qo'yildi. Uzilish haqida mijozdan eshitadigan bo'lsangiz, 99.9% deb ayta olmaysiz.",
+            body: "Sentry, Cafe24 server loglari va Slack ogohlantirishlari erta qo'yildi. Savdo kanali javob bermay qolganini mijozdan eshitadigan bo'lsangiz, sizda platforma emas — sayt va telefon raqami bor, xolos.",
           },
         ],
       },
       outcome: {
         title: "Natija",
-        body: "Ishga tushganidan beri 99.9% ishlash vaqti, qayta qurishdan keyin sahifa yuklanishi 60% tezlashdi, to'rtta kanalning hech birida jiddiy uzilish bo'lmadi. Sinxronizatsiya qayta qurilganidan buyon o'z do'kon bilan uchta marketplace narx borasida bir marta ham qarama-qarshi kelmadi.",
+        body: "Uch kanal bo'ylab kuniga taxminan 2,500 buyurtma quvurdan o'tadi, 설날 va 추석 sovg'a-to'plam kunlarida esa 5,000–6,000 tagacha ko'tariladi. Sinxronizatsiya qayta qurilganidan buyon o'z do'kon bilan ikki marketplace narx borasida bir marta ham qarama-qarshi kelmadi.",
       },
       next: {
         title: "Keyin nima qilardim",

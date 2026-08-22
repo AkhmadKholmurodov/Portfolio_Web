@@ -25,7 +25,7 @@ const DIM = "#585B60";
 const SIGNAL = "#F5AD58";
 const LINE = "rgba(255,255,255,0.10)";
 
-const FACTS = ["99.9% uptime", "100× cheaper vision", "E-7 visa", "Seoul"];
+const FACTS = ["~2,500 orders/day", "100× cheaper vision", "E-7 visa", "Seoul"];
 
 export default async function Image() {
   const photo = await readFile(join(process.cwd(), "public", "akhmad.jpeg"));
