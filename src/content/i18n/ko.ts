@@ -195,7 +195,7 @@ export const ko: Dict = {
 
   footer: {
     built:
-      "Next.js, GSAP, 캔버스로 만들었습니다. 서체는 Inter Tight와 Geist Mono입니다.",
+      "Next.js, GSAP, 캔버스로 만들었습니다. 서체는 Archivo, Pretendard, Geist Mono입니다.",
     rights: "All rights reserved.",
   },
 

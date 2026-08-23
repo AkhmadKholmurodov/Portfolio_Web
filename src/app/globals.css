@@ -71,11 +71,22 @@
   --color-live: #D3D0C9; /* 12.0:1 */
   --color-idle: #6E7873;
 
-  /* Inter Tight carries no Hangul; naming the system Korean faces is the
-     difference between decent Korean and the browser's last-resort serif. */
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui,
-    "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Noto Sans KR",
-    sans-serif;
+  /* Three faces, each with a job.
+   *
+   * Pretendard is the body face in every language. It covers Hangul and Latin
+   * in one family with matching proportions, which is the fix for the Korean
+   * looking like a different website: the old stack fell through to whatever
+   * Korean face the OS happened to have, and 맑은 고딕 next to Inter Tight is
+   * two designs on one line.
+   *
+   * Archivo is display only. It has no Hangul, so a Korean heading falls
+   * through to Pretendard automatically — font fallback is per glyph, so a
+   * mixed line sets each script in the right face without any locale
+   * branching in the markup. */
+  --font-display: var(--font-archivo), "Pretendard Variable", ui-sans-serif,
+    system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-sans: "Pretendard Variable", ui-sans-serif, system-ui,
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
 
   /* --- Type scale ---
@@ -231,13 +242,27 @@
   .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
   h1, h2, h3, h4 {
+    font-family: var(--font-display);
     color: var(--color-ink-100);
-    font-weight: 500;
+    font-weight: 700;
+    font-stretch: 110%;
     letter-spacing: -0.028em;
     text-wrap: balance;
   }
 
   p { text-wrap: pretty; }
+
+  /* Hangul has no spaces between syllables the way Latin has between letters,
+     so a browser left to itself will break a Korean word anywhere at all. This
+     is site-wide rather than scoped to the KO locale: the three dictionaries
+     mix scripts freely — 설날 appears in the English stat labels, SmartGuard
+     appears in the Korean ones — so a locale-scoped rule would miss exactly
+     the lines that need it. */
+  :lang(ko),
+  body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
 
   ::selection {
     background: var(--color-signal);
@@ -330,27 +355,52 @@
   color: var(--color-ink-400);
 }
 
-/* The lower bound is measured. "I build the product." sets to ~8.4em at this
-   tracking, and a 390px phone leaves 350px — anything above ~41px runs off
-   the screen. Korean is ~1em per glyph and needs room to wrap rather than be
-   clipped by `overflow-x: clip`. */
+/**
+ * Display.
+ *
+ * Archivo at 110% optical width and 700. `font-stretch` is a real axis on the
+ * variable font, not a synthetic stretch — the browser interpolates the
+ * design, so the letterforms stay correct instead of being scaled sideways.
+ *
+ * Korean falls through to Pretendard, which has no width axis; 110% is simply
+ * ignored there and the Hangul sets at its own proportions. That is the right
+ * outcome — stretched Hangul is always wrong.
+ *
+ * `word-break: keep-all` matters more than it looks: without it a browser
+ * breaks Hangul between any two syllables, so a headline splits mid-word and
+ * reads as a rendering fault. `overflow-wrap: break-word` is the escape hatch
+ * for a single token longer than the line, which keep-all would otherwise let
+ * overflow.
+ */
 @utility display-1 {
-  font-size: clamp(2.25rem, 9vw, 7.5rem);
-  line-height: 0.93;
-  letter-spacing: -0.045em;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: clamp(2.375rem, 6.4vw, 5.375rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  font-stretch: 110%;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 @utility display-2 {
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1.03;
-  letter-spacing: -0.038em;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 4.4vw, 3.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  font-weight: 700;
+  font-stretch: 110%;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 @utility display-3 {
-  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.6vw, 1.875rem);
   line-height: 1.15;
-  letter-spacing: -0.03em;
-  font-weight: 500;
+  letter-spacing: -0.026em;
+  font-weight: 700;
+  font-stretch: 110%;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Grain, generated rather than shipped. It also breaks up the banding a

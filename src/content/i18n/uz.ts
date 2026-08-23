@@ -198,7 +198,7 @@ export const uz: Dict = {
 
   footer: {
     built:
-      "Next.js, GSAP va canvas bilan qurilgan. Shriftlar — Inter Tight va Geist Mono.",
+      "Next.js, GSAP va canvas bilan qurilgan. Shriftlar — Archivo, Pretendard va Geist Mono.",
     rights: "Barcha huquqlar himoyalangan.",
   },
 

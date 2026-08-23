@@ -194,7 +194,7 @@ export const en = {
   },
 
   footer: {
-    built: "Next.js, GSAP and a canvas. Type is Inter Tight and Geist Mono.",
+    built: "Next.js, GSAP and a canvas. Type is Archivo, Pretendard and Geist Mono.",
     rights: "All rights reserved.",
   },
 

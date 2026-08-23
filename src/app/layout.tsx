@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter_Tight } from "next/font/google";
+import { Archivo, Geist_Mono } from "next/font/google";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { SectionProvider } from "@/components/providers/section-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
@@ -10,11 +10,28 @@ import { Footer } from "@/components/site/footer";
 import { en } from "@/content/i18n/en";
 import { profile } from "@/content/profile";
 import { siteUrl } from "@/lib/site";
+import "./pretendard.css";
 import "./globals.css";
 
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
-  subsets: ["latin"],
+/**
+ * Display face. Archivo at 110% width and 700 — the expanded optical width is
+ * the whole reason for the choice: it is industrial rather than neutral, and
+ * it stops the headline reading like every other Next.js portfolio, all of
+ * which are set in Inter or Inter Tight.
+ *
+ * `axes: ["wdth"]` is required. Without it next/font ships the default 100%
+ * instance and `font-stretch` in CSS has nothing to interpolate against.
+ *
+ * Archivo carries no Hangul, so the Korean headline falls through to
+ * Pretendard — see `--font-display` in globals.css. Fallback is per glyph, so
+ * a mixed line sets its Latin in Archivo and its Hangul in Pretendard.
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin", "latin-ext"],
+  // No `weight` key: next/font refuses `axes` unless the face loads as a full
+  // variable font, and the width axis is the entire reason for this choice.
+  axes: ["wdth"],
   display: "swap",
 });
 
@@ -106,9 +123,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${interTight.variable} ${geistMono.variable}`}
+      className={`${archivo.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Subset 91 is Latin plus the commonest Hangul — the only one every
+            visitor needs regardless of locale. Preloading the rest would
+            defeat the point of splitting by unicode-range. */}
+        <link
+          rel="preload"
+          href="/fonts/pretendard/PretendardVariable.subset.91.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-dvh">
         {/* Scroll-triggered reveals are prerendered in their hidden state.
             Without JS nothing would ever reveal them, so a no-JS visitor gets
