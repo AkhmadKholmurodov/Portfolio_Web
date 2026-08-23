@@ -31,22 +31,23 @@ export const profile = {
 /**
  * The hero portrait — one value, deliberately.
  *
- * `null` drops the image and lets the type carry the first screen, which is
- * where it stands today: the portraits on hand are formal studio shots against
- * an ornate gilded interior, and a warm patterned background is the one thing
- * a dark, minimal, technical page cannot absorb. Better no face than the wrong
- * face.
+ * `null` drops the image and lets the type carry the first screen; a value
+ * puts it back. Nothing else changes: the hero widens its text column when
+ * this is null and yields the right-hand third when it is not, at every
+ * breakpoint.
  *
- * To put one back: drop a plain-background portrait in `public/photos/`, point
- * `src` at it and give the real pixel dimensions. Nothing else changes — the
- * hero reserves the column when this is non-null and closes it up when it is
- * not, at every breakpoint.
+ * The photograph is used as shot. It is a studio portrait on a white wall, and
+ * on a near-black page that white is not a problem to be removed — it is the
+ * thing that makes the picture read as a physical print laid on the page.
+ * The frame and the shadow do the work instead.
  */
-export const heroPortrait: {
-  src: string;
-  width: number;
-  height: number;
-} | null = null;
+export type HeroPortrait = { src: string; width: number; height: number };
+
+export const heroPortrait: HeroPortrait | null = {
+  src: "/akhmad.jpeg",
+  width: 413,
+  height: 531,
+};
 
 export const socials = [
   { key: "github", label: "GitHub", handle: "AkhmadKholmurodov", href: profile.links.github },
