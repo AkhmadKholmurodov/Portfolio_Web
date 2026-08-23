@@ -17,6 +17,9 @@ import { cn } from "@/lib/utils";
  */
 export function Hero() {
   const { t } = useLanguage();
+  // Name on the first two lines, role on the third. The role is the line a
+  // recruiter is actually scanning for, so it is the one that carries the
+  // accent.
   const lines = [t.hero.line1, t.hero.line2, t.hero.line3];
 
   return (
@@ -40,7 +43,10 @@ export function Hero() {
             // type that arrives and type that appears.
             <span key={i} className="block overflow-hidden pb-[0.06em]">
               <span
-                className="rise-in block"
+                className={cn(
+                  "rise-in block",
+                  i === lines.length - 1 && "text-signal",
+                )}
                 style={{ animationDelay: `${140 + i * 110}ms` }}
               >
                 {line}

@@ -31,7 +31,7 @@ export const uz: Dict = {
   nav: {
     build: "Qurish",
     run: "Yuritish",
-    break: "Sindirish",
+    break: "Xavfsizlik",
     ai: "AI",
     about: "Men haqimda",
     contact: "Bog'lanish",
@@ -40,11 +40,11 @@ export const uz: Dict = {
   },
 
   hero: {
-    label: "Full-stack va WebOps muhandisi · Janubiy Koreya",
-    line1: "Men mahsulotni quraman.",
-    line2: "Serverni o'zim yurituraman.",
-    line3: "Ikkalasini birinchi o'zim sindiraman.",
-    lead: "Koreyada uch yildan beri production platformalar chiqaraman. Hozir ikkovlon bir kompaniyaning e-commerce stack'ini quramiz va yuritamiz.",
+    label: "Veb-platformalar · Server operatsiyalari · Xavfsizlik",
+    line1: "Akhmad",
+    line2: "Kholmurodov",
+    line3: "Full-Stack muhandis",
+    lead: "Koreyada uch yildan beri veb-platformalar quraman. Hozir bir kompaniyaning e-commerce tizimini yana bitta muhandis bilan birga quramiz va yuritamiz.",
     ctaWork: "Ishlarni ko'rish",
     ctaResume: "Rezyumeni yuklab olish",
     availability: "Seul, yoki Koreyaning istalgan joyi",
@@ -61,8 +61,8 @@ export const uz: Dict = {
 
   build: {
     label: "01 — Qurish",
-    title: "Men ticket emas, butun mahsulot chiqaraman.",
-    lead: "Sxemadan deploygacha. Uchtasi hozir haqiqiy foydalanuvchilar oldida ishlayapti.",
+    title: "Mahsulotni butunligicha quraman.",
+    lead: "Ma'lumotlar bazasi sxemasidan deploygacha. Uchtasi hozir ishlab turibdi.",
   },
 
   work: {
@@ -92,8 +92,8 @@ export const uz: Dict = {
 
   run: {
     label: "02 — Yuritish",
-    title: "Chiqarish — oson qismi.",
-    lead: "Ishlamayotgan platforma — platforma emas. Deploy, to'lov sinxronizatsiyasi va ostidagi Linux serverlar — javobgarligi menda.",
+    title: "Qurgan narsamni o'zim yurituraman.",
+    lead: "Ishga tushirish — oson qismi. Deploy ham, to'lov sinxronizatsiyasi ham, ostidagi Linux serverlar ham mening javobgarligimda.",
     timeline: "Yo'l",
     present: "Hozir",
   },
@@ -133,9 +133,9 @@ export const uz: Dict = {
   },
 
   break: {
-    label: "03 — Sindirish",
-    title: "O'zim topganim afzal.",
-    lead: "Muharrir yonida hujumchining ro'yxati ochiq turadi. Mashq qiladigan toifalarim — aynan o'z kodimni ko'zdan kechirganda qaraydigan toifalar.",
+    label: "03 — Xavfsizlik",
+    title: "Zaiflikni boshqalardan oldin o'zim topaman.",
+    lead: "Yonimda hujumchining ro'yxati ochiq turadi. Buzishni mashq qilgan narsam — aynan o'z kodimda tekshiradigan narsam.",
     certsTitle: "Sertifikatlar",
     read: "O'qish",
     items: {
@@ -168,7 +168,7 @@ export const uz: Dict = {
 
   ai: {
     label: "04 — AI",
-    title: "Model chiqargan kodni ham pull request kabi ko'zdan kechiraman.",
+    title: "AI yozgan kodni ham xuddi shunday tekshiraman.",
     // TODO(model-name): aniq model nomini Akhmad bergach qo'yiladi.
     lead: "Claude bilan birga, o'z ish jarayonimga moslab sozlagan self-hosted open-weight modeldan foydalanaman.",
     body: "Muhimi kod yozdirish emas — uni ko'zdan kechirish: tuzilishi, sifati, xavfsizligi va keyin qo'llab-quvvatlanishi, branchga tegishidan oldin. Model chiqargan narsa taklif bo'lib keladi, taklif esa istalgan pull request kabi o'qiladi: merge qilishdan oldin har bir qatorini tushuntira olishim kerak, tushuntira olmagan qatorlarim merge bo'lmaydi.",
@@ -176,7 +176,7 @@ export const uz: Dict = {
 
   stack: {
     label: "Asboblar",
-    title: "Nimalarga qo'l uraman",
+    title: "Nimalar bilan ishlayman",
     groups: {
       languages: "Tillar",
       frontend: "Frontend",
@@ -204,7 +204,7 @@ export const uz: Dict = {
 
   about: {
     label: "Men haqimda",
-    title: "Qashqadaryodan Gyeongbukgacha — rendering bo'lmagan bitta Flutter kodbazasi orqali.",
+    title: "Koreyaga nega keldim va nega qoldim.",
     intro: [
       "Koreyaga dasturiy injiniring bo'yicha o'qishga keldim va ish qiziq bo'lib ketgani uchun qoldim. Boshlanish nuqtasi universitetning Bulutli hisoblash laboratoriyasi bo'lgan: Flutter'da yozilgan avtonom transport prototipi mobil qurilmada rendering bo'lmasdi. Bir necha hafta atrofidan yamoq qo'yganimdan keyin frontendni React va TypeScript'da qaytadan qurishni taklif qildim. Shu ishni menga ishonishdi va muddatdan oldin topshirdik.",
       "Hozir ham shunday ishlayman. Bugungi tushdan keyinni yengillashtiradigan chetlab o'tish yo'liga bir kun sarflagandan ko'ra, keyingi olti oyni zerikarli qiladigan arxitekturaga bir hafta sarflaganim afzal.",
@@ -221,14 +221,12 @@ export const uz: Dict = {
       "Uchalasini ham har kuni ishlataman — SAMBU'da koreyscha, hujjatlar va mijozlar bilan inglizcha, eYaqin kimlar uchun qurilgan bo'lsa, ular bilan o'zbekcha.",
     languageLevels: { ko: "Yuqori", en: "Yuqori", uz: "Ona tili" },
     recognitionTitle: "E'tirof",
-    recognitionNote:
-      "Ishni menga xushomad qilishga hech qanday sababi yo'q odamlar baholagan yagona holat.",
+    recognitionNote: "Ishning o'ziga berilgan e'tirof.",
     recognition: {
       presidentTech: "O'zbekiston Prezidenti Tech mukofoti — eYaqin, jamoa rahbari",
     },
     awardsTitle: "Klaviaturadan tashqarida",
-    awardsNote:
-      "Stol tennisini musobaqa darajasida o'ynayman. Qiladigan ishlarim ichida hisobni boshqa odam yuritadigan yagonasi shu.",
+    awardsNote: "Stol tennisini musobaqa darajasida o'ynayman.",
     awards: {
       samsunghyeonTeam:
         "Samsunghyeon ochiq milliy stol tennisi turniri, Janubiy Koreya — jamoaviy 1-o'rin",

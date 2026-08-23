@@ -36,11 +36,11 @@ export const en = {
   },
 
   hero: {
-    label: "Full-stack & WebOps engineer · South Korea",
-    line1: "I build the product.",
-    line2: "I run the server.",
-    line3: "I break both first.",
-    lead: "Three years shipping production platforms in South Korea. Right now: a company's e-commerce stack, built and run by two of us.",
+    label: "Web platforms · Server operations · Security",
+    line1: "Akhmad",
+    line2: "Kholmurodov",
+    line3: "Full-Stack Engineer",
+    lead: "Three years building web platforms in South Korea. Right now I build and run a company's e-commerce system with one other engineer.",
     ctaWork: "See the work",
     ctaResume: "Download résumé",
     availability: "Open to roles in Seoul, or anywhere in Korea",
@@ -57,8 +57,8 @@ export const en = {
 
   build: {
     label: "01 — Build",
-    title: "I ship whole products, not tickets.",
-    lead: "Schema to deploy. Three are in front of real users right now.",
+    title: "I build whole products.",
+    lead: "Database schema through to deployment. Three of these are live right now.",
   },
 
   work: {
@@ -88,8 +88,8 @@ export const en = {
 
   run: {
     label: "02 — Run",
-    title: "Shipping is the easy half.",
-    lead: "A platform that is down is not a platform. I am on the hook for the deploys, the payment sync and the Linux boxes underneath.",
+    title: "I run what I build.",
+    lead: "Launching is the easy part. I am the one responsible for the deploys, the payment sync and the Linux servers underneath.",
     timeline: "Track record",
     present: "Present",
   },
@@ -130,8 +130,8 @@ export const en = {
 
   break: {
     label: "03 — Break",
-    title: "I would rather find it myself.",
-    lead: "I develop with an attacker's checklist open beside the editor. The categories I practise on are the categories I review my own code for.",
+    title: "I find the holes before someone else does.",
+    lead: "I write code with an attacker's checklist open next to the editor. What I practise breaking is what I check for in my own work.",
     certsTitle: "Certifications",
     read: "Read it",
     items: {
@@ -164,7 +164,7 @@ export const en = {
 
   ai: {
     label: "04 — AI",
-    title: "I review model output the way I review a pull request.",
+    title: "I review AI code like any other pull request.",
     // TODO(model-name): Akhmad is supplying the exact name of the self-hosted
     // open-weight model. It is deliberately unnamed until he does.
     lead: "I work with Claude alongside a self-hosted open-weight model I have tuned to my own workflow.",
@@ -173,7 +173,7 @@ export const en = {
 
   stack: {
     label: "Toolkit",
-    title: "What I reach for",
+    title: "What I work with",
     groups: {
       languages: "Languages",
       frontend: "Frontend",
@@ -200,8 +200,7 @@ export const en = {
 
   about: {
     label: "About",
-    title:
-      "From Qashqadaryo to Gyeongbuk, by way of a Flutter codebase that would not render.",
+    title: "Why I came to Korea, and why I stayed.",
     intro: [
       "I came to Korea for a software engineering degree and stayed because the work got interesting. It started in a university Cloud Computing Lab: an autonomous-vehicle prototype written in Flutter that would not render on mobile. After a few weeks of patching around it I argued we should rebuild the front end in React and TypeScript. I was allowed to lead that, and we shipped ahead of deadline.",
       "That is still how I work. I would rather spend a week on the architecture that makes the next six months boring than a day on the workaround that makes this afternoon easier.",
@@ -219,15 +218,13 @@ export const en = {
       "All three, daily — Korean at SAMBU, English for documentation and clients, Uzbek with the people eYaqin is actually built for.",
     languageLevels: { ko: "Advanced", en: "Advanced", uz: "Native" },
     recognitionTitle: "Recognition",
-    recognitionNote:
-      "The one time the work was judged by people who had no reason to be kind about it.",
+    recognitionNote: "Recognition for the work itself.",
     recognition: {
       presidentTech:
         "President Tech Award, Uzbekistan — team lead, with eYaqin",
     },
     awardsTitle: "Away from the keyboard",
-    awardsNote:
-      "I play competitive table tennis. It is the only thing I do that has a scoreboard somebody else keeps.",
+    awardsNote: "I play competitive table tennis.",
     awards: {
       samsunghyeonTeam:
         "Samsunghyeon National Open Table Tennis, South Korea — 1st place, team",
