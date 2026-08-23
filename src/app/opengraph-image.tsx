@@ -18,12 +18,12 @@ export const contentType = "image/png";
  * tokens. Mirrors `globals.css` and `lib/palette.ts` — all three move
  * together or the preview stops looking like the site.
  */
-const VOID = "#020305";
-const INK = "#F5F6F8";
-const MUTED = "#8A8C91";
-const DIM = "#585B60";
-const SIGNAL = "#F5AD58";
-const LINE = "rgba(255,255,255,0.10)";
+const VOID = "#0B100E";
+const INK = "#EDE9E1";
+const MUTED = "#9EA8A2";
+const DIM = "#6E7873";
+const SIGNAL = "#7FB6A4";
+const LINE = "rgba(237,233,225,0.10)";
 
 const FACTS = ["~2,500 orders/day", "100× cheaper vision", "E-7 visa", "Seoul"];
 
@@ -55,7 +55,7 @@ export default async function Image() {
             height: 700,
             borderRadius: 999,
             background:
-              "radial-gradient(circle, rgba(245,173,88,0.16), rgba(245,173,88,0) 68%)",
+              "radial-gradient(circle, rgba(127,182,164,0.16), rgba(127,182,164,0) 68%)",
           }}
         />
 

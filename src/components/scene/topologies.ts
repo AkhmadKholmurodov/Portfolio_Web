@@ -119,7 +119,7 @@ const run: Topology = {
  *
  * Pulses run backwards here: inward, from the edge of the frame towards the
  * core. Most of them stop partway and leave a mark. One edge is `open`, and
- * the pulse that finds it goes all the way through and lights the path amber.
+ * the pulse that finds it goes all the way through and lights the path celadon.
  *
  * Two of the nodes are stubs that connect to nothing — the scans that hit a
  * closed port. They are what makes the picture read as *probing* rather than

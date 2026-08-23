@@ -105,9 +105,15 @@ export function Hero() {
               style={{ animationDelay: "700ms" }}
             >
               <span className="text-signal">{t.hero.availability}</span>
-              <span className="text-ink-800">/</span>
+              {/* Punctuation between three separate facts, not content. It is
+                  deliberately below the text-contrast floor, so it says so. */}
+              <span aria-hidden className="text-ink-800">
+                /
+              </span>
               <span>{t.hero.visa}</span>
-              <span className="text-ink-800">/</span>
+              <span aria-hidden className="text-ink-800">
+                /
+              </span>
               <span>{t.hero.languages}</span>
             </div>
           </div>

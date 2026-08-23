@@ -31,7 +31,7 @@ export function ChannelsDiagram() {
         <span className="font-mono text-body text-ink-200">catalogue</span>
       </div>
 
-      {/* The sync job. Amber because it is the live piece — the thing that is
+      {/* The sync job. Celadon because it is the live piece — the thing that is
           running right now and the thing that, if it stops, makes the three
           boxes below disagree. */}
       <div className="relative flex items-center gap-3">

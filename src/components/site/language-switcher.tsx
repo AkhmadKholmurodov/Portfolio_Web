@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Three codes, one lit. The current language is *state*, which is precisely
- * what amber is for on this site — so this is one of the few places the accent
+ * what celadon is for on this site — so this is one of the few places the accent
  * appears without a production system behind it.
  */
 export function LanguageSwitcher({ className }: { className?: string }) {

@@ -9,8 +9,10 @@ const badgeVariants = cva(
       variant: {
         /** Default: a hairline chip. Carries no meaning beyond grouping. */
         outline: "border-line text-ink-500",
-        /** Reserved for things that are genuinely running in production. */
-        live: "border-signal-line text-signal",
+        /** Reserved for things that are genuinely running in production.
+         *  Bone, not celadon: the accent means "you can click this", and a
+         *  status chip is not clickable. Weight carries the state instead. */
+        live: "border-line-hover text-live",
         solid: "border-transparent bg-surface-2 text-ink-300",
       },
       size: {
@@ -45,7 +47,7 @@ export function StatusDot({ live }: { live: boolean }) {
       aria-hidden
       className={cn(
         "size-1.5 shrink-0 rounded-full",
-        live ? "animate-breathe bg-signal" : "bg-ink-700",
+        live ? "animate-breathe bg-live" : "bg-idle ring-1 ring-line-hover ring-inset",
       )}
     />
   );

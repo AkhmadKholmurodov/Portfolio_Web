@@ -1,52 +1,75 @@
 @import "tailwindcss";
 
 /* =====================================================================
- * Night Watch — the design system.
+ * Celadon — the design system.
  *
- * One hue. Amber is the only chroma on the page and it was taken from the
- * work itself: it is the one colour that appears in both of Akhmad's
- * products. Everything else is neutral on hue 265, so the darks stay cold
- * and the light stays warm.
+ * One hue, and it is not the one every developer portfolio reaches for.
+ * Celadon is the colour of 고려청자: the best-known object in Korean design
+ * history. Akhmad works in Korea and is applying to Korean companies, so the
+ * accent is tied to where he is rather than to a default.
  *
- * Amber marks state — live, in production, the current section. Hover only
- * ever changes lightness. Every colour resolves through a token here; the
- * canvas mirrors these values in `src/lib/palette.ts`.
+ * The ground is cool graphite-green, never neutral black, and the text is warm
+ * bone against it — that temperature split is what keeps a near-black page
+ * from reading as a switched-off screen.
+ *
+ * Celadon means one thing only: you can click this. Buttons, links, hover,
+ * the current nav item. Status does not use it — see `--color-live` below for
+ * why. Every colour resolves through a token here; the canvas mirrors these
+ * values in `src/lib/palette.ts`.
+ *
+ * Contrast ratios below are measured against --color-void, the page ground.
  * ===================================================================== */
 
 @theme {
-  /* Ground. Not pure black — the schematic needs somewhere to recede into. */
-  --color-void: oklch(0.098 0.007 265);
-  --color-bg: oklch(0.145 0.008 265);
-  --color-surface: oklch(0.192 0.009 265);
-  --color-surface-2: oklch(0.232 0.01 265);
-  --color-surface-3: oklch(0.278 0.011 265);
+  /* Ground. Cool graphite-green — the schematic needs somewhere to recede
+     into, and a green-tinted dark makes the celadon sit in the same family as
+     the page instead of on top of it. */
+  --color-void: #0B100E; /* page */
+  --color-bg: #0F1512; /* the wash under the nav, and the top of the page glow */
+  --color-surface: #111815; /* cards, panels */
+  --color-surface-2: #18211D; /* hover / elevated */
+  --color-surface-3: #1F2925; /* one step further, for controls */
 
-  --color-line: oklch(1 0 0 / 0.08);
-  --color-line-strong: oklch(1 0 0 / 0.14);
-  --color-line-hover: oklch(1 0 0 / 0.26);
+  /* Hairlines are struck in the text colour rather than in white: pure white
+     at 8% over a green-black ground reads faintly blue. */
+  --color-line: rgba(237, 233, 225, 0.08);
+  --color-line-strong: rgba(237, 233, 225, 0.12);
+  --color-line-hover: rgba(237, 233, 225, 0.16);
 
-  /* Semantic, not literal: low numbers are the loudest text. Ratios are
-     against --bg and were measured. ink-700 fails AA, so it is decorative
-     only — hairline glyphs and disabled states, never body text. */
-  --color-ink-100: oklch(0.972 0.003 265); /* 18.3:1 */
-  --color-ink-200: oklch(0.905 0.004 265); /* 14.9:1 */
-  --color-ink-300: oklch(0.8 0.006 265); /* 10.6:1 */
-  /* Added this pass. Every mono label on the page used to sit at ink-600 or
-     ink-700 — 5.2:1 and 3.0:1 against the ground, the second of which is not
-     readable text by any standard. This is the step they move to: #A2A5AA,
-     8.3:1, loud enough to read and quiet enough to stay a label. */
-  --color-ink-400: oklch(0.72 0.008 265); /*  8.3:1 */
-  --color-ink-500: oklch(0.66 0.008 265); /*  6.4:1 */
-  --color-ink-600: oklch(0.6 0.009 265); /*  5.0:1 */
-  --color-ink-700: oklch(0.47 0.009 265); /*  2.9:1 */
-  --color-ink-800: oklch(0.36 0.009 265);
+  /* Warm bone on the cool ground. Semantic, not literal: low numbers are the
+     loudest text. Ratios measured against --color-void.
 
-  --color-signal: oklch(0.8 0.132 68); /* 10.4:1 */
-  --color-signal-2: oklch(0.7 0.128 55);
-  --color-signal-3: oklch(0.56 0.105 48);
-  --color-signal-soft: oklch(0.8 0.132 68 / 0.12);
-  --color-signal-line: oklch(0.8 0.132 68 / 0.34);
-  --color-on-signal: oklch(0.19 0.026 62);
+     ink-600 is the brief's --t3 exactly, and it lands at 4.2:1 — under AA. It
+     is kept for decoration only: hairline glyphs, dividers, disabled states.
+     Mono labels are readable text and live at ink-400, which clears AA on the
+     card ground as well as on the page. */
+  --color-ink-100: #EDE9E1; /* 15.8:1 — headings            (brief --t1) */
+  --color-ink-200: #D3D0C9; /* 12.0:1 — strong body               */
+  --color-ink-300: #9EA8A2; /*  7.8:1 — body                (brief --t2) */
+  --color-ink-400: #8A938E; /*  6.1:1 — mono labels, captions     */
+  --color-ink-500: #7C8681; /*  5.1:1 — paired icons              */
+  --color-ink-600: #6E7873; /*  4.2:1 — DECORATIVE ONLY     (brief --t3) */
+  --color-ink-700: #5A625E; /*  3.1:1 — hairline glyphs           */
+  --color-ink-800: #414846; /*  2.0:1 — dimmest rule              */
+
+  /* Celadon. Interactive only. */
+  --color-signal: #7FB6A4; /*  8.3:1 */
+  --color-signal-2: #6BA492; /* hover — lightness moves, hue does not */
+  --color-signal-3: #4E7D6E;
+  --color-signal-soft: rgba(127, 182, 164, 0.12);
+  --color-signal-line: rgba(127, 182, 164, 0.28); /* brief --jade-dim */
+  --color-on-signal: #0B100E; /*  8.3:1 on the celadon fill */
+
+  /* Failure. The overselling moment in the case study, and error states. */
+  --color-alert: #C9614F; /*  4.9:1 */
+
+  /* Status is deliberately hueless.
+     The accent is already green, so a green "live" dot would be the exact
+     confusion this palette was changed to remove — two greens six pixels
+     apart that mean different things. State is carried by fill and weight
+     instead: live is bone and solid, in-development is dim and hollow. */
+  --color-live: #D3D0C9; /* 12.0:1 */
+  --color-idle: #6E7873;
 
   /* Inter Tight carries no Hangul; naming the system Korean faces is the
      difference between decent Korean and the browser's last-resort serif. */
@@ -115,7 +138,7 @@
 /* A live dot breathes rather than blinks. A blink is what a page does when
    something is wrong; this is claiming the opposite. */
 @keyframes breathe {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--color-signal-soft); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(211, 208, 201, 0.14); }
   50% { opacity: 0.68; box-shadow: 0 0 0 5px transparent; }
 }
 
@@ -364,8 +387,8 @@
     transform: translateY(-5px);
     border-color: var(--color-line-hover);
     box-shadow:
-      0 30px 70px -32px oklch(0 0 0 / 0.9),
-      0 0 0 1px oklch(1 0 0 / 0.06);
+      0 30px 70px -32px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(237, 233, 225, 0.06);
   }
 }
 

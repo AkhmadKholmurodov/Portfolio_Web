@@ -40,7 +40,8 @@ export function Nav() {
 
   return (
     <>
-      {/* Reading progress. Amber, because it is state — and one pixel tall,
+      {/* Reading progress. Celadon, because it tracks your own scrolling — and one
+          pixel tall,
           because it is not information anybody came here for. */}
       <motion.div
         aria-hidden

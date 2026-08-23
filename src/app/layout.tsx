@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Matches the ground colour exactly, so mobile browser chrome and the page
   // never show a seam at the top of the scroll.
-  themeColor: "#020305",
+  themeColor: "#0B100E",
   colorScheme: "dark",
 };
 

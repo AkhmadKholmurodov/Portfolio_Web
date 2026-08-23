@@ -25,15 +25,31 @@ export function SceneRoot() {
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-void"
     >
-      {/* A single soft wash from the top, so the ground is lit rather than
-          flat. No coloured haze: the amber on this page belongs to the pulses
-          and to state, and a warm gradient across the whole viewport spends
-          it on nothing. */}
+      {/* Three washes, none of which should be visible as a gradient.
+          The first lifts the top of the page off the ground so it is lit
+          rather than flat. The other two are celadon at two and one percent —
+          enough that the eye reads depth, far too little to read as colour.
+          A page that is one flat value is the thing that makes a dark site
+          feel like a switched-off screen. */}
       <div
         className="absolute inset-0"
         style={{
           background:
             "radial-gradient(125% 82% at 50% -8%, var(--color-bg) 0%, var(--color-void) 64%)",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(70% 55% at 12% 8%, rgba(127,182,164,0.055), transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 88% 96%, rgba(127,182,164,0.028), transparent 72%)",
         }}
       />
 

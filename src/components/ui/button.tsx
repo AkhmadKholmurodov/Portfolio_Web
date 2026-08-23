@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * shadcn/ui's Button, re-pointed at this site's tokens. The `primary` variant
- * is the only filled-amber element the design allows, and there is at most one
+ * is the only filled-celadon element the design allows, and there is at most one
  * of them on screen at a time.
  */
 const buttonVariants = cva(
