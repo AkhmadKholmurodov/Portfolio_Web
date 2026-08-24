@@ -6,6 +6,7 @@ export type Phase = 0 | 1 | 2 | 3 | 4;
 
 type SceneState = {
   progress: number;
+  scrollY: number;
   targetPhase: Phase;
   phase: number;
   velocity: number;
@@ -20,6 +21,14 @@ export const sceneState: SceneState = {
    * ScrollTrigger, so the camera tracks the scrollbar exactly.
    */
   progress: 0,
+
+  /**
+   * Scroll offset in pixels. `progress` is normalised over the whole document,
+   * which cannot answer "are we still on the first screen" — and that is the
+   * one question the schematic needs answered, because the hero is the one
+   * place it does not belong.
+   */
+  scrollY: 0,
 
   /**
    * Which formation the field should be heading for. Set discretely as sections
@@ -50,6 +59,7 @@ export const sceneState: SceneState = {
 /** Reset on route change — a case study page has no formations of its own. */
 export function resetSceneState() {
   sceneState.progress = 0;
+  sceneState.scrollY = 0;
   sceneState.targetPhase = 0;
   sceneState.velocity = 0;
 }

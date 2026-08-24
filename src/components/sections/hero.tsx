@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { heroPortrait, metrics, profile } from "@/content/profile";
 import { Tooltip } from "@/components/ui/tooltip";
 import { ArchPortrait } from "./arch-portrait";
+import { HeroAmbient } from "./hero-ambient";
 
 /**
  * The first screen: who he is, what he does, four numbers, and his face.
@@ -40,6 +41,8 @@ export function Hero() {
       // to come out of the hero's box, not out of its own min-height.
       className="relative mt-[74px] flex min-h-[calc(100svh-74px)] flex-col overflow-hidden"
     >
+      <HeroAmbient />
+
       <div className="shell relative z-10 flex flex-1 flex-col justify-center py-10">
         {/* Below 980 the portrait goes above the text. `flex-col-reverse` puts
             it there without moving it in the DOM, so the reading order stays

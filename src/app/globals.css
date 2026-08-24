@@ -26,7 +26,7 @@
      the page instead of on top of it. */
   --color-void: #0B100E; /* page */
   --color-bg: #0F1512; /* the wash under the nav, and the top of the page glow */
-  --color-surface: #111815; /* cards, panels */
+  --color-surface: #121A16; /* cards, panels */
   --color-surface-2: #18211D; /* hover / elevated */
   --color-surface-3: #1F2925; /* one step further, for controls */
 
@@ -302,6 +302,98 @@
 }
 
 /* =====================================================================
+ * Layer 2 — the ambient field.
+ *
+ * Three soft masses drifting behind the hero, and nothing else. No WebGL:
+ * three.js is not a dependency of this project and adding a renderer to move
+ * three blurred shapes would be the most expensive way available to do it.
+ * These are radial gradients moved by `transform`, which means the whole
+ * effect lives on the compositor and costs the main thread nothing per frame.
+ *
+ * Two hues and the ground, which is the rule: a deep petrol green and celadon
+ * at under a tenth of an alpha. A third hue is the moment atmosphere turns
+ * into a gradient-generator preset.
+ *
+ * The cycles are 38s, 44s and 33s and they are deliberately co-prime-ish, so
+ * the three never line up into a visible pulse. If you can see it moving it is
+ * too fast; the intended experience is that the page looks slightly different
+ * when you glance back at it.
+ *
+ * Under `prefers-reduced-motion` the base rule collapses every duration, and
+ * because the keyframes start from `translate3d(0,0,0) scale(1)` the untimed
+ * state *is* the composition — the field simply stops, fully painted, rather
+ * than falling back to something else.
+ * ===================================================================== */
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  /* Additive. A ground of its own here would put a hard seam across the page
+     at the hero's bottom edge, where this layer stops and the page's own
+     wash carries on. */
+}
+
+.ambient > i {
+  position: absolute;
+  display: block;
+  will-change: transform;
+  /* No `filter: blur()`. The gradient's own falloff is the blur, and a filter
+     over a 900px box is a full-surface re-raster on every frame it moves. */
+}
+
+.ambient-a {
+  inset: -34% 16% 6% -30%;
+  background: radial-gradient(
+    closest-side,
+    #0a1a16 0%,
+    rgba(10, 26, 22, 0.62) 52%,
+    transparent 78%
+  );
+  animation: drift-a 38s ease-in-out infinite;
+}
+
+.ambient-b {
+  inset: -22% -26% 22% 34%;
+  background: radial-gradient(
+    closest-side,
+    rgba(127, 182, 164, 0.09) 0%,
+    rgba(127, 182, 164, 0.035) 48%,
+    transparent 74%
+  );
+  animation: drift-b 44s ease-in-out infinite;
+}
+
+.ambient-c {
+  inset: 34% 22% -32% 8%;
+  background: radial-gradient(
+    closest-side,
+    rgba(127, 182, 164, 0.06) 0%,
+    rgba(127, 182, 164, 0.022) 50%,
+    transparent 76%
+  );
+  animation: drift-c 33s ease-in-out infinite;
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(6%, 4%, 0) scale(1.1); }
+  66% { transform: translate3d(-3%, 7%, 0) scale(0.96); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  40% { transform: translate3d(-7%, 5%, 0) scale(1.08); }
+  70% { transform: translate3d(4%, -4%, 0) scale(0.94); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  45% { transform: translate3d(8%, -6%, 0) scale(1.12); }
+  75% { transform: translate3d(-5%, -2%, 0) scale(1.02); }
+}
+
+/* =====================================================================
  * Utilities
  * ===================================================================== */
 
@@ -462,7 +554,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.055;
+    opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }

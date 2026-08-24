@@ -51,6 +51,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       end: "max",
       onUpdate: (self) => {
         sceneState.progress = self.progress;
+        sceneState.scrollY = self.scroll();
         sceneState.velocity = self.getVelocity();
       },
     });

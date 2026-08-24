@@ -138,6 +138,18 @@ export function Traces() {
         return;
       }
 
+      // The hero has its own background now — the arch and the ambient field
+      // already occupy that role, and a schematic behind them is a third thing
+      // competing for the same screen. So the traces start at zero and fade in
+      // as the first viewport leaves, which also means the busiest layer on the
+      // page draws nothing at all while the visitor is reading the headline.
+      const heroOut = Math.min(1, Math.max(0, (sceneState.scrollY - h * 0.14) / (h * 0.46)));
+      canvas!.style.opacity = heroOut.toFixed(3);
+      if (heroOut < 0.005) {
+        ctx!.clearRect(0, 0, w, h);
+        return;
+      }
+
       const active = sceneState.targetPhase;
       const narrow = w < 768;
       const showLabels = w >= 1024;
