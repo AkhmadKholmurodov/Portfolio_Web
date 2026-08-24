@@ -36,17 +36,25 @@ export const profile = {
  * this is null and yields the right-hand third when it is not, at every
  * breakpoint.
  *
- * The photograph is used as shot. It is a studio portrait on a white wall, and
- * on a near-black page that white is not a problem to be removed — it is the
- * thing that makes the picture read as a physical print laid on the page.
- * The frame and the shadow do the work instead.
+ * The asset is a cut-out with real alpha, produced by `scripts/portrait-assets.py`
+ * from the supplied JPEG — which was itself a cut-out flattened onto a
+ * checkerboard, because JPEG cannot carry an alpha channel. Two files come out
+ * of it: the full figure for the card, and a square head crop for the phone
+ * badge.
  */
-export type HeroPortrait = { src: string; width: number; height: number };
+export type HeroPortrait = {
+  src: string;
+  width: number;
+  height: number;
+  avatar: string;
+};
 
 export const heroPortrait: HeroPortrait | null = {
-  src: "/akhmad.jpeg",
-  width: 413,
-  height: 531,
+  src: "/photos/portrait-cutout.webp",
+  width: 451,
+  height: 1008,
+  /** Square head crop, for the phone badge. */
+  avatar: "/photos/avatar.webp",
 };
 
 export const socials = [

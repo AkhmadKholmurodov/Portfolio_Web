@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { heroPortrait, metrics, profile } from "@/content/profile";
 import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { HeroPortrait } from "./hero-portrait";
+import { IdentityBadge, IdentityCard } from "./identity-card";
 
 /**
  * The first screen: who he is, what he does, four numbers, and his face.
@@ -37,91 +37,100 @@ export function Hero() {
           never be obstructed. */}
       <div className="relative flex flex-1 flex-col justify-end md:justify-center">
         <div className="shell relative z-10 w-full">
-          <p
-            className="label lift-in flex items-center gap-2.5"
-            style={{ animationDelay: "80ms" }}
+          <div
+            className={cn(
+              "grid items-center gap-10",
+              heroPortrait &&
+                "md:grid-cols-[minmax(0,1fr)_minmax(0,272px)] md:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-16",
+            )}
           >
-            <span className="size-1.5 animate-breathe rounded-full bg-signal" />
-            {t.hero.label}
-          </p>
+            <div>
+              <div
+                className="lift-in flex items-center gap-3.5"
+                style={{ animationDelay: "80ms" }}
+              >
+                {heroPortrait && <IdentityBadge src={heroPortrait.avatar} />}
+                <p className="label flex items-center gap-2.5">
+                  <span className="size-1.5 animate-breathe rounded-full bg-signal" />
+                  {t.hero.label}
+                </p>
+              </div>
 
-          <h1 className="mt-7 text-ink-100 md:max-w-[58%] lg:max-w-[57%]">
-            {lines.map((line, i) => (
-              // Each line is clipped by its own row so it can slide up from
-              // underneath rather than fading in place — the difference between
-              // type that arrives and type that appears.
-              <span key={i} className="block overflow-hidden pb-[0.06em]">
-                <span
-                  className={cn(
-                    "rise-in block",
-                    // The name dominates; the role is a subtitle in the accent.
-                    // Set at display-1 the role became the loudest thing on the
-                    // page, which is the wrong way round — and at that size it
-                    // could not sit beside the figure anyway.
-                    i === lines.length - 1
-                      ? "display-3 pt-2 text-signal"
-                      : "display-1",
-                  )}
-                  style={{ animationDelay: `${140 + i * 110}ms` }}
+              <h1 className="mt-7 text-ink-100">
+                {lines.map((line, i) => (
+                  // Each line is clipped by its own row so it can slide up from
+                  // underneath rather than fading in place — the difference between
+                  // type that arrives and type that appears.
+                  <span key={i} className="block overflow-hidden pb-[0.06em]">
+                    <span
+                      className={cn(
+                        "rise-in block",
+                        // The name dominates; the role is a subtitle in the accent.
+                        // Set at display-1 the role became the loudest thing on the
+                        // page, which is the wrong way round — and at that size it
+                        // could not sit beside the figure anyway.
+                        i === lines.length - 1
+                          ? "display-3 pt-2 text-signal"
+                          : "display-1",
+                      )}
+                      style={{ animationDelay: `${140 + i * 110}ms` }}
+                    >
+                      {line}
+                    </span>
+                  </span>
+                ))}
+              </h1>
+
+              <div className="mt-8">
+                <p
+                  className="lift-in max-w-xl text-body text-ink-300"
+                  style={{ animationDelay: "520ms" }}
                 >
-                  {line}
-                </span>
-              </span>
-            ))}
-          </h1>
+                  {t.hero.lead}
+                </p>
 
-          <div className="mt-8 md:max-w-[58%] lg:max-w-[57%]">
-            <p
-              className="lift-in max-w-xl text-body text-ink-300"
-              style={{ animationDelay: "520ms" }}
-            >
-              {t.hero.lead}
-            </p>
-
-            <div
-              className="lift-in mt-8 flex flex-wrap items-center gap-3"
-              style={{ animationDelay: "620ms" }}
-            >
-              {/* The page's one piece of purely decorative self-starting motion,
+                <div
+                  className="lift-in mt-8 flex flex-wrap items-center gap-3"
+                  style={{ animationDelay: "620ms" }}
+                >
+                  {/* The page's one piece of purely decorative self-starting motion,
                   on the page's one primary action. */}
-              <BorderBeam>
-                <Button asChild size="lg">
-                  <Link href="/#build">
-                    {t.hero.ctaWork}
-                    <ArrowDown />
-                  </Link>
-                </Button>
-              </BorderBeam>
-              <Button asChild variant="outline" size="lg">
-                <a href={profile.resume} download>
-                  {t.hero.ctaResume}
-                  <ArrowUpRight />
-                </a>
-              </Button>
-            </div>
+                  <BorderBeam>
+                    <Button asChild size="lg">
+                      <Link href="/#build">
+                        {t.hero.ctaWork}
+                        <ArrowDown />
+                      </Link>
+                    </Button>
+                  </BorderBeam>
+                  <Button asChild variant="outline" size="lg">
+                    <a href={profile.resume} download>
+                      {t.hero.ctaResume}
+                      <ArrowUpRight />
+                    </a>
+                  </Button>
+                </div>
 
-            <div
-              className="lift-in mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-label tracking-label text-ink-400"
-              style={{ animationDelay: "700ms" }}
-            >
-              <span className="text-signal">{t.hero.availability}</span>
-              {/* Punctuation between three separate facts, not content. It is
+                <div
+                  className="lift-in mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-label tracking-label text-ink-400"
+                  style={{ animationDelay: "700ms" }}
+                >
+                  <span className="text-signal">{t.hero.availability}</span>
+                  {/* Punctuation between three separate facts, not content. It is
                   deliberately below the text-contrast floor, so it says so. */}
-              <span aria-hidden className="text-ink-800">
-                /
-              </span>
-              <span>{t.hero.visa}</span>
-              <span aria-hidden className="text-ink-800">
-                /
-              </span>
-              <span>{t.hero.languages}</span>
+                  <span aria-hidden className="text-ink-800">
+                    /
+                  </span>
+                  <span>{t.hero.visa}</span>
+                  <span aria-hidden className="text-ink-800">
+                    /
+                  </span>
+                  <span>{t.hero.languages}</span>
+                </div>
+              </div>
             </div>
 
-            {/* In the flow on a phone and positioned from `md` up — see the
-                note in `hero-portrait.tsx`. It is rendered here rather than as
-                a sibling of the shell so that the mobile case needs no second
-                element and no duplicate markup. */}
-            {heroPortrait && <HeroPortrait portrait={heroPortrait} />}
+            {heroPortrait && <IdentityCard portrait={heroPortrait} />}
           </div>
         </div>
       </div>
@@ -151,7 +160,9 @@ export function Hero() {
                         />
                       )}
                     </p>
-                    <p className="mt-2 text-caption text-ink-300">{copy.label}</p>
+                    <p className="mt-2 text-caption text-ink-300">
+                      {copy.label}
+                    </p>
                     <p className="mt-1 caption font-mono tracking-label">
                       {copy.source}
                     </p>
