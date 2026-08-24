@@ -57,7 +57,7 @@ export function BreakSection() {
                 {copy.body}
               </p>
               {href && (
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm text-ink-100">
+                <span className="mt-6 inline-flex items-center gap-1.5 text-ui text-ink-100">
                   {t.break.read}
                   <ArrowUpRight className="size-3.5 transition-transform duration-400 ease-(--ease-out-expo) group-hover/spot:translate-x-0.5 group-hover/spot:-translate-y-0.5" />
                   <span className="sr-only">{t.ui.external}</span>

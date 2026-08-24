@@ -75,7 +75,7 @@ export function Run() {
                           href={entry.href}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="mt-6 inline-flex items-center gap-1.5 text-sm text-ink-100 underline decoration-line-strong underline-offset-[6px] transition-colors duration-300 hover:decoration-ink-500"
+                          className="mt-6 inline-flex items-center gap-1.5 text-ui text-ink-100 underline decoration-line-strong underline-offset-[6px] transition-colors duration-300 hover:decoration-ink-500"
                         >
                           {entry.href.replace("https://", "")}
                           <ArrowUpRight className="size-3.5" />

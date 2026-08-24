@@ -18,7 +18,7 @@ export function Footer() {
     <footer className="border-t border-line bg-void/40">
       <div className="shell flex flex-col gap-8 py-12 md:flex-row md:items-end md:justify-between">
         <div className="max-w-md">
-          <Link href="/" className="text-sm font-medium text-ink-200">
+          <Link href="/" className="text-ui font-medium text-ink-200">
             {profile.name}
           </Link>
           <p className="mt-3 text-caption text-ink-400">

@@ -70,7 +70,7 @@ export function Nav() {
             <span className="flex size-8 items-center justify-center rounded-md border border-line font-mono text-label tracking-widest text-ink-200 transition-colors duration-400 ease-(--ease-out-expo) group-hover:border-line-hover">
               {profile.initials}
             </span>
-            <span className="hidden text-sm font-medium text-ink-200 sm:block">
+            <span className="hidden text-ui font-medium text-ink-200 sm:block">
               {profile.name}
             </span>
           </Link>
@@ -84,7 +84,7 @@ export function Nav() {
                   href={item.href}
                   aria-current={current ? "true" : undefined}
                   className={cn(
-                    "relative rounded-full px-3.5 py-2 text-sm transition-colors duration-300 ease-(--ease-out-expo)",
+                    "relative rounded-full px-3.5 py-2 text-ui transition-colors duration-300 ease-(--ease-out-expo)",
                     current ? "text-signal" : "text-ink-500 hover:text-ink-100",
                   )}
                 >
@@ -94,7 +94,7 @@ export function Nav() {
             })}
             <Link
               href="/about"
-              className="rounded-full px-3.5 py-2 text-sm text-ink-500 transition-colors duration-300 ease-(--ease-out-expo) hover:text-ink-100"
+              className="rounded-full px-3.5 py-2 text-ui text-ink-500 transition-colors duration-300 ease-(--ease-out-expo) hover:text-ink-100"
             >
               {t.nav.about}
             </Link>

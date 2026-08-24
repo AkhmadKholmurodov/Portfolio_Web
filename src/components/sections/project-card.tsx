@@ -98,7 +98,7 @@ export function ProjectCard({
             ))}
           </ul>
 
-          <span className="mt-8 inline-flex items-center gap-2 text-sm text-ink-100">
+          <span className="mt-8 inline-flex items-center gap-2 text-ui text-ink-100">
             {t.work.caseStudy}
             <ArrowUpRight className="size-4 transition-transform duration-400 ease-(--ease-out-expo) group-hover/spot:translate-x-0.5 group-hover/spot:-translate-y-0.5" />
           </span>

@@ -145,7 +145,7 @@ export function Hero() {
               >
                 <Tooltip content={copy.source}>
                   <div className="cursor-default">
-                    <p className="display-3 text-ink-100">
+                    <p className="stat-number text-ink-100">
                       {m.display ? (
                         <span className="tabular-nums">{m.display}</span>
                       ) : (
@@ -158,7 +158,7 @@ export function Hero() {
                         />
                       )}
                     </p>
-                    <p className="mt-2 text-caption text-ink-300">
+                    <p className="mt-2 text-stat-label text-ink-300">
                       {copy.label}
                     </p>
                     <p className="mt-1 caption font-mono tracking-label">

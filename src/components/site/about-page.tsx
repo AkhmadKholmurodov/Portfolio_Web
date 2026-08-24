@@ -119,7 +119,7 @@ export function AboutPage() {
                   <span className="font-mono text-body tracking-label text-ink-200">
                     {lang.code}
                   </span>
-                  <span className="text-caption text-ink-400">
+                  <span className="text-stat-label text-ink-400">
                     {t.about.languageLevels[lang.key as keyof typeof t.about.languageLevels]}
                   </span>
                 </div>

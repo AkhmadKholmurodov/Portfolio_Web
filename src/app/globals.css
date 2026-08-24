@@ -46,7 +46,7 @@
   --color-ink-100: #EDE9E1; /* 15.8:1 — headings            (brief --t1) */
   --color-ink-200: #D3D0C9; /* 12.0:1 — strong body               */
   --color-ink-300: #9EA8A2; /*  7.8:1 — body                (brief --t2) */
-  --color-ink-400: #8A938E; /*  6.1:1 — mono labels, captions     */
+  --color-ink-400: #8C948F; /*  6.2:1 — mono labels, captions     */
   --color-ink-500: #7C8681; /*  5.1:1 — paired icons              */
   --color-ink-600: #6E7873; /*  4.2:1 — DECORATIVE ONLY     (brief --t3) */
   --color-ink-700: #5A625E; /*  3.1:1 — hairline glyphs           */
@@ -91,29 +91,34 @@
 
   /* --- Type scale ---
    *
-   * The complaint was that the body text is small. It is not, particularly —
-   * the real fault is that nothing sat between a 120px display heading and a
-   * 15px paragraph, so the eye read the jump as the paragraph being tiny.
-   * `lede` is the step that was missing; everything else moved up one notch
-   * around it.
+   * Every step is a role, not a size: a caption and a stat label are two
+   * different jobs that happen to live near each other, so they get two
+   * tokens rather than one shared 14px.
+   *
+   * The floor is 12.5px and it is real. `--text-caption` *is* the floor —
+   * nothing on the site is allowed to resolve smaller, and there is no step
+   * below it to reach for.
    *
    * Sizes are rem so a visitor's own browser setting still scales the page.
    * Line height rides on the token rather than on a `leading-*` class at each
    * call site, because a size and its leading are one decision. */
-  --text-lede: 1.3125rem; /* 21 — the paragraph under a section heading */
-  --text-lede--line-height: 1.5;
-  --text-body: 1.0625rem; /* 17 — prose, list items, card copy */
-  --text-body--line-height: 1.65;
-  --text-body-lg: 1.125rem; /* 18 — prose that carries a whole section */
-  --text-body-lg--line-height: 1.6;
-  --text-caption: 0.875rem; /* 14 — figure captions, sub-labels under stats */
-  --text-caption--line-height: 1.5;
+  --text-lede: clamp(1.1875rem, 1.6vw, 1.3125rem); /* 19→21 — under a heading */
+  --text-lede--line-height: 1.55;
+  --text-body: 1.09375rem; /* 17.5 — prose, list items, card copy */
+  --text-body--line-height: 1.68;
+  --text-ui: 0.9375rem; /* 15 — nav links, buttons, inline links */
+  --text-ui--line-height: 1.4;
+  --text-stat-label: 0.875rem; /* 14 — the word under a stat number */
+  --text-stat-label--line-height: 1.4;
   --text-label: 0.8125rem; /* 13 — mono labels, chips, periods */
   --text-label--line-height: 1.4;
+  --text-caption: 0.78125rem; /* 12.5 — captions, sub-labels. THE FLOOR. */
+  --text-caption--line-height: 1.5;
 
   /* One tracking for every mono label. `tracking-wide` at 0.025em was doing
-     this job in most places and is too tight to space uppercase mono. */
-  --tracking-label: 0.08em;
+     this job in most places and is too tight to space uppercase mono, and
+     0.08em was still tight at 13px. */
+  --tracking-label: 0.1em;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -348,7 +353,15 @@
   max-width: 68ch;
 }
 
-/** Figure captions and the sub-labels under a stat. */
+/**
+ * Figure captions and provenance lines — the smallest type the site has, and
+ * the floor: 12.5px. It is set in mono at every call site with
+ * `--tracking-label` behind it, which is what makes 12.5px hold up; the same
+ * size in the body face at normal tracking would not.
+ *
+ * Nothing may go below this. If something needs to be quieter than a caption,
+ * it changes colour, not size.
+ */
 @utility caption {
   font-size: var(--text-caption);
   line-height: var(--text-caption--line-height);
@@ -374,8 +387,8 @@
  */
 @utility display-1 {
   font-family: var(--font-display);
-  font-size: clamp(2.375rem, 6.4vw, 5.375rem);
-  line-height: 0.98;
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem); /* 40 → 76 */
+  line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 700;
   font-stretch: 110%;
@@ -384,9 +397,9 @@
 }
 @utility display-2 {
   font-family: var(--font-display);
-  font-size: clamp(1.875rem, 4.4vw, 3.25rem);
-  line-height: 1.02;
-  letter-spacing: -0.032em;
+  font-size: clamp(2.125rem, 4.4vw, 3.75rem); /* 34 → 60 */
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   font-weight: 700;
   font-stretch: 110%;
   word-break: keep-all;
@@ -401,6 +414,40 @@
   font-stretch: 110%;
   word-break: keep-all;
   overflow-wrap: break-word;
+}
+
+/**
+ * The role line under the name in the hero. Celadon, because it is the one
+ * place on the page where the accent is describing rather than inviting a
+ * click — and it earns the exception by sitting directly under the name,
+ * where nothing else is competing to be the thing you press.
+ */
+@utility hero-role {
+  font-family: var(--font-display);
+  font-size: clamp(1.3125rem, 2.5vw, 2.125rem); /* 21 → 34 */
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-stretch: 110%;
+  color: var(--color-signal);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/**
+ * A stat number is read as a column, not as a heading, so it is split off from
+ * `display-3` rather than borrowing it: line-height 1 so four of them sit on a
+ * shared baseline whatever their digit count, and tabular figures so the
+ * columns do not shift width while a counter is still counting.
+ */
+@utility stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 3vw, 2.375rem); /* 26 → 38 */
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-stretch: 110%;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Grain, generated rather than shipped. It also breaks up the banding a
