@@ -23,7 +23,9 @@ import { IdentityBadge, IdentityCard } from "./identity-card";
  */
 export function Hero() {
   const { t } = useLanguage();
-  // Name on the first two lines, role on the third.
+  // Three claims, not an identifier. The name is already in the nav, the page
+  // title, the OG tags and the contact section; spending the largest type on
+  // the site to repeat it costs the one sentence that says what he does.
   const lines = [t.hero.line1, t.hero.line2, t.hero.line3];
 
   return (
@@ -64,14 +66,10 @@ export function Hero() {
                   <span key={i} className="block overflow-hidden pb-[0.06em]">
                     <span
                       className={cn(
-                        "rise-in block",
-                        // The name dominates; the role is a subtitle in the accent.
-                        // Set at display-1 the role became the loudest thing on the
-                        // page, which is the wrong way round — and at that size it
-                        // could not sit beside the figure anyway.
-                        i === lines.length - 1
-                          ? "display-3 pt-2 text-signal"
-                          : "display-1",
+                        "display-1 rise-in block",
+                        // The third line is what separates him from a developer
+                        // who only ships, so it is the one carrying the accent.
+                        i === lines.length - 1 && "text-signal",
                       )}
                       style={{ animationDelay: `${140 + i * 110}ms` }}
                     >
