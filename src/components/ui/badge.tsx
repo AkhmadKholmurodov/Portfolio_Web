@@ -8,7 +8,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         /** Default: a hairline chip. Carries no meaning beyond grouping. */
-        outline: "border-line text-ink-500",
+        outline: "border-line text-ink-400",
         /** Reserved for things that are genuinely running in production.
          *  Bone, not celadon: the accent means "you can click this", and a
          *  status chip is not clickable. Weight carries the state instead. */

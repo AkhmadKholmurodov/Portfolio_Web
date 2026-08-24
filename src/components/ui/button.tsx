@@ -23,7 +23,7 @@ const buttonVariants = cva(
         link: "h-auto p-0 text-ink-100 underline decoration-line-strong underline-offset-[6px] hover:decoration-ink-500",
       },
       size: {
-        sm: "h-9 px-4 text-label",
+        sm: "h-9 px-4 text-ui",
         md: "h-11 px-6 text-ui",
         lg: "h-13 px-8 text-ui",
         icon: "size-10 rounded-full",

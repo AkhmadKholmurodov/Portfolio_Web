@@ -234,17 +234,19 @@ export function Traces() {
           }
 
           if (showLabels && node.label) {
-            ctx!.font = `500 10px ${mono}`;
+            // 12.5px, not 10px: the floor applies to type the canvas draws
+            // as much as to type the DOM does. A node label is read.
+            ctx!.font = `500 12.5px ${mono}`;
             ctx!.textAlign = "center";
 
             // Knock the trace out from behind the text. A vertical wire running through
             // the middle of a label is the difference between a schematic and a mess,
             // and it is what every real drawing does: the label breaks the line.
             const tw = ctx!.measureText(node.label).width;
-            ctx!.clearRect(p.x - tw / 2 - 4, p.y + 8, tw + 8, 13);
+            ctx!.clearRect(p.x - tw / 2 - 4, p.y + 8, tw + 8, 16);
 
             ctx!.fillStyle = rgba(WHITE, 0.11 * alpha);
-            ctx!.fillText(node.label, p.x, p.y + 17);
+            ctx!.fillText(node.label, p.x, p.y + 19);
           }
         }
 
