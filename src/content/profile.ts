@@ -6,6 +6,13 @@
 
 export const profile = {
   name: "Akhmad Kholmurodov",
+  /**
+   * The hero headline, one line per span. A name is not a translation, so it
+   * lives here rather than in the three dictionaries — and it is pre-split
+   * rather than broken by the browser, because the two lines are a typographic
+   * decision, not a wrapping accident.
+   */
+  nameLines: ["Akhmad", "Kholmurodov"],
   initials: "AK",
   email: "seehyuk2000@gmail.com",
   phone: "+82 10-3802-1005",
@@ -32,29 +39,32 @@ export const profile = {
  * The hero portrait — one value, deliberately.
  *
  * `null` drops the image and lets the type carry the first screen; a value
- * puts it back. Nothing else changes: the hero widens its text column when
- * this is null and yields the right-hand third when it is not, at every
- * breakpoint.
+ * puts it back. Nothing else changes: the hero collapses to a single column
+ * when this is null and yields the right-hand column when it is not.
  *
- * The asset is a cut-out with real alpha, produced by `scripts/portrait-assets.py`
- * from the supplied JPEG — which was itself a cut-out flattened onto a
- * checkerboard, because JPEG cannot carry an alpha channel. Two files come out
- * of it: the full figure for the card, and a square head crop for the phone
- * badge.
+ * Swapping the picture is `src` and the two intrinsic dimensions, and nothing
+ * else — the arch does its own cropping, so a replacement does not have to
+ * match this one's aspect ratio.
  */
 export type HeroPortrait = {
+  /** The one-line swap. Drop a file in `/public` and point this at it. */
   src: string;
+  /** Intrinsic size, so Next can reserve the box and avoid a layout shift. */
   width: number;
   height: number;
-  avatar: string;
+  /**
+   * `object-position` inside the arch. The frame is a harder crop than a
+   * rectangle — it takes the top off — so where the head sits is a per-image
+   * decision rather than a constant.
+   */
+  focus: string;
 };
 
 export const heroPortrait: HeroPortrait | null = {
-  src: "/photos/portrait-cutout.webp",
-  width: 451,
-  height: 1008,
-  /** Square head crop, for the phone badge. */
-  avatar: "/photos/avatar.webp",
+  src: "/photos/portrait.webp",
+  width: 901,
+  height: 1280,
+  focus: "50% 16%",
 };
 
 export const socials = [

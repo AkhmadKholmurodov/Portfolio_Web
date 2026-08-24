@@ -41,9 +41,7 @@ export const uz: Dict = {
 
   hero: {
     label: "Veb-platformalar · Server operatsiyalari · Xavfsizlik",
-    line1: "Men mahsulotni quraman.",
-    line2: "Serverni o'zim yurituraman.",
-    line3: "Ikkalasiga birinchi o'zim hujum qilaman.",
+    role: "Full-Stack muhandis",
     lead: "Koreyada uch yildan beri veb-platformalar quraman. Hozir bir kompaniyaning e-commerce tizimini yana bitta muhandis bilan birga quramiz va yuritamiz.",
     ctaWork: "Ishlarni ko'rish",
     ctaResume: "Rezyumeni yuklab olish",

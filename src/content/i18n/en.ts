@@ -37,9 +37,9 @@ export const en = {
 
   hero: {
     label: "Web platforms · Server operations · Security",
-    line1: "I build the product.",
-    line2: "I run the server.",
-    line3: "I break both first.",
+    /** Under the name. The name itself is in `profile.nameLines` — it is the
+     *  one string on this page that is the same in all three languages. */
+    role: "Full-Stack Engineer",
     lead: "Three years building web platforms in South Korea. Right now I build and run a company's e-commerce system with one other engineer.",
     ctaWork: "See the work",
     ctaResume: "Download résumé",

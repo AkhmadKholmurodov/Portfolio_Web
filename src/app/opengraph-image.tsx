@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { en } from "@/content/i18n/en";
 import { profile } from "@/content/profile";
 
 /**
  * The link preview — the first thing a recruiter sees when this URL lands in
- * KakaoTalk, LinkedIn or an email. It is the headline, verbatim.
+ * KakaoTalk, LinkedIn or an email. English only: it is shown to a stranger,
+ * before the site has had a chance to ask what language they read.
  */
 
 export const alt = `${profile.name} — Full-Stack & WebOps Engineer`;
@@ -26,6 +26,18 @@ const SIGNAL = "#7FB6A4";
 const LINE = "rgba(237,233,225,0.10)";
 
 const FACTS = ["~2,500 orders/day", "100× cheaper vision", "E-7 visa", "Seoul"];
+
+/**
+ * The claim, in three lines. It was the hero headline until the name took that
+ * job; it survives here because an OG card is shown to somebody who has not
+ * arrived yet, and "I break both first" is exactly the sentence that decides
+ * whether they click. English only, like the rest of this card.
+ */
+const CLAIM = [
+  "I build the product.",
+  "I run the server.",
+  "I break both first.",
+];
 
 export default async function Image() {
   const photo = await readFile(join(process.cwd(), "public", "akhmad.jpeg"));
@@ -95,9 +107,11 @@ export default async function Image() {
                 lineHeight: 1.08,
               }}
             >
-              <span>{en.hero.line1}</span>
-              <span>{en.hero.line2}</span>
-              <span style={{ color: SIGNAL }}>{en.hero.line3}</span>
+              {CLAIM.map((line, i) => (
+                <span key={line} style={i === CLAIM.length - 1 ? { color: SIGNAL } : undefined}>
+                  {line}
+                </span>
+              ))}
             </div>
 
             <div

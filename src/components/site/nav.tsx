@@ -61,13 +61,13 @@ export function Nav() {
             : "border-b border-transparent",
         )}
       >
-        <nav className="shell flex h-16 items-center justify-between gap-6 md:h-20">
+        <nav className="shell flex h-[74px] items-center justify-between gap-6">
           <Link
             href="/"
             className="group flex items-center gap-3"
             aria-label={profile.name}
           >
-            <span className="flex size-8 items-center justify-center rounded-md border border-line font-mono text-label tracking-widest text-ink-200 transition-colors duration-400 ease-(--ease-out-expo) group-hover:border-line-hover">
+            <span className="font-mono text-label tracking-widest text-ink-500 transition-colors duration-300 ease-(--ease-out-expo) group-hover:text-ink-300">
               {profile.initials}
             </span>
             <span className="hidden text-ui font-medium text-ink-200 sm:block">
