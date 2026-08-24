@@ -127,6 +127,20 @@ export function Traces() {
     window.addEventListener("resize", resize, { passive: true });
 
     /**
+     * Where the schematic is, as a number between 0 and 1: nothing over the
+     * first screen, full strength half a viewport later. It is a property of
+     * the scroll position rather than of time, which is why it is separate
+     * from the frameloop — under reduced motion there is no frameloop and this
+     * still has to be right.
+     */
+    function setFade() {
+      const y = reduced ? window.scrollY : sceneState.scrollY;
+      const f = Math.min(1, Math.max(0, (y - h * 0.14) / (h * 0.46)));
+      canvas!.style.opacity = f.toFixed(3);
+      return f;
+    }
+
+    /**
      * One frame, given a time step. Split out from the rAF callback so it can also
      * be called synchronously — at mount and on every resize — which means the
      * schematic is on screen in the same paint as the rest of the page rather than
@@ -138,14 +152,10 @@ export function Traces() {
         return;
       }
 
-      // The hero has its own background now — the arch and the ambient field
-      // already occupy that role, and a schematic behind them is a third thing
-      // competing for the same screen. So the traces start at zero and fade in
-      // as the first viewport leaves, which also means the busiest layer on the
-      // page draws nothing at all while the visitor is reading the headline.
-      const heroOut = Math.min(1, Math.max(0, (sceneState.scrollY - h * 0.14) / (h * 0.46)));
-      canvas!.style.opacity = heroOut.toFixed(3);
-      if (heroOut < 0.005) {
+      // Not a motion decision, so it holds under reduced motion too: the hero
+      // has its own background now, and a schematic behind the arch and the
+      // ambient field is a third thing competing for one screen.
+      if (setFade() < 0.005 && !reduced) {
         ctx!.clearRect(0, 0, w, h);
         return;
       }
@@ -375,6 +385,20 @@ export function Traces() {
     }
 
     render(0);
+    // Under reduced motion the schematic is a still drawing, so there is no
+    // frameloop at all — not a loop repainting the same pixels sixty times a
+    // second. `resize` still repaints it, which is the only event that can
+    // change it. Scrolling cannot: the hero fade is motion too, and a visitor
+    // who asked for none gets the drawing at full strength from the start.
+    if (reduced) {
+      const onScroll = () => setFade();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", resize);
+      };
+    }
     raf = requestAnimationFrame(frame);
 
     return () => {

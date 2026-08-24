@@ -28,9 +28,13 @@ export function SpotlightCard({
         el.style.setProperty("--mx", `${e.clientX - r.left}px`);
         el.style.setProperty("--my", `${e.clientY - r.top}px`);
       }}
+      // No transition or hover border of its own. Every consumer pairs this
+      // with `lift-card`, and two transition utilities on one element do not
+      // merge — the later one in the sheet wins the property list outright,
+      // which is how the lift ended up jumping while the border eased. The
+      // card's hover is one rule, in one place.
       className={cn(
         "group/spot relative isolate overflow-hidden rounded-2xl border border-line",
-        "transition-colors duration-500 ease-(--ease-out-expo) hover:border-line-strong",
         className,
       )}
     >
@@ -39,7 +43,7 @@ export function SpotlightCard({
           wash across the card's content. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit] p-px opacity-0 transition-opacity duration-500 ease-(--ease-out-expo) group-hover/spot:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] p-px opacity-0 transition-opacity duration-200 ease-(--ease-out-expo) group-hover/spot:opacity-100"
         style={{
           background: `radial-gradient(${radius}px circle at var(--mx, 50%) var(--my, 0px), var(--color-line-hover), transparent 70%)`,
           WebkitMask:
@@ -52,7 +56,7 @@ export function SpotlightCard({
           outlining itself. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 ease-(--ease-out-expo) group-hover/spot:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-200 ease-(--ease-out-expo) group-hover/spot:opacity-100"
         style={{
           background: `radial-gradient(${radius}px circle at var(--mx, 50%) var(--my, 0px), oklch(1 0 0 / 0.05), transparent 65%)`,
         }}

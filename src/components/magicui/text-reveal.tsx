@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useMotionValueEvent, useScroll } from "motion/react";
+import { useReducedMotion } from "@/hooks/use-media";
 import { cn } from "@/lib/utils";
 
 /**
@@ -17,6 +18,7 @@ export function TextReveal({
   className?: string;
 }) {
   const ref = useRef<HTMLParagraphElement>(null);
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     // Starts as the paragraph clears the fold, finishes well before it
@@ -26,14 +28,17 @@ export function TextReveal({
   });
 
   useMotionValueEvent(scrollYProgress, "change", (p) => {
+    if (reduced) return;
     ref.current?.style.setProperty("--p", String(p));
   });
 
   // Without JS, or before the first scroll event, the paragraph must already
-  // be readable — this is body copy, not decoration.
+  // be readable — this is body copy, not decoration. And a visitor who asked
+  // for no motion gets it lit from the start rather than at 14% waiting for a
+  // scroll that is itself the animation.
   useEffect(() => {
-    ref.current?.style.setProperty("--p", "0");
-  }, []);
+    ref.current?.style.setProperty("--p", reduced ? "1" : "0");
+  }, [reduced]);
 
   const words = text.split(" ");
 

@@ -7,9 +7,14 @@ import { cn } from "@/lib/utils";
  * shadcn/ui's Button, re-pointed at this site's tokens. The `primary` variant
  * is the only filled-celadon element the design allows, and there is at most one
  * of them on screen at a time.
+ *
+ * The press used to shrink the button by 1.5%. A button that recoils is
+ * describing a soft, springy thing, and nothing on this site is soft or
+ * springy — so the whole interaction is now one background value moving over
+ * 180ms, and `transform` is off the transition list entirely.
  */
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium outline-none transition-[background-color,border-color,color,opacity,transform] duration-300 ease-(--ease-out-expo) active:scale-[0.985] disabled:pointer-events-none disabled:opacity-45 [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium outline-none transition-[background-color,border-color,color,opacity] duration-[180ms] ease-(--ease-out-expo) disabled:pointer-events-none disabled:opacity-45 [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {

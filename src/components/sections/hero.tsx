@@ -107,7 +107,7 @@ export function Hero() {
             // width is a percentage of the cell — which is the circular
             // definition that resolves to zero. The cell stretches; the frame
             // centres itself inside it.
-            <div className="lift-in" style={step(7)}>
+            <div className="arch-in" style={step(7)}>
               <ArchPortrait portrait={heroPortrait} />
             </div>
           )}
@@ -141,7 +141,7 @@ export function Hero() {
 
       {/* The numbers land on the fold because the grid above them is
           `flex-1`, not because anything here was measured. */}
-      <div className="lift-in shell relative z-10 w-full pb-9" style={step(8)}>
+      <div className="fade-in shell relative z-10 w-full pb-9" style={step(8)}>
         <div className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 tabular-nums md:grid-cols-4 md:gap-x-10">
           {metrics.map((m) => {
             const copy = t.metrics[m.key as keyof typeof t.metrics];
