@@ -62,7 +62,15 @@ export function Nav() {
   // `useActiveSection` only knows about the home page's sections, so on any
   // other route the nav had nothing marked at all — including on /about, where
   // the answer is not ambiguous.
-  const onAbout = usePathname() === "/about";
+  const pathname = usePathname();
+  const onAbout = pathname === "/about";
+  // A case study is the third kind of place a visitor can be, and on a phone
+  // it is the one where the bar is otherwise completely empty: no section to
+  // report, no room for the name. The slug is the answer and it is right there
+  // in the URL.
+  const workSlug = pathname.startsWith("/work/")
+    ? pathname.slice("/work/".length)
+    : undefined;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
@@ -108,11 +116,24 @@ export function Nav() {
   // repeating the largest text on the page in the smallest. The slot filling
   // as you leave the hero is also the clearer signal that this line is
   // *reporting* rather than labelling.
-  const readoutId = onAbout ? "about" : scrolled ? active : undefined;
+  const workName = workSlug
+    ? t.projects[workSlug as keyof typeof t.projects]?.name
+    : undefined;
+  const readoutId = workSlug
+    ? `work:${workSlug}`
+    : onAbout
+      ? "about"
+      : scrolled
+        ? active
+        : undefined;
   const readout = readoutId
     ? {
-        no: onAbout ? undefined : sectionNo(readoutId),
-        name: t.nav[readoutId as keyof typeof t.nav] as string | undefined,
+        no: workSlug || onAbout ? undefined : sectionNo(readoutId),
+        name:
+          workName ??
+          (onAbout
+            ? t.nav.about
+            : (t.nav[readoutId as keyof typeof t.nav] as string | undefined)),
       }
     : undefined;
 
