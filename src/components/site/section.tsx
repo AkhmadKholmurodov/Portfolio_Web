@@ -20,7 +20,12 @@ export function Section({
     <section
       id={id}
       // `scroll-mt` clears the fixed header when an anchor link lands here.
-      className={cn("shell scroll-mt-24 py-20 md:py-28", className)}
+      //
+      // 64px of air on a phone rather than 80. The gap between two sections is
+      // the sum of two of these, and at 80 a reader on a 390px screen scrolls
+      // through 160px of nothing between the last project and the next
+      // heading — which is a third of the fold spent on punctuation.
+      className={cn("shell scroll-mt-24 py-16 md:py-28", className)}
     >
       {children}
     </section>

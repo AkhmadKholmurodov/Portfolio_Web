@@ -17,7 +17,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       role="radiogroup"
       aria-label={t.ui.language}
       className={cn(
-        "flex items-center gap-px rounded-full border border-line bg-surface/70 p-0.5",
+        "flex shrink-0 items-center gap-px rounded-full border border-line bg-surface-2/75 p-0.5",
         className,
       )}
     >
@@ -32,7 +32,12 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             aria-label={localeLabels[code].full}
             onClick={() => setLocale(code)}
             className={cn(
-              "rounded-full px-2.5 py-1 font-mono text-label tracking-label transition-colors duration-300 ease-(--ease-out-expo)",
+              // Tighter on a phone, tighter again on a 320px one. This now
+              // sits on the bar at every width rather than only from `sm` up,
+              // and it shares 280px of usable width with the mark, the section
+              // readout and the menu toggle on the narrowest screen that still
+              // gets built for.
+              "rounded-full px-1.5 py-1 font-mono text-label tracking-label transition-colors duration-300 ease-(--ease-out-expo) min-[360px]:px-2 sm:px-2.5",
               selected
                 ? "bg-signal-soft text-signal"
                 : "text-ink-400 hover:text-ink-200",

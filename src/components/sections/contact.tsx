@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ArrowUpRight, Download, Mail, Phone } from "lucide-react";
 import { Section } from "@/components/site/section";
-import { Button } from "@/components/ui/button";
+import { Button, buttonStack } from "@/components/ui/button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/magicui/reveal";
 import { useLanguage } from "@/components/providers/language-provider";
 import { profile, socials } from "@/content/profile";
@@ -32,14 +32,19 @@ export function Contact() {
             </p>
           </Reveal>
 
-          <Reveal className="mt-10 flex flex-wrap gap-3" y={16}>
-            <Button asChild size="lg">
+          {/* Stacked and full width on a phone, for the same reason as the
+              hero's pair — see the note there. */}
+          <Reveal
+            className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+            y={16}
+          >
+            <Button asChild size="lg" className={buttonStack}>
               <a href={`mailto:${profile.email}`}>
                 <Mail />
                 {t.contact.emailCta}
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline" size="lg" className={buttonStack}>
               <a href={profile.resume} download>
                 <Download />
                 {t.contact.resumeCta}
@@ -85,12 +90,24 @@ export function Contact() {
                 href={social.href}
                 target={social.key === "github" || social.key === "linkedin" ? "_blank" : undefined}
                 rel="noreferrer noopener"
-                className="group flex items-center gap-5 border-b border-line py-5 transition-colors duration-400 ease-(--ease-out-expo) hover:border-line-hover"
+                className="group flex items-center gap-5 border-b border-line py-5 transition-colors duration-400 ease-(--ease-out-expo) hover:border-line-hover hover:bg-signal-soft"
               >
-                <Icon className="size-4 shrink-0 text-ink-500 transition-colors duration-400 group-hover:text-ink-300" />
-                <span className="label w-24 shrink-0">{social.label}</span>
-                <span className="min-w-0 flex-1 truncate text-body text-ink-200">
-                  {social.handle}
+                <Icon className="size-4 shrink-0 text-ink-500 transition-colors duration-400 group-hover:text-signal" />
+                {/* Label over handle on a phone, label beside handle from
+                    `sm`. Side by side, a 96px label column plus the icon and
+                    the arrow left 190px for the handle on a 390px screen —
+                    which truncated the email address, on the row whose entire
+                    job is to show the email address. Stacked, it has the width.
+                    
+                    The row also leans a couple of pixels towards the arrow on
+                    hover: the smallest gesture that says the whole row is the
+                    target rather than the handle inside it. `transform` only,
+                    so nothing reflows under the pointer. */}
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5 transition-transform duration-400 ease-(--ease-out-expo) group-hover:translate-x-1 sm:flex-row sm:items-center sm:gap-5">
+                  <span className="label sm:w-24 sm:shrink-0">{social.label}</span>
+                  <span className="min-w-0 truncate text-body text-ink-200 sm:flex-1">
+                    {social.handle}
+                  </span>
                 </span>
                 <ArrowUpRight className="size-4 shrink-0 text-ink-500 transition-all duration-400 ease-(--ease-out-expo) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink-300" />
               </a>

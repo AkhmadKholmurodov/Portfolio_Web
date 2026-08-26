@@ -108,7 +108,13 @@ export function ArchPortrait({ portrait }: { portrait: HeroPortrait }) {
     <div
       ref={wrapRef}
       data-hero="portrait"
-      className="relative w-[min(100%,300px)] will-change-transform min-[980px]:mx-auto min-[980px]:w-[min(100%,398px)]"
+      // 244px on a phone, not 300. At 300 the arch is 370px tall and the
+      // frame alone eats 44% of the fold — so a visitor's first screen was a
+      // photograph and the name was below it, which is the wrong way round for
+      // a page whose headline *is* the name. Centred rather than flush left at
+      // every width now: the ring is offset to the right, so a left-aligned
+      // frame put an asymmetric composition hard against the page margin.
+      className="relative mx-auto w-[min(100%,244px)] will-change-transform min-[420px]:w-[min(100%,272px)] min-[980px]:w-[min(100%,398px)]"
     >
       {/* The offset ring. Same radius, shifted up and right, and stopping
           34px short of the base so it never runs behind the badge. It is the
@@ -139,7 +145,7 @@ export function ArchPortrait({ portrait }: { portrait: HeroPortrait }) {
 
       {/* Two mono lines, hung off the lower-left corner. The one thing the
           picture cannot say by itself: where he is, and on what visa. */}
-      <div className="absolute bottom-7 left-0 rounded-xl border border-line bg-surface-2/92 px-4 py-3 min-[980px]:-left-6">
+      <div className="absolute bottom-6 -left-3 rounded-xl border border-line bg-surface-2/92 px-3.5 py-2.5 shadow-card min-[980px]:bottom-7 min-[980px]:-left-6 min-[980px]:px-4 min-[980px]:py-3">
         <p className="flex items-center gap-2 font-mono text-label tracking-label text-ink-200">
           <span className="size-1.5 shrink-0 animate-breathe rounded-full bg-live" />
           {profile.country}

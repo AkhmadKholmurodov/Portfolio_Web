@@ -7,13 +7,13 @@
  * the schematic drifts out of the scheme.
  */
 export const PALETTE = {
-  void: 0x0b100e,
-  bg: 0x0f1512,
-  ink: 0x9ea8a2,
-  inkDim: 0x5a625e,
-  signal: 0x7fb6a4,
-  signal2: 0x6ba492,
-  signal3: 0x4e7d6e,
+  void: 0xf1f3ee,
+  bg: 0xfbfcf9,
+  ink: 0x444e49,
+  inkDim: 0x99a29d,
+  signal: 0x256657,
+  signal2: 0x1a4f42,
+  signal3: 0x4e8d7b,
 } as const;
 
 export type PaletteKey = keyof typeof PALETTE;

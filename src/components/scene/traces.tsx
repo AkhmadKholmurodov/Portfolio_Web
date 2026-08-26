@@ -19,7 +19,13 @@ function rgba(hex: number, alpha: number) {
   return `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
 }
 
-const WHITE = 0xffffff;
+/**
+ * Everything in the drawing that is not a pulse is struck in the body ink.
+ * It was white, which was correct while the page was near-black and is
+ * invisible now that the page is paper: a hairline is a hairline because it is
+ * a few percent away from the ground, and on this ground "away" means darker.
+ */
+const HAIR = PALETTE.ink;
 
 /** Strokes the first `frac` of a path — this is what "drawing itself" is. */
 function strokePartial(ctx: CanvasRenderingContext2D, path: Path, frac: number) {
@@ -184,7 +190,7 @@ export function Traces() {
       const gridStep = 34;
       const gx = (pointerX * 5) % gridStep;
       const gy = ((-drift * 90 + pointerY * 5) % gridStep + gridStep) % gridStep;
-      ctx!.fillStyle = rgba(WHITE, 0.028);
+      ctx!.fillStyle = rgba(HAIR, 0.05);
       for (let y = gy - gridStep; y < h + gridStep; y += gridStep) {
         for (let x = gx - gridStep; x < w + gridStep; x += gridStep) {
           ctx!.fillRect(x, y, 1, 1);
@@ -230,7 +236,7 @@ export function Traces() {
 
           ctx!.strokeStyle = lit
             ? rgba(PALETTE.signal, 0.34 * alpha)
-            : rgba(WHITE, 0.055 * alpha);
+            : rgba(HAIR, 0.075 * alpha);
           strokePartial(ctx!, geo.paths[ei], f);
         }
 
@@ -241,7 +247,7 @@ export function Traces() {
           const p = geo.nodes[ni];
           const size = node.kind === "origin" ? 7 : 5;
 
-          ctx!.strokeStyle = rgba(WHITE, 0.11 * alpha);
+          ctx!.strokeStyle = rgba(HAIR, 0.15 * alpha);
           if (node.kind === "sink") {
             ctx!.beginPath();
             ctx!.arc(p.x, p.y, size / 2, 0, Math.PI * 2);
@@ -267,7 +273,7 @@ export function Traces() {
             const tw = ctx!.measureText(node.label).width;
             ctx!.clearRect(p.x - tw / 2 - 4, p.y + 8, tw + 8, 16);
 
-            ctx!.fillStyle = rgba(WHITE, 0.11 * alpha);
+            ctx!.fillStyle = rgba(HAIR, 0.2 * alpha);
             ctx!.fillText(node.label, p.x, p.y + 19);
           }
         }
@@ -342,7 +348,7 @@ export function Traces() {
           marks.splice(mi, 1);
           continue;
         }
-        ctx!.strokeStyle = rgba(WHITE, mark.life * 0.3);
+        ctx!.strokeStyle = rgba(HAIR, mark.life * 0.38);
         ctx!.beginPath();
         ctx!.moveTo(mark.x - 3, mark.y - 3);
         ctx!.lineTo(mark.x + 3, mark.y + 3);

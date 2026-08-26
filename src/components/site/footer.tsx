@@ -15,7 +15,11 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line bg-void/40">
+    // A band rather than more of the same paper. `bg-void/40` was doing this
+    // job on a near-black page, where 40% of the ground over the field read as
+    // a step down; on paper it is 40% of the paper over the paper, which is
+    // nothing. `surface-3` is the one step *below* the page the scale has.
+    <footer className="border-t border-line bg-surface-3/60">
       <div className="shell flex flex-col gap-8 py-12 md:flex-row md:items-end md:justify-between">
         <div className="max-w-md">
           <Link href="/" className="text-ui font-medium text-ink-200">

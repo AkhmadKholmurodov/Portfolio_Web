@@ -1,75 +1,104 @@
 @import "tailwindcss";
 
 /* =====================================================================
- * Celadon — the design system.
+ * Celadon, in daylight — the design system.
  *
  * One hue, and it is not the one every developer portfolio reaches for.
  * Celadon is the colour of 고려청자: the best-known object in Korean design
  * history. Akhmad works in Korea and is applying to Korean companies, so the
  * accent is tied to where he is rather than to a default.
  *
- * The ground is cool graphite-green, never neutral black, and the text is warm
- * bone against it — that temperature split is what keeps a near-black page
- * from reading as a switched-off screen.
+ * The scheme was near-black and is now paper. The temperature split that made
+ * the dark version work is not thrown away, it is turned over: the ground used
+ * to be cool graphite-green with warm bone text on it, and it is now warm bone
+ * with cool graphite-green ink. Same two temperatures, opposite jobs. That is
+ * what stops a light page reading as an empty browser window — a page built
+ * out of #FFFFFF and #000000 has no temperature at all.
  *
- * Celadon means one thing only: you can click this. Buttons, links, hover,
- * the current nav item. Status does not use it — see `--color-live` below for
- * why. Every colour resolves through a token here; the canvas mirrors these
- * values in `src/lib/palette.ts`.
+ * Celadon is darker here than it was, and it has to be: #7FB6A4 on paper is
+ * 2.2:1, which is a decoration, not a link. The hue is unchanged and the
+ * lightness moved until it cleared AA. It still means one thing only: you can
+ * click this. Buttons, links, hover, the current nav item. Status does not use
+ * it — see `--color-live` below for why. Every colour resolves through a token
+ * here; the canvas mirrors these values in `src/lib/palette.ts`.
  *
  * Contrast ratios below are measured against --color-void, the page ground.
  * ===================================================================== */
 
 @theme {
-  /* Ground. Cool graphite-green — the schematic needs somewhere to recede
-     into, and a green-tinted dark makes the celadon sit in the same family as
-     the page instead of on top of it. */
-  --color-void: #0B100E; /* page */
-  --color-bg: #0F1512; /* the wash under the nav, and the top of the page glow */
-  --color-surface: #121A16; /* cards, panels */
-  --color-surface-2: #18211D; /* hover / elevated */
-  --color-surface-3: #1F2925; /* one step further, for controls */
+  /* Ground. Warm bone paper with a whisper of green in it, never pure white —
+     a flat #FFF page has nowhere for a white card to sit, which is why every
+     surface below is *lighter* than the page rather than darker. */
+  --color-void: #F1F3EE; /* page */
+  --color-bg: #FBFCF9; /* the wash under the nav, and the top of the page glow */
+  --color-surface: #FAFBF7; /* cards, panels */
+  --color-surface-2: #FFFFFF; /* hover / elevated */
+  --color-surface-3: #E7EAE3; /* one step further, for controls */
 
-  /* Hairlines are struck in the text colour rather than in white: pure white
-     at 8% over a green-black ground reads faintly blue. */
-  --color-line: rgba(237, 233, 225, 0.08);
-  --color-line-strong: rgba(237, 233, 225, 0.12);
-  --color-line-hover: rgba(237, 233, 225, 0.16);
+  /* Hairlines are struck in the ink colour rather than in black: pure black at
+     11% over a warm paper reads grey and slightly cold. */
+  --color-line: rgba(20, 30, 26, 0.11);
+  --color-line-strong: rgba(20, 30, 26, 0.17);
+  --color-line-hover: rgba(20, 30, 26, 0.26);
 
-  /* Warm bone on the cool ground. Semantic, not literal: low numbers are the
-     loudest text. Ratios measured against --color-void.
+  /* Cool graphite-green on the warm ground. Semantic, not literal: low numbers
+     are the loudest text. Ratios measured against --color-void.
 
-     ink-600 is the brief's --t3 exactly, and it lands at 4.2:1 — under AA. It
-     is kept for decoration only: hairline glyphs, dividers, disabled states.
-     Mono labels are readable text and live at ink-400, which clears AA on the
-     card ground as well as on the page. */
-  --color-ink-100: #EDE9E1; /* 15.8:1 — headings            (brief --t1) */
-  --color-ink-200: #D3D0C9; /* 12.0:1 — strong body               */
-  --color-ink-300: #9EA8A2; /*  7.8:1 — body                (brief --t2) */
-  --color-ink-400: #8C948F; /*  6.2:1 — mono labels, captions     */
-  --color-ink-500: #7C8681; /*  5.1:1 — paired icons              */
-  --color-ink-600: #6E7873; /*  4.2:1 — DECORATIVE ONLY     (brief --t3) */
-  --color-ink-700: #5A625E; /*  3.1:1 — hairline glyphs           */
-  --color-ink-800: #414846; /*  2.0:1 — dimmest rule              */
+     ink-600 lands at 4.1:1 — under AA. It is kept for decoration only:
+     hairline glyphs, dividers, disabled states. Mono labels are readable text
+     and live at ink-400, which clears AA on the card ground as well as on the
+     page. */
+  --color-ink-100: #101815; /* 16.2:1 — headings                  */
+  --color-ink-200: #26302B; /* 12.2:1 — strong body               */
+  --color-ink-300: #444E49; /*  7.7:1 — body                      */
+  --color-ink-400: #515C57; /*  6.1:1 — mono labels, captions     */
+  --color-ink-500: #5E6964; /*  5.1:1 — paired icons              */
+  --color-ink-600: #737E79; /*  4.1:1 — DECORATIVE ONLY           */
+  --color-ink-700: #99A29D; /*  2.9:1 — hairline glyphs           */
+  --color-ink-800: #C6CCC7; /*  1.9:1 — dimmest rule              */
 
-  /* Celadon. Interactive only. */
-  --color-signal: #7FB6A4; /*  8.3:1 */
-  --color-signal-2: #6BA492; /* hover — lightness moves, hue does not */
-  --color-signal-3: #4E7D6E;
-  --color-signal-soft: rgba(127, 182, 164, 0.12);
-  --color-signal-line: rgba(127, 182, 164, 0.28); /* brief --jade-dim */
-  --color-on-signal: #0B100E; /*  8.3:1 on the celadon fill */
+  /* Celadon. Interactive only. Two steps darker than the dark theme's accent,
+     for the reason in the header note. */
+  --color-signal: #256657; /*  6.0:1 */
+  --color-signal-2: #1A4F42; /* hover — lightness moves, hue does not */
+  --color-signal-3: #4E8D7B;
+  --color-signal-soft: rgba(37, 102, 87, 0.1);
+  --color-signal-line: rgba(37, 102, 87, 0.3);
+  --color-on-signal: #F4F8F5; /*  6.7:1 on the celadon fill */
 
   /* Failure. The overselling moment in the case study, and error states. */
-  --color-alert: #C9614F; /*  4.9:1 */
+  --color-alert: #A33C2B; /*  5.8:1 */
 
   /* Status is deliberately hueless.
      The accent is already green, so a green "live" dot would be the exact
      confusion this palette was changed to remove — two greens six pixels
      apart that mean different things. State is carried by fill and weight
-     instead: live is bone and solid, in-development is dim and hollow. */
-  --color-live: #D3D0C9; /* 12.0:1 */
-  --color-idle: #6E7873;
+     instead: live is ink and solid, in-development is dim and hollow. */
+  --color-live: #26302B; /* 12.2:1 */
+  --color-idle: #99A29D;
+
+  /* --- Elevation ---
+   *
+   * The dark theme had none, and could not have had any: a shadow is an
+   * absence of light, and there was no light to take away. On paper it is the
+   * primary depth cue, and the two-pixel-lift-plus-hairline hover the cards
+   * used to share is invisible here without one.
+   *
+   * Struck in the ink colour rather than in black, for the same reason the
+   * hairlines are — a neutral-black shadow under a warm card reads as dirt.
+   * Every shadow is a near-contact term plus one long soft term; a single
+   * blurred box is what makes a card look like it is floating in space rather
+   * than resting on a page. */
+  --shadow-card: 0 1px 2px rgba(20, 30, 26, 0.04),
+    0 10px 26px -14px rgba(20, 30, 26, 0.14);
+  --shadow-card-hover: 0 2px 4px rgba(20, 30, 26, 0.05),
+    0 26px 50px -18px rgba(20, 30, 26, 0.2);
+  --shadow-control: 0 1px 2px rgba(20, 30, 26, 0.06),
+    0 8px 18px -10px rgba(20, 30, 26, 0.18);
+  --shadow-control-hover: 0 2px 5px rgba(20, 30, 26, 0.07),
+    0 16px 30px -12px rgba(20, 30, 26, 0.26);
+  --shadow-pop: 0 4px 10px rgba(20, 30, 26, 0.06),
+    0 20px 48px -16px rgba(20, 30, 26, 0.24);
 
   /* Three faces, each with a job.
    *
@@ -149,8 +178,8 @@
 /* A live dot breathes rather than blinks. A blink is what a page does when
    something is wrong; this is claiming the opposite. */
 @keyframes breathe {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(211, 208, 201, 0.14); }
-  50% { opacity: 0.68; box-shadow: 0 0 0 5px transparent; }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(38, 48, 43, 0.16); }
+  50% { opacity: 0.42; box-shadow: 0 0 0 5px transparent; }
 }
 
 @keyframes sweep {
@@ -190,14 +219,30 @@
 
 /* Radix mounts an open dialog already carrying `data-state="open"`, so there
    is no state change for a transition to interpolate. Animations run on
-   mount, which is the event being described. Exits are instant on purpose. */
+   mount, which is the event being described.
+ *
+ * Exits used to be instant, on the argument that a menu closing is not worth
+ * describing. That is true of a menu you dismiss by accident and false of this
+ * one: the trigger is a two-bar mark that morphs into an X over 420ms, so a
+ * panel that vanishes in one frame leaves the X animating back to bars over
+ * nothing. Radix's presence layer waits for a CSS animation on the node before
+ * unmounting it, so the exit is a real animation and the two now finish
+ * together. It is faster than the entrance — leaving should always be. */
 @keyframes anim-fade {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+@keyframes anim-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 @keyframes anim-slide-x {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
+}
+@keyframes anim-slide-x-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 @keyframes anim-pop {
   from { opacity: 0; transform: scale(0.96) translateY(2px); }
@@ -226,7 +271,7 @@
   }
 
   html {
-    color-scheme: dark;
+    color-scheme: light;
     background-color: var(--color-void);
     scroll-behavior: auto; /* Lenis owns scrolling. */
     -webkit-text-size-adjust: 100%;
@@ -290,11 +335,11 @@
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--color-void); }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-surface-2);
+    background: var(--color-ink-800);
     border: 3px solid var(--color-void);
     border-radius: 999px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-surface-3); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-ink-700); }
 
   /* The floor, and the delays matter as much as the durations. The hero's
      entrance is a stagger built out of `animation-delay`, so collapsing only
@@ -323,9 +368,14 @@
  * These are radial gradients moved by `transform`, which means the whole
  * effect lives on the compositor and costs the main thread nothing per frame.
  *
- * Two hues and the ground, which is the rule: a deep petrol green and celadon
- * at under a tenth of an alpha. A third hue is the moment atmosphere turns
- * into a gradient-generator preset.
+ * On paper the arithmetic inverts. A dark page builds atmosphere by adding
+ * light; a light page builds it by taking light away in some places and
+ * adding a bloom in others. So `a` and `c` are celadon tints *deeper* than the
+ * ground, and `b` is a white bloom — the highlight that keeps the top of the
+ * page from reading as flat card stock.
+ *
+ * Two hues and the ground, which is the rule: celadon and white. A third hue
+ * is the moment atmosphere turns into a gradient-generator preset.
  *
  * The cycles are 38s, 44s and 33s and they are deliberately co-prime-ish, so
  * the three never line up into a visible pulse. If you can see it moving it is
@@ -361,19 +411,19 @@
   inset: -34% 16% 6% -30%;
   background: radial-gradient(
     closest-side,
-    #0a1a16 0%,
-    rgba(10, 26, 22, 0.62) 52%,
+    rgba(37, 102, 87, 0.11) 0%,
+    rgba(37, 102, 87, 0.045) 52%,
     transparent 78%
   );
   animation: drift-a 38s ease-in-out infinite;
 }
 
 .ambient-b {
-  inset: -22% -26% 22% 34%;
+  inset: -26% -26% 18% 30%;
   background: radial-gradient(
     closest-side,
-    rgba(127, 182, 164, 0.09) 0%,
-    rgba(127, 182, 164, 0.035) 48%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.5) 46%,
     transparent 74%
   );
   animation: drift-b 44s ease-in-out infinite;
@@ -383,8 +433,8 @@
   inset: 34% 22% -32% 8%;
   background: radial-gradient(
     closest-side,
-    rgba(127, 182, 164, 0.06) 0%,
-    rgba(127, 182, 164, 0.022) 50%,
+    rgba(37, 102, 87, 0.07) 0%,
+    rgba(37, 102, 87, 0.028) 50%,
     transparent 76%
   );
   animation: drift-c 33s ease-in-out infinite;
@@ -498,7 +548,16 @@
   font-weight: 700;
   font-stretch: 110%;
   word-break: keep-all;
-  overflow-wrap: break-word;
+  /* `anywhere`, not `break-word`. The two behave identically when a line is
+     being broken and differ in exactly one place: `anywhere` also shrinks the
+     element's min-content width, and `break-word` does not. That distinction
+     is invisible until a heading is a grid or flex item, at which point the
+     item's automatic minimum size is its min-content width — so a single
+     unbreakable word wider than the track (Uzbek's "Gaplashaylik." at 40px on
+     a 320px screen) pushes the item past the track and the whole page gains a
+     horizontal scrollbar. `anywhere` lets the box shrink and the word break,
+     which is what the fallback was always supposed to do. */
+  overflow-wrap: anywhere;
 }
 @utility display-2 {
   font-family: var(--font-display);
@@ -508,7 +567,16 @@
   font-weight: 700;
   font-stretch: 110%;
   word-break: keep-all;
-  overflow-wrap: break-word;
+  /* `anywhere`, not `break-word`. The two behave identically when a line is
+     being broken and differ in exactly one place: `anywhere` also shrinks the
+     element's min-content width, and `break-word` does not. That distinction
+     is invisible until a heading is a grid or flex item, at which point the
+     item's automatic minimum size is its min-content width — so a single
+     unbreakable word wider than the track (Uzbek's "Gaplashaylik." at 40px on
+     a 320px screen) pushes the item past the track and the whole page gains a
+     horizontal scrollbar. `anywhere` lets the box shrink and the word break,
+     which is what the fallback was always supposed to do. */
+  overflow-wrap: anywhere;
 }
 @utility display-3 {
   font-family: var(--font-display);
@@ -518,7 +586,16 @@
   font-weight: 700;
   font-stretch: 110%;
   word-break: keep-all;
-  overflow-wrap: break-word;
+  /* `anywhere`, not `break-word`. The two behave identically when a line is
+     being broken and differ in exactly one place: `anywhere` also shrinks the
+     element's min-content width, and `break-word` does not. That distinction
+     is invisible until a heading is a grid or flex item, at which point the
+     item's automatic minimum size is its min-content width — so a single
+     unbreakable word wider than the track (Uzbek's "Gaplashaylik." at 40px on
+     a 320px screen) pushes the item past the track and the whole page gains a
+     horizontal scrollbar. `anywhere` lets the box shrink and the word break,
+     which is what the fallback was always supposed to do. */
+  overflow-wrap: anywhere;
 }
 
 /**
@@ -536,7 +613,16 @@
   font-stretch: 110%;
   color: var(--color-signal);
   word-break: keep-all;
-  overflow-wrap: break-word;
+  /* `anywhere`, not `break-word`. The two behave identically when a line is
+     being broken and differ in exactly one place: `anywhere` also shrinks the
+     element's min-content width, and `break-word` does not. That distinction
+     is invisible until a heading is a grid or flex item, at which point the
+     item's automatic minimum size is its min-content width — so a single
+     unbreakable word wider than the track (Uzbek's "Gaplashaylik." at 40px on
+     a 320px screen) pushes the item past the track and the whole page gains a
+     horizontal scrollbar. `anywhere` lets the box shrink and the word break,
+     which is what the fallback was always supposed to do. */
+  overflow-wrap: anywhere;
 }
 
 /**
@@ -547,7 +633,11 @@
  */
 @utility stat-number {
   font-family: var(--font-display);
-  font-size: clamp(1.625rem, 3vw, 2.375rem); /* 26 → 38 */
+  /* The floor is 24, not 26. At 26 the widest number on the page,
+     "5,000–6,000", is 172px and the stat column on a 390px screen is 165 —
+     so the one figure the section exists to show wrapped onto two lines and
+     knocked the row of four off a shared baseline. */
+  font-size: clamp(1.5rem, 3vw, 2.375rem); /* 24 → 38 */
   line-height: 1;
   letter-spacing: -0.02em;
   font-weight: 700;
@@ -567,25 +657,94 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.028;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
 /**
- * Hover: two pixels and a brighter hairline, in 200ms.
+ * Hover: four pixels, a deeper shadow and a brighter hairline, in 320ms.
  *
- * It used to be five pixels, half a second and a drop shadow. That is a card
- * announcing that you are pointing at it; this is a card acknowledging it. No
- * hue anywhere either — the accent means state, not pointer position.
+ * The dark theme did this in two pixels and no shadow, because there was no
+ * shadow to be had — depth on a near-black page can only be built out of
+ * hairlines. On paper the shadow is the depth cue and the hairline is the
+ * detail, so the card rests at `--shadow-card` and rises to
+ * `--shadow-card-hover`. Four pixels rather than two because the shadow now
+ * moves with it and a lift the shadow cannot follow reads as a glitch.
+ *
+ * Still no hue anywhere — the accent means state, not pointer position.
  */
 @utility lift-card {
+  box-shadow: var(--shadow-card);
   transition:
-    transform 0.2s var(--ease-out-expo),
-    border-color 0.2s var(--ease-out-expo);
+    transform 0.32s var(--ease-out-expo),
+    box-shadow 0.32s var(--ease-out-expo),
+    border-color 0.32s var(--ease-out-expo);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-line-hover);
+  }
+}
+
+/**
+ * The same idea at control scale: buttons, icon buttons, the nav pill. Two
+ * pixels, because a 44px control that jumps four is a control that wobbles.
+ */
+@utility lift-control {
+  box-shadow: var(--shadow-control);
+  transition:
+    transform 0.24s var(--ease-out-expo),
+    box-shadow 0.24s var(--ease-out-expo),
+    background-color 0.18s var(--ease-out-expo),
+    border-color 0.18s var(--ease-out-expo),
+    color 0.18s var(--ease-out-expo);
   &:hover {
     transform: translateY(-2px);
-    border-color: var(--color-line-hover);
+    box-shadow: var(--shadow-control-hover);
+  }
+  /* Press returns it to the page. This is the one exception to "nothing on
+     this page moves down" — a button that does not go back under your finger
+     has not been pressed. */
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-control);
+    transition-duration: 0.08s;
+  }
+}
+
+/**
+ * The project stack.
+ *
+ * Each card sticks a little lower than the one before it, so the next card
+ * slides up over the last and leaves a sliver of its top edge showing. The
+ * depth cue is the covering card's own shadow falling across the one beneath
+ * — which is why this needs no JavaScript at all, and why the cards had to
+ * become opaque for it to work.
+ *
+ * Desktop only, and it is a size question rather than a taste one: below
+ * 1024px the card is a single column with the screenshot stacked under the
+ * copy, which is taller than most phone viewports. A sticky element taller
+ * than the scrollport pins its *top* off screen and never comes back, so the
+ * stack would read as a card that will not scroll.
+ *
+ * The reduced-motion block is last so it wins the cascade. Nothing here is an
+ * `animation`, so the blanket duration collapse in the base layer cannot reach
+ * it — a visitor who asked for no motion has to be handed a plain list, which
+ * is what `static` restores.
+ */
+@utility stack-card {
+  @media (width >= 64rem) {
+    position: sticky;
+    top: var(--stack-top, 7rem);
+    /* A card resting on the page wants a hint of a shadow; a card resting on
+       another card wants a real one, or the overlap reads as a rendering fault
+       rather than as depth. Overriding the token rather than the rule is what
+       leaves `lift-card` still owning the hover and the transition. */
+    --shadow-card: var(--shadow-pop);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    position: static;
   }
 }
 
@@ -624,7 +783,7 @@
    own scroll-linked motion value would change the hook count when the
    language changes, which React does not allow. */
 @utility word-reveal {
-  opacity: max(0.14, calc(var(--p, 0) * var(--n) - var(--i)));
+  opacity: max(0.16, calc(var(--p, 0) * var(--n) - var(--i)));
   transition: opacity 0.12s linear;
 }
 
@@ -656,8 +815,14 @@
 @utility anim-fade {
   animation: anim-fade 0.28s var(--ease-out-quart) both;
 }
+@utility anim-fade-out {
+  animation: anim-fade-out 0.2s var(--ease-out-quart) both;
+}
 @utility anim-slide-x {
   animation: anim-slide-x 0.42s var(--ease-out-expo) both;
+}
+@utility anim-slide-x-out {
+  animation: anim-slide-x-out 0.3s var(--ease-in-out-quint) both;
 }
 @utility anim-pop {
   animation: anim-pop 0.18s var(--ease-out-quart) both;

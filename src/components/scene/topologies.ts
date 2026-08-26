@@ -11,7 +11,7 @@ export type NodeKind = "origin" | "service" | "sink" | "ghost";
 export type TopoNode = {
   x: number;
   y: number;
-  /** Drawn at ~11% white on wide screens only. Legible if you look for it. */
+  /** Drawn at ~20% ink on wide screens only. Legible if you look for it. */
   label?: string;
   kind: NodeKind;
 };

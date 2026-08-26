@@ -43,7 +43,7 @@ export function SpotlightCard({
           wash across the card's content. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit] p-px opacity-0 transition-opacity duration-200 ease-(--ease-out-expo) group-hover/spot:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] p-px opacity-0 transition-opacity duration-300 ease-(--ease-out-expo) group-hover/spot:opacity-100"
         style={{
           background: `radial-gradient(${radius}px circle at var(--mx, 50%) var(--my, 0px), var(--color-line-hover), transparent 70%)`,
           WebkitMask:
@@ -53,12 +53,16 @@ export function SpotlightCard({
         }}
       />
       {/* A very faint fill, so the card lifts off the page as well as
-          outlining itself. */}
+          outlining itself. It used to be white at 5%, which on a white card is
+          nothing at all — it is celadon at 5% now, which is the same gesture
+          pointed the one direction a light surface leaves open. Longer than
+          the ring, too: the wash should arrive after the outline rather than
+          with it. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-200 ease-(--ease-out-expo) group-hover/spot:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-400 ease-(--ease-out-expo) group-hover/spot:opacity-100"
         style={{
-          background: `radial-gradient(${radius}px circle at var(--mx, 50%) var(--my, 0px), oklch(1 0 0 / 0.05), transparent 65%)`,
+          background: `radial-gradient(${radius}px circle at var(--mx, 50%) var(--my, 0px), rgba(37,102,87,0.05), transparent 65%)`,
         }}
       />
       {children}

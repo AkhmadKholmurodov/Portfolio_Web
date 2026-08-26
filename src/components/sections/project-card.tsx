@@ -28,12 +28,12 @@ export function ProjectCard({
   const isPhone = project.cover ? project.cover.width < project.cover.height : false;
 
   return (
-    // Opaque enough that the schematic stops crossing the reading area. The
-    // traces are the page's atmosphere, not its texture, and a hairline
-    // running through a paragraph is noise exactly where the eye is working.
-    // Still short of solid, so the card reads as a panel over the field
-    // rather than a slab cut out of it.
-    <SpotlightCard className="lift-card bg-surface/80">
+    // Solid, and it has to be: these cards stack (see `Build`), and a card you
+    // can see the previous one through is not covering it. It was 80% while
+    // they sat in a column, to keep the schematic from crossing the reading
+    // area — that job is now done by the card being opaque outright, which is
+    // the stronger version of the same guarantee.
+    <SpotlightCard className="lift-card bg-surface">
       <Link
         href={`/work/${project.slug}`}
         // The image column is the wider of the two. A screenshot is the fastest

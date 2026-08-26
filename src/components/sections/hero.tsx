@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonStack } from "@/components/ui/button";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -39,7 +39,15 @@ export function Hero() {
       id="home"
       // `mt` rather than `pt`: the nav is fixed, so the height it occupies has
       // to come out of the hero's box, not out of its own min-height.
-      className="relative mt-[74px] flex min-h-[calc(100svh-74px)] flex-col overflow-hidden"
+      //
+      // The min-height is capped at 56rem. Without the cap a very tall window
+      // stretches the hero to match it, and because the grid inside is
+      // `flex-1` and centred, every pixel of that goes into one gap between
+      // the meta row and the numbers — 300px of nothing on a 1440-tall screen.
+      // Capped, the composition holds its proportions and the overflow becomes
+      // the top of the next section, which is a better thing to do with the
+      // space anyway: it says there is a page here.
+      className="relative mt-[74px] flex min-h-[min(calc(100svh-74px),56rem)] flex-col overflow-hidden"
     >
       <HeroAmbient />
 
@@ -49,9 +57,13 @@ export function Hero() {
             name-first for anything that is not looking at the page. */}
         <div className="flex w-full flex-col-reverse gap-12 min-[980px]:grid min-[980px]:grid-cols-[1.05fr_0.95fr] min-[980px]:items-center min-[980px]:gap-[clamp(2rem,5vw,5rem)]">
           <div>
-            <p className="lift-in label flex items-center gap-2.5" style={step(0)}>
-              <span className="size-1.5 animate-breathe rounded-full bg-signal" />
-              {t.hero.label}
+            {/* `items-start` and a nudge, not `items-center`: the label wraps
+                to two lines below about 420px, and a centred dot then sits in
+                the gutter between them pointing at nothing. Aligned to the
+                first line it keeps meaning "this line is live". */}
+            <p className="lift-in label flex items-start gap-2.5" style={step(0)}>
+              <span className="mt-[0.45em] size-1.5 shrink-0 animate-breathe rounded-full bg-signal" />
+              <span>{t.hero.label}</span>
             </p>
 
             <h1 className="mt-7 text-ink-100">
@@ -78,21 +90,25 @@ export function Hero() {
               {t.hero.lead}
             </p>
 
+            {/* Full width and stacked on a phone, side by side from `sm`.
+                Two pills of different widths stacked down a narrow screen read
+                as a layout accident rather than as a pair, and the ragged
+                right edge is the first thing the eye finds. */}
             <div
-              className="lift-in mt-9 flex flex-wrap items-center gap-3"
+              className="lift-in mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center"
               style={step(5)}
             >
               {/* The page's one piece of purely decorative self-starting
                   motion, on the page's one primary action. */}
-              <BorderBeam>
-                <Button asChild size="lg">
+              <BorderBeam className="w-full sm:w-auto">
+                <Button asChild size="lg" className={buttonStack}>
                   <Link href="/#build">
                     {t.hero.ctaWork}
                     <ArrowDown />
                   </Link>
                 </Button>
               </BorderBeam>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className={buttonStack}>
                 <a href={profile.resume} download>
                   {t.hero.ctaResume}
                   <ArrowUpRight />
@@ -142,7 +158,7 @@ export function Hero() {
       {/* The numbers land on the fold because the grid above them is
           `flex-1`, not because anything here was measured. */}
       <div className="fade-in shell relative z-10 w-full pb-9" style={step(8)}>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 tabular-nums md:grid-cols-4 md:gap-x-10">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-7 border-t border-line pt-7 tabular-nums md:grid-cols-4 md:gap-x-10">
           {metrics.map((m) => {
             const copy = t.metrics[m.key as keyof typeof t.metrics];
             return (
