@@ -9,6 +9,7 @@ import { Reveal } from "@/components/magicui/reveal";
 import { useLanguage } from "@/components/providers/language-provider";
 import { projects, type ProjectSlug } from "@/content/profile";
 import { ChannelsDiagram } from "@/components/sections/channels-diagram";
+import { CoverMorph } from "@/components/view-transition";
 import { cn } from "@/lib/utils";
 
 /**
@@ -106,9 +107,17 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
         </div>
       </div>
 
-      {/* ---- cover ---- */}
+      {/* ---- cover ----
+           The far side of the door: the same `name` as the card's cover, so
+           the picture the visitor clicked arrives here by growing into place
+           rather than by the page cutting to it. The morph is the navigation.
+
+           No `Reveal` on the cover any more — a rise-and-fade would fight the
+           morph, which is already animating this element's position and size.
+           The rest of the page still reveals on scroll; only the shared
+           element opts out. */}
       <div className="shell mt-16 md:mt-24">
-        <Reveal y={26}>
+        <CoverMorph slug={project.slug}>
           {project.cover ? (
             <figure>
               <div className="media-frame lift-card rounded-2xl border border-line bg-void">
@@ -131,7 +140,7 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
               <ChannelsDiagram />
             </div>
           )}
-        </Reveal>
+        </CoverMorph>
       </div>
 
       {/* ---- problem ---- */}

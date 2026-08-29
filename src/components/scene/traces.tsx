@@ -372,11 +372,16 @@ export function Traces() {
         // reads.
         ctx!.fillStyle = "rgba(0,0,0,0.5)";
       } else {
+        // The schematic reads as atmosphere, not texture, so it is held well
+        // clear of the copy. The ceiling drops across the whole width — even at
+        // the far right the traces are a hint rather than a drawing — and the
+        // ramp starts later, so the right-hand text columns (the AI body, the
+        // certifications, the Run bullets) sit over near-empty ground.
         const mask = ctx!.createLinearGradient(0, 0, w, 0);
-        mask.addColorStop(0, "rgba(0,0,0,0.18)");
-        mask.addColorStop(0.42, "rgba(0,0,0,0.42)");
-        mask.addColorStop(0.72, "rgba(0,0,0,0.9)");
-        mask.addColorStop(1, "rgba(0,0,0,1)");
+        mask.addColorStop(0, "rgba(0,0,0,0.1)");
+        mask.addColorStop(0.5, "rgba(0,0,0,0.22)");
+        mask.addColorStop(0.8, "rgba(0,0,0,0.6)");
+        mask.addColorStop(1, "rgba(0,0,0,0.9)");
         ctx!.fillStyle = mask;
       }
       ctx!.fillRect(0, 0, w, h);

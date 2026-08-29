@@ -105,7 +105,10 @@ export function Nav() {
    * typeface. The number is the half that can go: it is a nicety, and the name
    * is the answer to the question the line exists to answer.
    */
-  const numbered = sections.filter((s) => s.id !== "home");
+  // Stack is excluded from the numbering: it is the toolkit, printed as
+  // "Toolkit" with no ordinal, so counting it would push Contact from 05 to
+  // 06. It still gets a trigger (see `sections`) so the readout leaves AI.
+  const numbered = sections.filter((s) => s.id !== "home" && s.id !== "stack");
   const sectionNo = (id: string) => {
     const i = numbered.findIndex((s) => s.id === id);
     return i < 0 ? undefined : String(i + 1).padStart(2, "0");
@@ -128,12 +131,17 @@ export function Nav() {
         : undefined;
   const readout = readoutId
     ? {
-        no: workSlug || onAbout ? undefined : sectionNo(readoutId),
+        no:
+          workSlug || onAbout || readoutId === "stack"
+            ? undefined
+            : sectionNo(readoutId),
         name:
           workName ??
           (onAbout
             ? t.nav.about
-            : (t.nav[readoutId as keyof typeof t.nav] as string | undefined)),
+            : readoutId === "stack"
+              ? t.stack.label
+              : (t.nav[readoutId as keyof typeof t.nav] as string | undefined)),
       }
     : undefined;
 

@@ -125,9 +125,19 @@ export function ArchPortrait({ portrait }: { portrait: HeroPortrait }) {
         style={{ inset: "-16px -16px 34px 20px", borderRadius: ARCH }}
       />
 
+      {/* The drop shadow rides the frame, following the arch's own radius, so
+          the print looks lifted off the page and lit from the upper left — a
+          near-contact term plus one long soft throw, both struck in the ink
+          colour rather than neutral black so the shadow reads warm under a warm
+          photograph rather than as dirt. `overflow-hidden` clips the image to
+          the arch; the shadow sits outside that clip, on the same box. */}
       <div
         className="relative aspect-[3/3.7] overflow-hidden bg-surface"
-        style={{ borderRadius: ARCH }}
+        style={{
+          borderRadius: ARCH,
+          boxShadow:
+            "0 2px 6px rgba(20, 30, 26, 0.08), 0 30px 60px -22px rgba(20, 30, 26, 0.38)",
+        }}
       >
         <Image
           ref={imgRef}
@@ -138,7 +148,13 @@ export function ArchPortrait({ portrait }: { portrait: HeroPortrait }) {
           // viewport, so a 40vw hint is generous rather than wasteful.
           sizes="(max-width: 980px) 300px, 40vw"
           priority
-          className="object-cover will-change-transform"
+          // `cover` fills the frame with a photograph; `contain` stands a
+          // cutout figure in it without cropping. A contained cutout also
+          // needs no border radius clip of its own — the transparent margin
+          // shows the arch's surface, which is exactly the mount we want.
+          className={`will-change-transform ${
+            portrait.fit === "contain" ? "object-contain" : "object-cover"
+          }`}
           style={{ objectPosition: portrait.focus }}
         />
       </div>

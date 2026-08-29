@@ -28,10 +28,9 @@ export const profile = {
     eyaqin: "https://eyaqin-app.vercel.app",
     lowshop: "https://lowshop.net",
     medium: "https://medium.com/@seehyuk2000",
-    // TODO(cve-repo): replace with the CVE-2025-55182 proof-of-concept
-    // repository once Akhmad supplies the URL. Points at the profile for now
-    // so the card never ships a dead link.
-    cve: "https://github.com/AkhmadKholmurodov",
+    // The CVE-2025-55182 (React2Shell) proof-of-concept. A real repository now,
+    // so the Break card links to the exploit itself rather than to the profile.
+    cve: "https://github.com/AkhmadKholmurodov/React2Shell_Exploit",
   },
 } as const;
 
@@ -58,9 +57,21 @@ export type HeroPortrait = {
    * decision rather than a constant.
    */
   focus: string;
+  /**
+   * How the image sits in the arch. A cutout — a figure on a transparent
+   * background — wants `contain`, so the whole person stands against the arch's
+   * own surface rather than being cropped into it. A full photograph wants
+   * `cover`, the default, so it fills the frame edge to edge.
+   */
+  fit?: "cover" | "contain";
 };
 
 export const heroPortrait: HeroPortrait | null = {
+  // The photograph as shot, background and all — the room, the light, the
+  // frame. It fills the arch (`cover` is the default), and the arch itself is
+  // now lifted off the page by a real drop shadow so the print reads as
+  // *mounted* rather than pasted flat. `50% 16%` keeps the head clear of the
+  // arch's rounded top.
   src: "/photos/portrait.webp",
   width: 901,
   height: 1280,
@@ -363,6 +374,10 @@ export const sections = [
   // a model's output is the same posture as reviewing anyone else's, and the
   // field should not announce a change of subject that has not happened.
   { id: "ai", phase: 3 },
+  // Stack has no number and no nav link, but it still needs a scroll trigger —
+  // without one the nav readout stuck on "AI" the whole way through the
+  // toolkit. It shares AI's formation; it is the same posture, still reviewing.
+  { id: "stack", phase: 3 },
   { id: "contact", phase: 4 },
 ] as const;
 

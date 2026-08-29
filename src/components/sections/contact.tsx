@@ -21,7 +21,7 @@ export function Contact() {
   const { t } = useLanguage();
 
   return (
-    <Section id="contact" className="pb-32 md:pb-44">
+    <Section id="contact" className="pb-20 md:pb-44">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-20">
         <div>
           <Reveal>
@@ -81,7 +81,7 @@ export function Contact() {
         </Reveal>
       </div>
 
-      <RevealGroup className="mt-20 border-t border-line" stagger={0.06}>
+      <RevealGroup className="mt-14 border-t border-line md:mt-20" stagger={0.06}>
         {socials.map((social) => {
           const Icon = ICONS[social.key];
           return (

@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import type { Project } from "@/content/profile";
 import { cn } from "@/lib/utils";
 import { ChannelsDiagram } from "./channels-diagram";
+import { CoverMorph } from "@/components/view-transition";
 
 /**
  * One product, at a glance. The card leads with the *number* rather than with
@@ -105,28 +106,39 @@ export function ProjectCard({
         </div>
 
         <div className={cn("relative", flipped && "lg:order-1")}>
-          {project.cover ? (
-            <div
-              className={cn(
-                "relative overflow-hidden rounded-xl border border-line bg-void",
-                isPhone ? "mx-auto max-w-72" : "",
-              )}
-            >
-              {/* Keyed to the card, not to the frame: the whole card is the
-                  link, so the picture should react wherever the pointer is
-                  inside it. `media-frame` is for standalone figures. */}
-              <Image
-                src={project.cover.src}
-                alt={t.shots[project.cover.caption as keyof typeof t.shots]}
-                width={project.cover.width}
-                height={project.cover.height}
-                sizes="(max-width: 1024px) 90vw, 52vw"
-                className="h-auto w-full transition-transform duration-700 ease-(--ease-out-expo) group-hover/spot:scale-[1.045]"
-              />
-            </div>
-          ) : (
-            <ChannelsDiagram />
-          )}
+          {/* The cover is the door. It carries the same `view-transition-name`
+              as the hero on the case-study page (see `coverTransition`), so
+              clicking the card grows this picture into that one rather than
+              cutting to a new screen. The name is a plain CSS custom property
+              the browser matches across the navigation. */}
+          <CoverMorph slug={project.slug}>
+            {project.cover ? (
+              <div
+                className={cn(
+                  // The screenshot lifts off the card under the pointer — a soft
+                  // shadow behind it, keyed to the card's own hover, so the image
+                  // reads as a raised object rather than a flat inset. The scale
+                  // below rides the image; this shadow rides its frame.
+                  "relative overflow-hidden rounded-xl border border-line bg-void shadow-card transition-shadow duration-500 ease-(--ease-out-expo) group-hover/spot:shadow-card-hover",
+                  isPhone ? "mx-auto max-w-72" : "",
+                )}
+              >
+                {/* Keyed to the card, not to the frame: the whole card is the
+                    link, so the picture should react wherever the pointer is
+                    inside it. `media-frame` is for standalone figures. */}
+                <Image
+                  src={project.cover.src}
+                  alt={t.shots[project.cover.caption as keyof typeof t.shots]}
+                  width={project.cover.width}
+                  height={project.cover.height}
+                  sizes="(max-width: 1024px) 90vw, 52vw"
+                  className="h-auto w-full transition-transform duration-700 ease-(--ease-out-expo) group-hover/spot:scale-[1.045]"
+                />
+              </div>
+            ) : (
+              <ChannelsDiagram />
+            )}
+          </CoverMorph>
         </div>
       </Link>
     </SpotlightCard>

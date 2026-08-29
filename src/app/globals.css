@@ -734,14 +734,25 @@
  * is what `static` restores.
  */
 @utility stack-card {
+  /* The deck now stacks at every width, phones included. It used to be
+     desktop-only, on the argument that a single-column card is taller than a
+     phone viewport and a sticky element taller than the scrollport pins its
+     top off screen. The fix is not to skip the effect but to sit the cards
+     higher — `--stack-top` is `5rem` on a phone (just under the nav) — and to
+     let each card overhang the top of the viewport if it must: the *next*
+     card still slides up over its lower edge, which is the whole gesture. A
+     tall card simply scrolls its own body past first, then holds while the one
+     behind it arrives. */
+  position: sticky;
+  top: var(--stack-top-sm, 5rem);
+  /* A card resting on the page wants a hint of a shadow; a card resting on
+     another card wants a real one, or the overlap reads as a rendering fault
+     rather than as depth. Overriding the token rather than the rule is what
+     leaves `lift-card` still owning the hover and the transition. */
+  --shadow-card: var(--shadow-pop);
+
   @media (width >= 64rem) {
-    position: sticky;
     top: var(--stack-top, 7rem);
-    /* A card resting on the page wants a hint of a shadow; a card resting on
-       another card wants a real one, or the overlap reads as a rendering fault
-       rather than as depth. Overriding the token rather than the rule is what
-       leaves `lift-card` still owning the hover and the transition. */
-    --shadow-card: var(--shadow-pop);
   }
   @media (prefers-reduced-motion: reduce) {
     position: static;
@@ -749,13 +760,21 @@
 }
 
 /* The scale lives on the media, never on the frame, so the border stays a
-   crisp one pixel while the picture moves inside it. */
+   crisp one pixel while the picture moves inside it.
+ *
+ * On paper a standalone figure also wants to lift off the page under the
+ * pointer — the same elevation the cards get, so a picture reads as an object
+ * you can act on rather than a flat plate. The shadow rides the frame; the
+ * scale rides the image inside it. */
 @utility media-frame {
   overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.4s var(--ease-out-expo);
   & img {
     transition: transform 0.75s var(--ease-out-expo);
     will-change: transform;
   }
+  &:hover { box-shadow: var(--shadow-card-hover); }
   &:hover img { transform: scale(1.045); }
 }
 
@@ -826,4 +845,42 @@
 }
 @utility anim-pop {
   animation: anim-pop 0.18s var(--ease-out-quart) both;
+}
+
+/* =====================================================================
+ * View transitions — the shared-element morph.
+ *
+ * A project card's cover and the case-study hero carry the same
+ * `view-transition-name` (see `components/view-transition.tsx`), so the
+ * browser animates the picture from the card's cell into the hero slot: the
+ * "step through the door" move. These rules only tune what the browser
+ * already does — they are not what makes the morph happen.
+ *
+ * One cadence with the rest of the page: 500ms of the site's own
+ * ease-out-expo, the same curve every arrival uses. A short blur at the middle
+ * of the flight hides the pixel-stretching while the two pictures are
+ * different sizes — it reads as focus pulling in, which is exactly the "the
+ * closer you get, the more you see inside" feeling.
+ *
+ * Under reduced motion the durations collapse and the navigation is instant,
+ * the browser's own default.
+ * ===================================================================== */
+::view-transition-group(*) {
+  animation-duration: 0.77s;
+  animation-timing-function: var(--ease-out-expo);
+}
+::view-transition-image-pair(*) {
+  animation-name: vt-blur;
+}
+@keyframes vt-blur {
+  35% { filter: blur(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+  }
 }
