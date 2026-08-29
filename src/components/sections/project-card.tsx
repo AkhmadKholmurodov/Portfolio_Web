@@ -8,7 +8,6 @@ import { Badge, StatusDot } from "@/components/ui/badge";
 import { useLanguage } from "@/components/providers/language-provider";
 import type { Project } from "@/content/profile";
 import { cn } from "@/lib/utils";
-import { ChannelsDiagram } from "./channels-diagram";
 import { CoverMorph } from "@/components/view-transition";
 
 /**
@@ -26,7 +25,7 @@ export function ProjectCard({
   const { t } = useLanguage();
   const copy = t.projects[project.slug];
   const flipped = index % 2 === 1;
-  const isPhone = project.cover ? project.cover.width < project.cover.height : false;
+  const isPhone = project.cover.width < project.cover.height;
 
   return (
     // Solid, and it has to be: these cards stack (see `Build`), and a card you
@@ -118,46 +117,40 @@ export function ProjectCard({
               cutting to a new screen. The name is a plain CSS custom property
               the browser matches across the navigation. */}
           <CoverMorph slug={project.slug}>
-            {project.cover ? (
-              <div
+            <div
+              className={cn(
+                // The screenshot lifts off the card under the pointer — a soft
+                // shadow behind it, keyed to the card's own hover, so the image
+                // reads as a raised object rather than a flat inset. The scale
+                // below rides the image; this shadow rides its frame.
+                "relative overflow-hidden rounded-xl border border-line bg-void shadow-card transition-shadow duration-500 ease-(--ease-out-expo) group-hover/spot:shadow-card-hover",
+                // A portrait screenshot is 2.2 times as tall as it is wide.
+                // Shown whole on a phone it is 620px of card — more than the
+                // copy, the stats and the chips put together, and enough on
+                // its own to push the card's bottom edge off a sticky
+                // screen. So on a phone it is cropped to a landscape window
+                // anchored at the top of the shot: the app's header and its
+                // first rows, at the full width of the card, which is more
+                // of the product than a 130px-wide whole screen would show.
+                // The full capture is one tap away in the case study.
+                isPhone ? "aspect-[3/2] md:mx-auto md:aspect-auto md:max-w-72" : "",
+              )}
+            >
+              {/* Keyed to the card, not to the frame: the whole card is the
+                  link, so the picture should react wherever the pointer is
+                  inside it. `media-frame` is for standalone figures. */}
+              <Image
+                src={project.cover.src}
+                alt={t.shots[project.cover.caption as keyof typeof t.shots]}
+                width={project.cover.width}
+                height={project.cover.height}
+                sizes="(max-width: 1024px) 90vw, 52vw"
                 className={cn(
-                  // The screenshot lifts off the card under the pointer — a soft
-                  // shadow behind it, keyed to the card's own hover, so the image
-                  // reads as a raised object rather than a flat inset. The scale
-                  // below rides the image; this shadow rides its frame.
-                  "relative overflow-hidden rounded-xl border border-line bg-void shadow-card transition-shadow duration-500 ease-(--ease-out-expo) group-hover/spot:shadow-card-hover",
-                  // A portrait screenshot is 2.2 times as tall as it is wide.
-                  // Shown whole on a phone it is 620px of card — more than the
-                  // copy, the stats and the chips put together, and enough on
-                  // its own to push the card's bottom edge off a sticky
-                  // screen. So on a phone it is cropped to a landscape window
-                  // anchored at the top of the shot: the app's header and its
-                  // first rows, at the full width of the card, which is more
-                  // of the product than a 130px-wide whole screen would show.
-                  // The full capture is one tap away in the case study.
-                  isPhone
-                    ? "aspect-[3/2] md:mx-auto md:aspect-auto md:max-w-72"
-                    : "",
+                  "h-auto w-full transition-transform duration-700 ease-(--ease-out-expo) group-hover/spot:scale-[1.045]",
+                  isPhone && "h-full object-cover object-top md:h-auto",
                 )}
-              >
-                {/* Keyed to the card, not to the frame: the whole card is the
-                    link, so the picture should react wherever the pointer is
-                    inside it. `media-frame` is for standalone figures. */}
-                <Image
-                  src={project.cover.src}
-                  alt={t.shots[project.cover.caption as keyof typeof t.shots]}
-                  width={project.cover.width}
-                  height={project.cover.height}
-                  sizes="(max-width: 1024px) 90vw, 52vw"
-                  className={cn(
-                    "h-auto w-full transition-transform duration-700 ease-(--ease-out-expo) group-hover/spot:scale-[1.045]",
-                    isPhone && "h-full object-cover object-top md:h-auto",
-                  )}
-                />
-              </div>
-            ) : (
-              <ChannelsDiagram />
-            )}
+              />
+            </div>
           </CoverMorph>
         </div>
       </Link>

@@ -118,28 +118,22 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
            element opts out. */}
       <div className="shell mt-16 md:mt-24">
         <CoverMorph slug={project.slug}>
-          {project.cover ? (
-            <figure>
-              <div className="media-frame lift-card rounded-2xl border border-line bg-void">
-                <Image
-                  src={project.cover.src}
-                  alt={t.shots[project.cover.caption as keyof typeof t.shots]}
-                  width={project.cover.width}
-                  height={project.cover.height}
-                  sizes="(max-width: 1024px) 100vw, 84rem"
-                  priority
-                  className="h-auto w-full"
-                />
-              </div>
-              <figcaption className="mt-4 max-w-2xl caption font-mono tracking-label">
-                {t.shots[project.cover.caption as keyof typeof t.shots]}
-              </figcaption>
-            </figure>
-          ) : (
-            <div className="mx-auto max-w-lg">
-              <ChannelsDiagram />
+          <figure>
+            <div className="media-frame lift-card rounded-2xl border border-line bg-void">
+              <Image
+                src={project.cover.src}
+                alt={t.shots[project.cover.caption as keyof typeof t.shots]}
+                width={project.cover.width}
+                height={project.cover.height}
+                sizes="(max-width: 1024px) 100vw, 84rem"
+                priority
+                className="h-auto w-full"
+              />
             </div>
-          )}
+            <figcaption className="mt-4 max-w-2xl caption font-mono tracking-label">
+              {t.shots[project.cover.caption as keyof typeof t.shots]}
+            </figcaption>
+          </figure>
         </CoverMorph>
       </div>
 
@@ -151,6 +145,19 @@ export function CaseStudy({ slug }: { slug: ProjectSlug }) {
             {copy.problem.body}
           </p>
         </Reveal>
+
+        {/* The diagram used to stand in for the cover, back when lowshop had
+            no screenshots to show. It has them now, so the diagram moves to
+            the one place it was always arguing for: directly under the
+            paragraph that describes three channels arriving at one stock
+            table. A screenshot cannot draw that shape; this panel can. */}
+        {project.diagram === "channels" && (
+          <Reveal y={24}>
+            <div className="mt-12 max-w-lg md:mt-16">
+              <ChannelsDiagram />
+            </div>
+          </Reveal>
+        )}
       </section>
 
       {/* ---- decisions ---- */}

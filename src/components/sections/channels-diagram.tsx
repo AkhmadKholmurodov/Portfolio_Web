@@ -13,11 +13,12 @@ const CHANNELS = ["lowshop.net", "Coupang", "Naver SmartStore"];
 const PAYMENTS = ["Toss Payments", "KG Inicis", "Toss Pay", "Naver Pay", "Kakao Pay"];
 
 /**
- * lowshop.net is the one project with no screenshots — it is a company's
- * production storefront, not something to publish captures of. So it gets a
- * diagram instead, and the diagram is the actual point of the case study: one
- * catalogue, one synchronisation job, three places a price has to be true at
- * once, and a separate row of payment rails underneath.
+ * The part of lowshop.net a screenshot cannot photograph. The storefront's own
+ * pages are on the case study now, but they only ever show one of the three
+ * channels; this panel is the actual point of it: one catalogue, one
+ * synchronisation job, three places a price has to be true at once, and a
+ * separate row of payment rails underneath. It sits under the problem
+ * paragraph that describes exactly that shape.
  */
 export function ChannelsDiagram() {
   const { t } = useLanguage();

@@ -237,6 +237,12 @@ export const en = {
   },
 
   shots: {
+    lowshopStorefront:
+      "lowshop.net's storefront. The brand grid at the top is the customer's shortest route in; the banner under it is whatever is running that week.",
+    lowshopGiftSets:
+      "The gift-set catalogue — the pages that carry the 설날 and 추석 peaks, and the ones where an inaccurate stock count costs the most.",
+    lowshopBrand:
+      "The brand story page. The building is SAMBU's own: the storefront sits in front of a real warehouse.",
     eyaqinHero:
       "eYaqin's landing page. Location is the first thing the product says about itself.",
     eyaqinFeed:

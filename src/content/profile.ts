@@ -147,9 +147,15 @@ export type Project = {
   status: "live" | "building";
   tech: string[];
   href?: string;
-  /** Rendered instead of a screenshot grid where there are no screenshots. */
+  /**
+   * An architecture panel that belongs to the case study's prose rather than
+   * to its picture rail. Only lowshop has one, and only because its problem
+   * paragraph describes a shape — three channels, one stock table — that a
+   * screenshot cannot show.
+   */
   diagram?: "channels";
-  cover?: Shot;
+  /** The card's picture, and the case study's hero. Every project has one. */
+  cover: Shot;
   shots: Shot[];
   /** Two numbers per card. Keys resolve against `t.work.stats`. */
   stats: { key: string; value: string }[];
@@ -164,7 +170,16 @@ export const projects: Project[] = [
     href: profile.links.lowshop,
     tech: ["Next.js", "NestJS", "PostgreSQL", "Redis", "Docker", "Linux"],
     diagram: "channels",
-    shots: [],
+    cover: {
+      src: "/work/lowshop-storefront.webp",
+      width: 1800,
+      height: 1049,
+      caption: "lowshopStorefront",
+    },
+    shots: [
+      { src: "/work/lowshop-gift-sets.webp", width: 1700, height: 896, caption: "lowshopGiftSets" },
+      { src: "/work/lowshop-brand.webp", width: 1700, height: 890, caption: "lowshopBrand" },
+    ],
     stats: [
       { key: "orders", value: "~2,500" },
       { key: "channels", value: "3" },

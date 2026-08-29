@@ -237,6 +237,12 @@ export const uz: Dict = {
   },
 
   shots: {
+    lowshopStorefront:
+      "lowshop.net do'koni. Yuqoridagi brend to'ri — xaridor uchun eng qisqa yo'l; ostidagi banner esa o'sha haftada ishlab turgan aksiya.",
+    lowshopGiftSets:
+      "Sovg'a-to'plamlar katalogi — 설날 va 추석 cho'qqilarini ko'taradigan sahifalar, va qoldiq noto'g'ri bo'lsa eng qimmatga tushadigan joy.",
+    lowshopBrand:
+      "Brend sahifasi. Bino — SAMBU'ning o'ziniki: do'kon ortida haqiqiy ombor turadi.",
     eyaqinHero: "eYaqin bosh sahifasi. Mahsulot o'zi haqida birinchi aytadigan narsa — joylashuv.",
     eyaqinFeed: "Qidiruv lentasi: mahalla, tuman yoki radius bo'yicha chegaralanadi.",
     eyaqinListing:
