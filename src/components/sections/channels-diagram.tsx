@@ -23,12 +23,12 @@ export function ChannelsDiagram() {
   const { t } = useLanguage();
 
   return (
-    <div className="relative flex h-full min-h-64 w-full flex-col justify-center gap-5 rounded-xl border border-line bg-void/50 p-6 md:p-8">
+    <div className="relative flex h-full w-full min-w-0 flex-col justify-center gap-3 rounded-xl border border-line bg-void/50 p-4 md:min-h-64 md:gap-5 md:p-8">
       <div className="blueprint pointer-events-none absolute inset-0 rounded-[inherit] opacity-50" />
 
       <div className="relative flex flex-col gap-1">
         <span className="label">SAMBU</span>
-        <span className="font-mono text-body text-ink-200">catalogue</span>
+        <span className="font-mono text-ui text-ink-200 md:text-body">catalogue</span>
       </div>
 
       {/* The sync job. Celadon because it is the live piece — the thing that is
@@ -42,13 +42,21 @@ export function ChannelsDiagram() {
         <span className="h-px flex-1 bg-linear-to-l from-signal/60 to-signal/10" />
       </div>
 
-      <div className="relative grid gap-2 sm:grid-cols-3">
+      {/* Three boxes, one row — and on a phone that row scrolls sideways
+          rather than stacking. Stacked, these three cost 126px of a card that
+          has to fit under a 74px nav on an 844px screen; as a swipeable row
+          they cost 38 and nothing is dropped. It also keeps the shape of the
+          idea intact: three destinations *beside* each other, which is the
+          whole reason they are boxes and not a list. The row bleeds to the
+          panel's edge so the third box is visibly clipped — that clip is the
+          affordance. */}
+      <div className="hide-scrollbar relative -mx-4 flex min-w-0 gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-2 sm:overflow-visible sm:px-0">
         {CHANNELS.map((name) => (
           <div
             key={name}
-            className="rounded-lg border border-line bg-surface/60 px-3 py-2.5"
+            className="shrink-0 rounded-lg border border-line bg-surface/60 px-3 py-1.5 md:py-2.5"
           >
-            <span className="font-mono text-label tracking-label text-ink-300">
+            <span className="font-mono text-label tracking-label whitespace-nowrap text-ink-300">
               {name}
             </span>
           </div>
@@ -62,13 +70,15 @@ export function ChannelsDiagram() {
       {/* A separate row, below the divider, so the hierarchy states the thing
           the old diagram got wrong: these are how an order is paid for, not
           where it comes from. */}
-      <div className="relative mt-1 border-t border-line pt-4">
-        <p className="label mb-3">{t.work.payments}</p>
-        <ul className="flex flex-wrap gap-1.5">
+      <div className="relative min-w-0 border-t border-line pt-3 md:mt-1 md:pt-4">
+        <p className="label mb-2 md:mb-3">{t.work.payments}</p>
+        {/* Same trade as the channels above: five rails wrap to three lines on
+            a phone and ride in one swipeable line instead. */}
+        <ul className="hide-scrollbar -mx-4 flex min-w-0 gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
           {PAYMENTS.map((name) => (
             <li
               key={name}
-              className="rounded-full border border-line px-2.5 py-1 font-mono text-label tracking-label text-ink-400"
+              className="shrink-0 rounded-full border border-line px-2.5 py-1 font-mono text-label tracking-label whitespace-nowrap text-ink-400"
             >
               {name}
             </li>

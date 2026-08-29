@@ -131,13 +131,13 @@
    * Sizes are rem so a visitor's own browser setting still scales the page.
    * Line height rides on the token rather than on a `leading-*` class at each
    * call site, because a size and its leading are one decision. */
-  --text-lede: clamp(1.1875rem, 1.6vw, 1.3125rem); /* 19→21 — under a heading */
+  --text-lede: clamp(1.0625rem, 1.45vw, 1.1875rem); /* 17→19 — under a heading */
   --text-lede--line-height: 1.55;
-  --text-body: 1.09375rem; /* 17.5 — prose, list items, card copy */
+  --text-body: 1.03125rem; /* 16.5 — prose, list items, card copy */
   --text-body--line-height: 1.68;
-  --text-ui: 0.9375rem; /* 15 — nav links, buttons, inline links */
+  --text-ui: 0.90625rem; /* 14.5 — nav links, buttons, inline links */
   --text-ui--line-height: 1.4;
-  --text-stat-label: 0.875rem; /* 14 — the word under a stat number */
+  --text-stat-label: 0.84375rem; /* 13.5 — the word under a stat number */
   --text-stat-label--line-height: 1.4;
   --text-label: 0.8125rem; /* 13 — mono labels, chips, periods */
   --text-label--line-height: 1.4;
@@ -542,7 +542,7 @@
  */
 @utility display-1 {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.4vw, 4.75rem); /* 40 → 76 */
+  font-size: clamp(2.25rem, 5vw, 4.25rem); /* 36 → 68 */
   line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 700;
@@ -561,7 +561,7 @@
 }
 @utility display-2 {
   font-family: var(--font-display);
-  font-size: clamp(2.125rem, 4.4vw, 3.75rem); /* 34 → 60 */
+  font-size: clamp(1.875rem, 4vw, 3.25rem); /* 30 → 52 */
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -580,7 +580,7 @@
 }
 @utility display-3 {
   font-family: var(--font-display);
-  font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+  font-size: clamp(1.25rem, 2.3vw, 1.625rem); /* 20 → 26 */
   line-height: 1.15;
   letter-spacing: -0.026em;
   font-weight: 700;
@@ -606,7 +606,7 @@
  */
 @utility hero-role {
   font-family: var(--font-display);
-  font-size: clamp(1.3125rem, 2.5vw, 2.125rem); /* 21 → 34 */
+  font-size: clamp(1.1875rem, 2.2vw, 1.875rem); /* 19 → 30 */
   line-height: 1.2;
   letter-spacing: -0.02em;
   font-weight: 700;
@@ -633,11 +633,11 @@
  */
 @utility stat-number {
   font-family: var(--font-display);
-  /* The floor is 24, not 26. At 26 the widest number on the page,
+  /* The floor is low on purpose. At 26 the widest number on the page,
      "5,000–6,000", is 172px and the stat column on a 390px screen is 165 —
      so the one figure the section exists to show wrapped onto two lines and
-     knocked the row of four off a shared baseline. */
-  font-size: clamp(1.5rem, 3vw, 2.375rem); /* 24 → 38 */
+     knocked the row of four off a shared baseline. 22 has margin. */
+  font-size: clamp(1.375rem, 2.7vw, 2.125rem); /* 22 → 34 */
   line-height: 1;
   letter-spacing: -0.02em;
   font-weight: 700;

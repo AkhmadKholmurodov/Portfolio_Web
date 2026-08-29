@@ -25,11 +25,22 @@ import { ProjectCard } from "./project-card";
 /** Where the first card comes to rest: clear of the 74px nav, with air. */
 const STACK_TOP = 7; /* rem */
 
-/** The same, tightened for a phone — just clear of the nav, no more. */
-const STACK_TOP_SM = 5; /* rem */
+/** The same, tightened for a phone — just clear of the 74px nav, no more. */
+const STACK_TOP_SM = 4.75; /* rem — 76px */
 
 /** How much of each card's top edge stays visible under the next one. */
 const REVEAL_EDGE = 0.875; /* rem — 14px */
+
+/**
+ * And on a phone, half that.
+ *
+ * The reveal is a running cost: the fourth card rests three edges lower than
+ * the first, so at 14px the last card in the deck starts 42px further down a
+ * screen that has none to spare, and 42px is the difference between reading
+ * the "Read the case study" line and not. 8px is still a legible edge — you
+ * can see there is a card under this one, which is the entire job.
+ */
+const REVEAL_EDGE_SM = 0.5; /* rem — 8px */
 
 export function Build() {
   const { t } = useLanguage();
@@ -40,7 +51,7 @@ export function Build() {
         <SectionHeader label={t.build.label} title={t.build.title} lead={t.build.lead} />
       </Reveal>
 
-      <div className="mt-14 flex flex-col gap-6 md:mt-20 md:gap-8">
+      <div className="mt-10 flex flex-col gap-6 md:mt-20 md:gap-8">
         {projects.map((project, i) => (
           <div
             key={project.slug}
@@ -50,7 +61,7 @@ export function Build() {
               // reading order — the later card is the one on top. Two rest
               // heights: a tighter one on phones (`sm`), where there is less
               // room above the fold, and the roomier desktop one.
-              ["--stack-top-sm" as string]: `${STACK_TOP_SM + i * REVEAL_EDGE}rem`,
+              ["--stack-top-sm" as string]: `${STACK_TOP_SM + i * REVEAL_EDGE_SM}rem`,
               ["--stack-top" as string]: `${STACK_TOP + i * REVEAL_EDGE}rem`,
               zIndex: i + 1,
             }}
